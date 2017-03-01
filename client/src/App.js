@@ -1,21 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Nav from './components/Nav.js'
+import Main from './components/Main.js'
+import Side from './components/Side.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      tips: ['one']
+    }
+    this.addTip = this.addTip.bind(this)
+  }
+  addTip(item) {
+    let arr = this.state.tips.slice()
+    arr.push(1)
+    this.setState({
+      tips: arr
+    })  
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <MuiThemeProvider>
+        <div>
+          <Nav />
+          <div className="container">
+            <div className="row">
+              <Main addTip={this.addTip} />
+              <Side tips={this.state.tips} />
+            </div>
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </MuiThemeProvider>
     );
   }
+
 }
+
 
 export default App;

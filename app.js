@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var uri = 'https://bookmakersapi.adjarabet.com/sportsbook/rest/public/leaguesMatches?ln=en&id=2615';
+
 
 var updateGames = require('./server/scripts/updateGames');
 var index = require('./routes/index');
@@ -30,7 +30,7 @@ mongoose.connect('mongodb://localhost/test');
 
 setInterval(updateGames, 600000);
 
-app.use('/', index);
+app.use('/api', index);
 app.use('/submit', submit);
 
 

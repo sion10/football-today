@@ -1,6 +1,7 @@
 var obj = {};
 var Game = require('../models/game');
 var request = require('request');
+var uri = 'https://bookmakersapi.adjarabet.com/sportsbook/rest/public/leaguesMatches?ln=en&id=2615';
 
 function updateGames() {
   console.log("update started");
@@ -32,10 +33,6 @@ function updateGames() {
 
             if (err) {
               console.log(err);
-            }
-            else {
-
-              console.log("updated games");
             }
           }
         )
