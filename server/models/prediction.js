@@ -1,0 +1,13 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+// create a schema
+var predictionSchema = new Schema({
+  date: {type: Date},
+  tips: [{ type: Schema.Types.ObjectId, ref: 'Tip' }]
+});
+
+// create a model
+var Prediction = mongoose.model('Prediction', predictionSchema);
+
+module.exports = Prediction;

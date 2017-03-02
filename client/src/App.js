@@ -10,16 +10,35 @@ class App extends Component {
     super();
 
     this.state = {
-      tips: ['one']
+      tips: []
     }
     this.addTip = this.addTip.bind(this)
+    this.handleOnClick = this.handleOnClick.bind(this)
+  }
+  handleOnClick() {
+    console.log("init req")
+    fetch('http://localhost:3000/submit', {
+      method: 'post',
+      body: JSON.stringify(this.state.tips),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      })
+    });
   }
   addTip(item) {
     let arr = this.state.tips.slice()
-    arr.push(1)
+    let obj = {
+      eventId: item.game.gameId,
+      eventName: item.game.gameName,
+      categoryName: item.game.categoryName,
+      eventStart: item.game.eventStart,
+      betId: item.tip.v
+    }
+    arr.push(obj)
     this.setState({
       tips: arr
-    })  
+    })
   }
 
   render() {
@@ -30,7 +49,7 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <Main addTip={this.addTip} />
-              <Side tips={this.state.tips} />
+              <Side tips={this.state.tips} handleOnClick={this.handleOnClick} />
             </div>
           </div>
         </div>

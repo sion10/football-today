@@ -8,7 +8,8 @@ var tipSchema = new Schema({
   categoryName: { type: String, required: true},
   eventStart: { type: Date},
   betId: { type: Number, required:  true},
-  status: { type: String, default: "open"}
+  status: { type: String, default: "open"},
+  prediction: { type: Schema.Types.ObjectId, ref: 'Prediction'}
 });
 
 // create a model
