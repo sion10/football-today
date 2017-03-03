@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var Tip = require('../server/models/tip');
 var Prediction = require('../server/models/prediction');
 
 
@@ -8,33 +7,21 @@ var Prediction = require('../server/models/prediction');
 router.post('/', function (req, res, next) {
 
   let newPredict = Prediction({
-    date: Date.now()
+    date: Date.now(),
+    tips: []
   })
-  newPredict.save(function (err) {
-    if (err) {
-      console.log(err)
+  req.body.forEach((item, i) => {
+    let newTip = {
+      eventId: item.eventId,
+      eventName: item.eventName,
+      categoryName: item.categoryName,
+      eventStart: item.eventStart,
+      betId: item.betId,
     }
-    else {
-      req.body.forEach((item, i) => {
-        let newTip = Tip({
-          eventId: item.eventId,
-          eventName: item.eventName,
-          categoryName: item.categoryName,
-          eventStart: item.eventStart,
-          betId: item.betId,
-          prediction: newPredict._id
-        })
-
-        newTip.save(function (err) {
-          if (err) {
-            console.log(err)
-          }
-          else {
-            console.log('tip created');
-          }
-        })
-      });
-    }
+    newPredict.tips.push(newTip)
+  })
+  newPredict.save((err) => {
+    if (!err) res.status(200)
   })
 })
 

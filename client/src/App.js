@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Nav from './components/Nav.js'
-import Main from './components/Main.js'
 import Side from './components/Side.js'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
@@ -42,13 +41,20 @@ class App extends Component {
   }
 
   render() {
+      let children = React.Children.map(this.props.children, (child) => {
+        return (
+          React.cloneElement(child, {
+            addTip: this.addTip
+          })
+        )
+      })
     return (
       <MuiThemeProvider>
         <div>
           <Nav />
           <div className="container">
             <div className="row">
-              <Main addTip={this.addTip} />
+             {children}
               <Side tips={this.state.tips} handleOnClick={this.handleOnClick} />
             </div>
           </div>

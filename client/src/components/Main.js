@@ -44,6 +44,7 @@ class Main extends Component {
     const matches = this.state.games.map((item, i) => {
       return (
         <div key={item._id}>
+          <hr/>
           <p>{item.gameName}</p>
           <p>{item.eventStart}</p>
           <p>{item.categoryName}</p>
