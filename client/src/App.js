@@ -12,10 +12,15 @@ class App extends Component {
       tips: []
     }
     this.addTip = this.addTip.bind(this)
-    this.handleOnClick = this.handleOnClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClear = this.handleClear.bind(this)
   }
-  handleOnClick() {
-    console.log("init req")
+  handleClear() {
+    this.setState({
+      tips: []
+    })
+  }
+  handleSubmit() {
     fetch('http://localhost:3000/submit', {
       method: 'post',
       body: JSON.stringify(this.state.tips),
@@ -41,21 +46,21 @@ class App extends Component {
   }
 
   render() {
-      let children = React.Children.map(this.props.children, (child) => {
-        return (
-          React.cloneElement(child, {
-            addTip: this.addTip
-          })
-        )
-      })
+    let children = React.Children.map(this.props.children, (child) => {
+      return (
+        React.cloneElement(child, {
+          addTip: this.addTip
+        })
+      )
+    })
     return (
       <MuiThemeProvider>
         <div>
           <Nav />
           <div className="container">
             <div className="row">
-             {children}
-              <Side tips={this.state.tips} handleOnClick={this.handleOnClick} />
+              {children}
+              <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} />
             </div>
           </div>
         </div>

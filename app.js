@@ -6,9 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-
-
 var updateGames = require('./server/scripts/updateGames');
+var checkResults = require('./server/scripts/checkResults');
 var index = require('./routes/index');
 var submit = require('./routes/submit');
 
@@ -29,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://localhost/test');
 
 setInterval(updateGames, 600000);
+setInterval(checkResults, 6000);
 
 app.use('/api', index);
 app.use('/submit', submit);

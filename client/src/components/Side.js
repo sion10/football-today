@@ -20,9 +20,10 @@ const Side = (props) => {
                     title={<span>Tip Slip</span>}
                     iconElementLeft={<span></span>}
                     iconElementRight={<FlatButton label="Clear" />}
+                    onRightIconButtonTouchTap={props.handleClear}
                 />
                 {tips}
-                <RaisedButton onClick={props.handleOnClick} label="Submit Tip" primary={true} />
+                <RaisedButton onClick={props.handleSubmit} label="Submit Tip" primary={true} />
             </List>
 
         </div>
