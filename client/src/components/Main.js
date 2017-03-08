@@ -48,10 +48,10 @@ class Main extends Component {
           <p>{item.gameName}</p>
           <p>{item.eventStart}</p>
           <p>{item.categoryName}</p>
-          <p>{item.markets['0']['0'].n} : <TipButton item={item} tip={item.markets['0']['1']} addTip={this.props.addTip} /></p> 
-          <p>{item.markets['0']['1'].n} : <TipButton item={item} tip={item.markets['0']['1']} addTip={this.props.addTip} /></p> 
-          <p>{item.markets['0']['2'].n} : <TipButton item={item} tip={item.markets['0']['2']} addTip={this.props.addTip} /></p> 
-
+          <p>{item.markets['0'].type}</p>
+          <p>{item.markets['0'].options['0'].name} : <TipButton item={item} tip={item.markets['0'].options['0']} addTip={this.props.addTip} /></p> 
+          <p>{item.markets['0'].options['1'].name} : <TipButton item={item} tip={item.markets['0'].options['1']} addTip={this.props.addTip} /></p> 
+          <p>{item.markets['0'].options['2'].name} : <TipButton item={item} tip={item.markets['0'].options['2']} addTip={this.props.addTip} /></p> 
         </div>
       )
     })

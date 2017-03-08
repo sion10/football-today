@@ -39,10 +39,11 @@ class Feed extends Component {
     render() {
 
         const predicts = this.state.predictions.map((item) => {
+            console.log(item)
             const tips = item.tips.map((tip) => {
                 return (
                     <div key={tip._id}>
-                    <p>{tip.eventName} : {tip.betId} </p>
+                    <p>{tip.eventName} : {tip.betName} </p>
                     </div>
                 )
             })

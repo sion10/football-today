@@ -11,7 +11,7 @@ class TipButton extends Component {
     
     render() {
         return (
-            <span onClick={this.handleOnClick.bind(this)}>{this.props.tip.v}</span>
+            <span onClick={this.handleOnClick.bind(this)}>{this.props.tip.value}</span>
         )
     }
 

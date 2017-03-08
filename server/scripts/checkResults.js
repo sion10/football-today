@@ -1,11 +1,12 @@
 const uri = 'https://bookmakersapi.adjarabet.com/sportsbook/rest/public/results?ln=en'
 let request = require('request')
 let moment = require('moment')
-let obj = {}
+let Prediction = require('../models/prediction');
+let betType = require('../scripts/betTypes')
 
 function checkResults() {
     console.log('started checking results')
-    let requestPromise = new Promise((resolve) => {
+    let getResults = new Promise((resolve) => {
         request.post({
             uri: uri,
             json: {
@@ -17,15 +18,67 @@ function checkResults() {
                 console.log(err)
             }
             else {
-                resolve(body)
+                let tipResults = body[0].c.forEach((item) => {
+                    if (item.id === 331) {
+                        item.l.forEach((league) => {
+                            if (league.id === 2615) {
+                                return league.m
+                            }
+                        })
+                    }
+                })
+                resolve(tipResults)
             }
         })
     })  // Promise ends here
-    
-    // TODO check all predictions with open status 
-    //(? add should end prop to the prediction = the greatest
-    // eventStart time of predicts>tips + 3h)
-    // Open Status && shoulEnd < time now
+
+    //Checking Predicts for update of status
+    let pendingPredicts = Prediction.find({ status: 'pending' }, (err, predicts) => {
+        predicts.map((predict) => {
+            predict.populate('tips', (err, item) => {
+                let status
+                item.tips.forEach((tip) => {
+                    if (tip.status === 'lost') {
+                        status = 'lost'
+                        return
+                    }
+                    else if (tip.status === 'open') {
+                        return
+                    }
+                    else {
+                        status = 'won'
+                    }
+                }) // end tips forEach
+                predict.status = status
+                resolve()
+            })  // end populate callBack
+        })// end predicts map
+    })
+
+    //Check individual tips Statuses
+    getResults.then((results) => {
+        let openTips = Tip.find({ status: 'open' }, (err, tips) => {
+            tips.map((tip) => {
+                if (moment() > (moment(tip.eventStart).add(3, 'h'))) {
+                    // check outcome of the event
+                    results.forEach((result) => {
+                        if (result.id === tip.eventId) {
+                            result.t[betType[tip.betType]].forEach((option)=> {
+                                if (option.n === tip.betName){
+                                    if(option.w === true){
+                                        tip.status = 'won'
+                                    }
+                                    else{
+                                        tip.status = 'lost'
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        })
+    })
 }
 
 module.exports = checkResults

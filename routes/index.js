@@ -22,11 +22,19 @@ router.get('/', function (req, res, next) {
 
 router.get('/predictions', (req, res, next) => {
   Prediction.find((err, predictions) => {
-    
-    res.send(predictions)
-    
+    let results = []
+    let proms = predictions.map((item) => {
+      return new Promise((resolve) => {
+        item.populate('tips', (err, populated)=>{
+          results.push(populated)
+          resolve()
+        })
+      })
+    })//map ends here
+    Promise.all(proms).then(() => {
+        res.send(results)
+    })
   })
-  
 })
 
 module.exports = router;

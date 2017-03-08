@@ -9,7 +9,7 @@ const Side = (props) => {
         return (
             <ListItem key={i}
                 primaryText={item.eventName}
-                secondaryText={<p>{item.betId}</p>}
+                secondaryText={<p>{item.betValue}</p>}
             />
         )
     })

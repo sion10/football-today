@@ -37,7 +37,9 @@ class App extends Component {
       eventName: item.game.gameName,
       categoryName: item.game.categoryName,
       eventStart: item.game.eventStart,
-      betId: item.tip.v
+      betName: item.tip.name,
+      betValue: item.tip.value,
+      betType: '3way'
     }
     arr.push(obj)
     this.setState({

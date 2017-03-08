@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://localhost/test');
 
 setInterval(updateGames, 600000);
-setInterval(checkResults, 6000);
+setInterval(checkResults, (60000*60*2));
 
 app.use('/api', index);
 app.use('/submit', submit);
