@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var updateGames = require('./server/scripts/updateGames');
-var checkResults = require('./server/scripts/checkResults.1');
+var checkResults = require('./server/scripts/checkResults');
 var index = require('./routes/index');
 var submit = require('./routes/submit');
 
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://localhost/test');
 
 setInterval(updateGames, 600000);
-setInterval(checkResults, 6000);//(60000*60*2));
+//setInterval(checkResults, (60000*60*2));
 
 app.use('/api', index);
 app.use('/submit', submit);

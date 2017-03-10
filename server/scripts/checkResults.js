@@ -50,7 +50,7 @@ function checkResults() {
                     }
                 }) // end tips forEach
                 predict.status = status
-                resolve()
+                predict.save()
             })  // end populate callBack
         })// end predicts map
     })
@@ -67,9 +67,11 @@ function checkResults() {
                                 if (option.n === tip.betName){
                                     if(option.w === true){
                                         tip.status = 'won'
+                                        tip.save()
                                     }
                                     else{
                                         tip.status = 'lost'
+                                        tip.save()
                                     }
                                 }
                             })

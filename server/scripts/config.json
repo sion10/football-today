@@ -1,0 +1,6 @@
+{
+  "jwtSecret": "openAccessPredictxApplicationFBAuth",
+  "clientID": "1859717754244533",
+  "clientSecret": "f0c09134d5daa5def3033dc15d307729",
+  "callbackURL": "https: //poly-datom.c9users.io/auth/facebook/callback"
+}
