@@ -54,13 +54,11 @@ module.exports = new PassportLocalStrategy({
                         var payload = {
                             sub: profile.id
                         }
-                        var data = {
-                            name: (profile.name.givenName + ' ' + profile.name.familyName)
-                        }
+                        
                         var token = jwt.sign(payload, config.jwtSecret);
 
                         // if successful, return the new user
-                        return done(null, newUser);
+                        return done(null, token);
                     });
                 }
 
