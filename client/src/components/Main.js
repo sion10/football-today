@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TipButton from './TipButton.js'
+import Auth from '../routes/auth'
 
 class Main extends Component {
   constructor() {
@@ -17,7 +18,12 @@ class Main extends Component {
   gamesList() {
     var self = this;
     return fetch('/api', {
-      accept: 'application/json',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
     }).then(checkStatus)
       .then(parseJSON)
       .then(function (data) {

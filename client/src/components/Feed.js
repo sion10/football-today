@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Auth from '../routes/auth'
 
 
 class Feed extends Component {
@@ -15,7 +16,12 @@ class Feed extends Component {
     predictionsList() {
         var self = this;
         return fetch('/api/predictions', {
-            accept: 'application/json',
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${Auth.getToken()}`
+            }
         }).then(checkStatus)
             .then(parseJSON)
             .then(function (data) {
@@ -39,17 +45,16 @@ class Feed extends Component {
     render() {
 
         const predicts = this.state.predictions.map((item) => {
-            console.log(item)
             const tips = item.tips.map((tip) => {
                 return (
                     <div key={tip._id}>
-                    <p>{tip.eventName} : {tip.betName} </p>
+                        <p>{tip.eventName} : {tip.betName} </p>
                     </div>
                 )
             })
             return (
                 <div key={item._id}>
-                    <hr/>
+                    <hr />
                     <p>{item.date}</p>
                     <p>{item.status}</p>
                     <p>tips:</p>
