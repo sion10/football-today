@@ -19,7 +19,7 @@ const routes = {
             }
         },
         {
-            path: '/main',
+            path: '/games',
             component: Main
         },
         {

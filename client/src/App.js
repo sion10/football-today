@@ -59,7 +59,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <Nav />
-          <div className="container">
+          <div className="container" style={{paddingTop: "70px"}}>
             <div className="row">
               {children}
               <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} />
