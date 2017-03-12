@@ -1,14 +1,13 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import AppBarChild from './AppBarChild'
 
-const Nav = () => (
+const Nav = (props) => (
+ 
   <AppBar style={{ position: 'fixed' }}
-    title={<AppBarChild />}
+    title={ <div className={"container"}><AppBarChild path={props.path} user={props.user}/></div>}
     showMenuIconButton={false}
   />
-   
 );
 
 export default Nav

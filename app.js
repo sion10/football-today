@@ -44,6 +44,7 @@ setInterval(updateGames, 600000);
 app.use('/api', authCheck);
 app.use('/submit', authCheck);
 
+
 app.use('/api', index);
 app.use('/submit', submit);
 app.use('/login', login);

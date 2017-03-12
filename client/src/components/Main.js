@@ -3,8 +3,8 @@ import TipButton from './TipButton.js'
 import Auth from '../routes/auth'
 
 class Main extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       games: []
@@ -47,6 +47,7 @@ class Main extends Component {
     }
   }
   render() {
+    const avatarSrc = this.props.picture
     const matches = this.state.games.map((item, i) => {
       return (
         <div key={item._id}>

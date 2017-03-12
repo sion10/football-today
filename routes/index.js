@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Game = require('../server/models/game');
+var User = require('../server/models/user');
 var Prediction = require('../server/models/prediction');
 var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -20,19 +21,25 @@ router.get('/', function (req, res, next) {
   });
 })
 
+router.get('/user', function (req, res, next) {
+   User.findOne({fbId: req.userId}, (err, user)=>{
+     res.json(user)
+   })
+})
+
 router.get('/predictions', (req, res, next) => {
   Prediction.find((err, predictions) => {
     let results = []
     let proms = predictions.map((item) => {
       return new Promise((resolve) => {
-        item.populate('tips', (err, populated)=>{
+        item.populate('tips', (err, populated) => {
           results.push(populated)
           resolve()
         })
       })
     })//map ends here
     Promise.all(proms).then(() => {
-        res.send(results)
+      res.send(results)
     })
   })
 })
