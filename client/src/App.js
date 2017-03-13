@@ -24,13 +24,14 @@ class App extends Component {
     this.setState(state)
   }
   handleSubmit() {
-    fetch('http://localhost:3000/submit', {
-      method: 'post',
+    fetch('/submit', {
+      method: 'POST',
       body: JSON.stringify(this.state.tips),
-      headers: new Headers({
+      headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
-      })
+        'Accept': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
     });
   }
   addTip(item) {
@@ -40,9 +41,9 @@ class App extends Component {
       eventName: item.game.gameName,
       categoryName: item.game.categoryName,
       eventStart: item.game.eventStart,
-      betName: item.tip.name,
-      betValue: item.tip.value,
-      betType: '3way'
+      betName: item.tip.n,
+      betValue: item.tip.v,
+      betType: item.tipType
     }
     arr.push(obj)
     let state = this.state
@@ -64,7 +65,6 @@ class App extends Component {
         }).then(checkStatus)
             .then(parseJSON)
             .then(function (data) {
-                console.log(data);
                 let state = self.state
                 state.user = data
                 self.setState(state);

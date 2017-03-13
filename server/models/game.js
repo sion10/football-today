@@ -13,8 +13,8 @@ var gameSchema = new Schema({
     type: { type: String },
     options: [{
       id: { type: Number },
-      name: { type: String },
-      value: { type: Number }
+      n: { type: String },
+      v: { type: Number }
     }],
     conflict: {type: Number}
   }],

@@ -27,8 +27,9 @@ class Main extends Component {
     }).then(checkStatus)
       .then(parseJSON)
       .then(function (data) {
-        //console.log(data);
-        self.setState({ games: data });
+        console.log(self.state)
+        console.log(data);
+        self.setState({ games: data })
       });
 
 
@@ -47,27 +48,43 @@ class Main extends Component {
     }
   }
   render() {
-    const avatarSrc = this.props.picture
     const matches = this.state.games.map((item, i) => {
+      let threeWay, BTS
+      if (item.markets['0'].options['0']) {
+        threeWay = item.markets['0'].options.map((option, x) => {
+          return (
+              <p>{item.markets['0'].options[x].n} : <TipButton item={item} tip={item.markets['0'].options[x]} addTip={this.props.addTip} tipType={item.markets['0'].type} /></p>
+          )
+        })
+      }
+      if (item.markets['1'].options['0']) {
+        BTS = item.markets['1'].options.map((option,x) => {
+          return (
+            <div>
+              <p>{item.markets['1'].options[x].n} : <TipButton item={item} tip={item.markets['1'].options[x]} addTip={this.props.addTip} tipType={item.markets['1'].type} /></p>
+            </div>
+          )
+        })
+      }
       return (
         <div key={item._id}>
-          <hr/>
+          <hr />
           <p>{item.gameName}</p>
           <p>{item.eventStart}</p>
           <p>{item.categoryName}</p>
           <p>{item.markets['0'].type}</p>
-          <p>{item.markets['0'].options['0'].name} : <TipButton item={item} tip={item.markets['0'].options['0']} addTip={this.props.addTip} /></p> 
-          <p>{item.markets['0'].options['1'].name} : <TipButton item={item} tip={item.markets['0'].options['1']} addTip={this.props.addTip} /></p> 
-          <p>{item.markets['0'].options['2'].name} : <TipButton item={item} tip={item.markets['0'].options['2']} addTip={this.props.addTip} /></p> 
+          {threeWay}
+          <p>{item.markets['1'].type}</p>
+          {BTS}
         </div>
       )
     })
     return (
-   
-        <div className="col-sm-9"> 
-          {matches} 
-        </div>
-  
+
+      <div className="col-sm-9">
+        {matches}
+      </div>
+
     );
   }
 }

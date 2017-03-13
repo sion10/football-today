@@ -6,12 +6,13 @@ class TipButton extends Component {
         let obj = {}
         obj.game = this.props.item
         obj.tip = this.props.tip
+        obj.tipType = this.props.tipType
         this.props.addTip(obj);
     }
     
     render() {
         return (
-            <span onClick={this.handleOnClick.bind(this)}>{this.props.tip.value}</span>
+            <span onClick={this.handleOnClick.bind(this)}>{this.props.tip.v}</span>
         )
     }
 
