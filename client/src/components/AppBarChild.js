@@ -14,7 +14,6 @@ class Nav extends Component {
         }
         this.handleOnClick = this.handleOnClick.bind(this)
         this.handleOnTouch = this.handleOnTouch.bind(this)
-        this.handleLogIn = this.handleLogIn.bind(this)
     }
     handleOnClick(e) {
         this.setState({ active: '/' + e.props.label })
@@ -27,15 +26,7 @@ class Nav extends Component {
     handleTouchTap() {
         browserHistory.push('/dashboard');
     }
-    handleLogIn() {
-        fetch('/login', {
-            method: 'get',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            })
-        });
-    }
+
 
     render() {
         return (
@@ -53,7 +44,7 @@ class Nav extends Component {
                         <Avatar src={this.props.user.picture} size={30} />
                         {this.props.user.name}
                     </Chip> : null}
-                    {this.props.user.name ? <FlatButton label="Log Out" onTouchTap={this.props.logOut} /> : <FlatButton label="Log In" onTouchTap={this.handleLogIn}/>}
+                    {this.props.user.name ? <FlatButton labelStyle={{color:'#ffffff'}} label="Log Out" onTouchTap={this.props.logOut} /> : <FlatButton href={'/login'} label="Log In" onTouchTap={this.handleLogIn}/>}
                 </ToolbarGroup>
             </Toolbar>
         )

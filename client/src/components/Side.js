@@ -14,17 +14,17 @@ const Side = (props) => {
     const styleDef = {
         display: 'inline-block',
         minHeight: 300,
-        width: 210,
+        flex: 1,
         marginTop: 10,
-        marginBottom: 8 ,
+        marginBottom: 8,
     };
     const style = {
         display: 'flex',
         justifyContent: 'center',
         minHeight: 300,
-        width: 210,
+        flex: 1,
         marginTop: 10,
-        marginBottom: 8 ,
+        marginBottom: 8,
     };
     const inner = {
         alignSelf: 'center',
@@ -42,20 +42,19 @@ const Side = (props) => {
     })
     return (
         <div className="col-sm-3">
-            <List>
+            <List style={{padding: 0 }}>
                 <AppBar
                     style={{ zIndex: '1' }}
                     title={<span>Tip Slip</span>}
                     iconElementLeft={<span></span>}
                     iconElementRight={<FlatButton label="Clear" />}
                     onRightIconButtonTouchTap={props.handleClear}
+                    zDepth={2}
                 />
-                {tips[0] ? <Paper style={styleDef} zDepth={2}> {tips} </Paper> : <Paper style={style} zDepth={2}> <div style={inner}><Subheader style={{fontSize:18, padding: 0}}>Your Tip Slip Is Empty</Subheader><p style={{fontStyle:'italic', fontSize:12, lineHeight:0.2, color: '#b4b6ba'}}><br/>make predictions to submit a tip</p></div> </Paper>}
+                {tips[0] ? <Paper style={styleDef} zDepth={2}> {tips} </Paper> : <Paper style={style} zDepth={2}> <div style={inner}><Subheader style={{ fontSize: 18, padding: 0 }}>Your Tip Slip Is Empty</Subheader><p style={{ fontStyle: 'italic', fontSize: 12, lineHeight: 0.2, color: '#b4b6ba' }}><br />make predictions to submit a tip</p></div> </Paper>}
                 {location.pathname !== '/games' ?
-                    <RaisedButton onTouchTap={handleMakePred} label="Make Predictions" primary={true} /> :
-                    <RaisedButton onTouchTap={props.handleSubmit} label="Submit Tip" primary={true} disabled={tips[0] ? false : true} />}
-
-                <p>{location.pathname}</p>
+                    <RaisedButton zDepth={2} onTouchTap={handleMakePred} label="Make Predictions" primary={true} /> :
+                    <RaisedButton zDepth={2} onTouchTap={props.handleSubmit} label="Submit Tip" primary={true} disabled={tips[0] ? false : true} />}
             </List>
 
         </div>
