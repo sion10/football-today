@@ -5,7 +5,7 @@ import AppBarChild from './AppBarChild'
 const Nav = (props) => (
  
   <AppBar style={{ position: 'fixed' }}
-    title={ <div className={"container"}><AppBarChild path={props.path} user={props.user}/></div>}
+    title={ <div className={"container"}><AppBarChild path={props.path} user={props.user} logOut={props.logOut}/></div>}
     showMenuIconButton={false}
   />
 );

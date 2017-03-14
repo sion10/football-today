@@ -3,7 +3,9 @@ import Nav from './components/Nav.js'
 import Side from './components/Side.js'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Auth from './routes/auth'
+import { browserHistory } from 'react-router';
 import './App.css';
+
 
 class App extends Component {
   constructor() {
@@ -11,12 +13,13 @@ class App extends Component {
 
     this.state = {
       tips: [],
-      user:{}
+      user: {}
     }
     this.addTip = this.addTip.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.getUser = this.getUser.bind(this)
+    this.handleLogOut = this.handleLogOut.bind(this)
   }
   handleClear() {
     let state = this.state
@@ -55,36 +58,48 @@ class App extends Component {
   }
   getUser() {
     let self = this
-        return fetch('api/user', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `bearer ${Auth.getToken()}`
-            }
-        }).then(checkStatus)
-            .then(parseJSON)
-            .then(function (data) {
-                let state = self.state
-                state.user = data
-                self.setState(state);
-            });
+    return fetch('api/user', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    }).then(checkStatus.bind(self))
+      .then(parseJSON)
+      .then(function (data) {
+        let state = self.state
+        state.user = data
+        self.setState(state);
+      });
 
 
-        function checkStatus(response) {
-            if (response.status >= 200 && response.status < 300) {
-                return response;
-            }
-            const error = new Error(`HTTP Error ${response.statusText}`);
-            error.status = response.statusText;
-            error.response = response;
-            console.log(error); // eslint-disable-line no-console
-            throw error;
-        }
-        function parseJSON(response) {
-            return response.json();
-        }
+    function checkStatus(response) {
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      }
+      const error = new Error(`HTTP Error ${response.statusText}`);
+      error.status = response.statusText;
+      error.response = response;
+      let self = this
+      let state = self.state
+      state.user = {}
+      self.setState(state)
+       Auth.deauthenticateUser()
+      console.log(error); // eslint-disable-line no-console
+      throw error;
     }
+    function parseJSON(response) {
+      return response.json();
+    }
+  }
+  handleLogOut(){
+    Auth.deauthenticateUser()
+    browserHistory.push('/');
+    let state = this.state
+    state.user = {}
+    this.setState(state)
+  }
 
   render() {
     let children = React.Children.map(this.props.children, (child) => {
@@ -98,7 +113,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Nav path={this.props.location.pathname} user={this.state.user}/>
+          <Nav path={this.props.location.pathname} user={this.state.user} logOut={this.handleLogOut} />
           <div className="container" style={{ paddingTop: "70px" }}>
             <div className="row">
               {children}
