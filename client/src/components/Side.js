@@ -53,8 +53,8 @@ const Side = (props) => {
                 />
                 {tips[0] ? <Paper style={styleDef} zDepth={2}> {tips} </Paper> : <Paper style={style} zDepth={2}> <div style={inner}><Subheader style={{ fontSize: 18, padding: 0 }}>Your Tip Slip Is Empty</Subheader><p style={{ fontStyle: 'italic', fontSize: 12, lineHeight: 0.2, color: '#b4b6ba' }}><br />make predictions to submit a tip</p></div> </Paper>}
                 {location.pathname !== '/games' ?
-                    <RaisedButton zDepth={2} onTouchTap={handleMakePred} label="Make Predictions" primary={true} /> :
-                    <RaisedButton zDepth={2} onTouchTap={props.handleSubmit} label="Submit Tip" primary={true} disabled={tips[0] ? false : true} />}
+                    <RaisedButton  onTouchTap={handleMakePred} label="Make Predictions" primary={true} /> :
+                    <RaisedButton  onTouchTap={props.handleSubmit} label="Submit Tip" primary={true} disabled={tips[0] ? false : true} />}
             </List>
 
         </div>

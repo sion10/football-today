@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FlatButton from 'material-ui/FlatButton';
 
 class TipButton extends Component {
     
@@ -12,7 +13,7 @@ class TipButton extends Component {
     
     render() {
         return (
-            <span onClick={this.handleOnClick.bind(this)}>{this.props.tip.v}</span>
+            <FlatButton labelStyle={{paddingRight:3, paddingLeft:3}} style={{padding:0, minWidth:10}} label={parseFloat(this.props.tip.v).toFixed(2)} onTouchTap={this.handleOnClick.bind(this)}></FlatButton>
         )
     }
 

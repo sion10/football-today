@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TipButton from './TipButton.js'
 import Auth from '../routes/auth'
+import moment from 'moment'
 
 class Main extends Component {
   constructor(props) {
@@ -47,40 +48,90 @@ class Main extends Component {
   }
   render() {
     const matches = this.state.games.map((item, i) => {
-      let threeWay, BTS
+      let threeWay, BTS, total, double
       if (item.markets['0'].options['0']) {
         threeWay = item.markets['0'].options.map((option, x) => {
           return (
-              <p key={'b' + x}>{item.markets['0'].options[x].n} : <TipButton item={item} tip={item.markets['0'].options[x]} addTip={this.props.addTip} tipType={item.markets['0'].type} /></p>
+            <td key={'b' + (i + x)}> <TipButton item={item} tip={item.markets['0'].options[x]} addTip={this.props.addTip} tipType={item.markets['0'].type} /></td>
           )
         })
+      }
+      else {
+        threeWay = ['1', 'X', '2'].map((a, x) => <td></td>)
       }
       if (item.markets['1'].options['0']) {
-        BTS = item.markets['1'].options.map((option,x) => {
+        BTS = item.markets['1'].options.map((option, x) => {
           return (
-              <p key={'a'+ x}>{item.markets['1'].options[x].n} : <TipButton item={item} tip={item.markets['1'].options[x]} addTip={this.props.addTip} tipType={item.markets['1'].type} /></p>
+            <td key={'a' + i + x}><TipButton item={item} tip={item.markets['1'].options[x]} addTip={this.props.addTip} tipType={item.markets['1'].type} /></td>
           )
         })
       }
+      else {
+        BTS = ['Yes', 'No'].map((a, x) => {
+          return (
+            <td> </td>
+          )
+        })
+      }
+      if (item.markets['2'].options['0']) {
+        total = item.markets['2'].options.map((option, x) => {
+          return (
+            <td key={'c' + i + x}><TipButton item={item} tip={item.markets['2'].options[x]} addTip={this.props.addTip} tipType={item.markets['2'].type} /></td>
+          )
+        })
+      }
+      else {
+        total = ['Over', 'Under'].map((a, x) => {
+          return (
+            <td> </td>
+          )
+        })
+      }
+      if (item.markets['3'].options['0']) {
+        double = item.markets['3'].options.map((option, x) => {
+          return (
+            <td key={'d' + i + x}><TipButton item={item} tip={item.markets['3'].options[x]} addTip={this.props.addTip} tipType={item.markets['3'].type} /></td>
+          )
+        })
+      }
+      else {
+        double = ['1X', '12', 'X2'].map(() => <td></td>)
+      }
       return (
-        <div key={item._id}>
-          <hr />
-          <p>{item.gameName}</p>
-          <p>{item.eventStart}</p>
-          <p>{item.categoryName}</p>
-          <p>{item.markets['0'].type}</p>
+        <tr key={item._id}>
+          <td scope="row">{moment(item.eventStart).format('DD/MM/YY [at] H:MM')}</td>
+          <td>{item.gameName.toLowerCase()}</td>
           {threeWay}
-          <p>{item.markets['1'].type}</p>
+          {double}
+          {total}
           {BTS}
-        </div>
+        </tr>
       )
     })
     return (
-
       <div className="col-sm-9">
-        {matches}
+        <table className="table table-sm table-condensed table-striped" style={{ fontSize: 12 }}>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Sides</th>
+              <th>1</th>
+              <th>X</th>
+              <th>2</th>
+              <th>1X</th>
+              <th>12</th>
+              <th>X2</th>
+              <th>Under</th>
+              <th>Over</th>
+              <th>Yes</th>
+              <th>No</th>
+            </tr>
+          </thead>
+          <tbody>
+            {matches}
+          </tbody>
+        </table>
       </div>
-
     );
   }
 }
