@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node ./bin/www",
     "server": "./node_modules/.bin/babel-node ./bin/www",
     "client": "./node_modules/.bin/babel-node start-client.js"
   },

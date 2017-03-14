@@ -2,5 +2,5 @@
   "jwtSecret": "openAccessPredictxApplicationFBAuth",
   "clientID": "1404688249605121",
   "clientSecret": "997fd000fbd41eabe1b8a25816feb073",
-  "callbackURL": "http://localhost:3001/login/facebook/callback"
+  "callbackURL": "https://beta.football-today.com/login/facebook/callback"
 }
