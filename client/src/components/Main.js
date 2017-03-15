@@ -83,7 +83,7 @@ class Main extends Component {
       else {
         total = ['Over', 'Under'].map((a, x) => {
           return (
-            <td> </td>
+            <td key={'ca' + i + x}> </td>
           )
         })
       }
@@ -110,7 +110,7 @@ class Main extends Component {
     })
     return (
       <div className="col-sm-9">
-        <table className="table table-sm table-condensed table-striped" style={{ fontSize: 12 }}>
+        <table className="table table-sm table-condensed table-striped table-responsive" style={{ fontSize: 12 }}>
           <thead>
             <tr>
               <th>Date</th>

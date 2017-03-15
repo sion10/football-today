@@ -35,6 +35,10 @@ class App extends Component {
         'Accept': 'application/json',
         'Authorization': `bearer ${Auth.getToken()}`
       }
+    }).then((response) => {
+      if(response.status == 200){
+        this.handleClear()
+      }
     });
   }
   addTip(item) {
@@ -106,7 +110,7 @@ class App extends Component {
       return (
         React.cloneElement(child, {
           addTip: this.addTip,
-          user: this.user
+          user: this.state.user
         })
       )
     })

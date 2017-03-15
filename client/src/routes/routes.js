@@ -3,6 +3,7 @@ import Feed from '../components/Feed'
 import Main from '../components/Main'
 import Auth from './auth'
 import Login from '../components/Login'
+import Dashboard from '../components/Dashboard'
 
 const routes = {
     component: App,
@@ -21,6 +22,10 @@ const routes = {
         {
             path: '/games',
             component: Main
+        },
+        {
+            path: '/dashboard',
+            component: Dashboard
         }
     ]
 };

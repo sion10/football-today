@@ -44,7 +44,7 @@ class Nav extends Component {
                         <Avatar src={this.props.user.picture} size={30} />
                         {this.props.user.name}
                     </Chip> : null}
-                    {this.props.user.name ? <FlatButton labelStyle={{color:'#ffffff'}} label="Log Out" onTouchTap={this.props.logOut} /> : <FlatButton href={'/login'} label="Log In" onTouchTap={this.handleLogIn}/>}
+                    {this.props.user.name ? <FlatButton labelStyle={{color:'#ffffff'}} label="Log Out" onTouchTap={this.props.logOut} /> : <FlatButton labelStyle={{color:'#ffffff'}} href={'/login'} label="Log In" onTouchTap={this.handleLogIn}/>}
                 </ToolbarGroup>
             </Toolbar>
         )

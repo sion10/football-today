@@ -22,26 +22,40 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/user', function (req, res, next) {
-   User.findOne({fbId: req.userId}, (err, user)=>{
-     res.json(user)
-   })
+  User.findOne({ fbId: req.userId }, (err, user) => {
+    res.json(user)
+  })
 })
 
-router.get('/predictions', (req, res, next) => {
-  Prediction.find((err, predictions) => {
-    let results = []
-    let proms = predictions.map((item) => {
-      return new Promise((resolve) => {
-        item.populate('tips', (err, populated) => {
-          results.push(populated)
-          resolve()
+router.post('/predictions', (req, res, next) => {
+  console.log(req.body)
+  let page = req.body.page
+  Prediction.find()
+    .limit(10)
+    .skip(10 * page)
+    .sort({
+      date: 'desc'
+    }).exec((err, predictions) => {
+      Prediction.count((err, count) => {
+        let hasMore = (count - (page + 1) * 10) > 0
+        let results = []
+        let proms = predictions.map((item) => {
+          return new Promise((resolve) => {
+            item.populate('tips', (err, populated) => {
+              results.push(populated)
+              resolve()
+            })
+          })
+        })//map ends here
+        Promise.all(proms).then(() => {
+          res.json({
+            predictions: results,
+            hasMore: hasMore,
+            page: (req.body.page + 1)
+          })
         })
       })
-    })//map ends here
-    Promise.all(proms).then(() => {
-      res.send(results)
     })
-  })
 })
 
 module.exports = router;

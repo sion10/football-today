@@ -8,23 +8,16 @@ class Login extends Component {
         this.state = {
 
         }
-        this.handleLogin = this.handleLogin.bind(this)
-    }
-    handleLogin() {
-        fetch('/login', {
-            method: 'get',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                Accept: 'application/json'
-            })
-        });
+
     }
 
     render() {
         return (
-            <div className="col-sm-9">
-                <RaisedButton onClick={this.handleLogin} label="Login" primary={true} />
-                <a href='/login'>login</a>
+            <div className="col-sm-9 container">
+                <div class="jumbotron" >
+                    <h1 class="display-1" style={{marginTop:50}}>TWITTER FOR <br/>FOOTBALL  BETTING <br/>PREDICTIONS</h1>
+                    <RaisedButton href={'/login'} label="SignUp With Facebook" primary={true} />
+                </div>
             </div>
         )
     }

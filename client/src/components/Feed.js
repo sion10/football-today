@@ -1,31 +1,45 @@
 import React, { Component } from 'react';
 import Auth from '../routes/auth'
+import InfiniteScroll from 'react-infinite-scroller';
+import CircularProgress from 'material-ui/CircularProgress';
+import { Card, CardHeader } from 'material-ui/Card';
+import { List, ListItem } from 'material-ui/List';
+import moment from 'moment'
+import Masonry from 'react-masonry-component'
+import './Feed.css'
 
 
 class Feed extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            predictions: []
+            predictions: [],
+            hasMore: true,
+            page: 0
         }
-    }
-    componentDidMount() {
-        this.predictionsList();
+        this.width = document.querySelector('.grid-sizer')
+        this.predictionsList = this.predictionsList.bind(this)
     }
     predictionsList() {
-        var self = this;
+        let self = this;
         return fetch('/api/predictions', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': `bearer ${Auth.getToken()}`
-            }
+            },
+            body: JSON.stringify({ page: self.state.page })
         }).then(checkStatus)
             .then(parseJSON)
             .then(function (data) {
-                self.setState({ predictions: data });
+                let prds = self.state.predictions.concat(data.predictions)
+                self.setState({
+                    predictions: prds,
+                    hasMore: data.hasMore,
+                    page: data.page
+                });
             });
 
 
@@ -47,24 +61,45 @@ class Feed extends Component {
         const predicts = this.state.predictions.map((item) => {
             const tips = item.tips.map((tip) => {
                 return (
-                    <div key={tip._id}>
-                        <p>{tip.eventName} : {tip.betName} </p>
-                    </div>
+                    <ListItem key={tip._id}
+                        primaryText={tip.eventName}
+                        secondaryText={<p>{tip.betName}</p>}
+                        style={{ color: '#686868', fontSize: 12, overflow: 'hidden' }}
+                    />
                 )
             })
             return (
-                <div key={item._id}>
-                    <hr />
-                    <p>{item.date}</p>
-                    <p>{item.status}</p>
-                    <p>tips:</p>
-                    {tips}
+                <div className="grid-item">
+                    <Card key={item._id} style={{ marginBottom: 10 }}>
+                        <CardHeader
+                            title={`Status:  ${item.status}`}
+                            subtitle={moment(item.date).format('DD/MM/YY [at] HH:mm:ss')}
+                            avatar={this.props.user.picture}
+                            children={<List> {tips}</List>}
+                        />
+                    </Card>
                 </div>
             )
         })
         return (
             <div className="col-sm-9">
-                {predicts}
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={this.predictionsList}
+                    hasMore={this.state.hasMore}
+                    loader={<div className="loader"> <CircularProgress /></div>}
+                    useWindow={true}
+                >
+                    <Masonry className={'grid'}
+                        options={{
+                            itemSelector: '.grid-item',
+                            columnWidth: this.width,
+                            gutter: 5
+                        }}>
+                        <div className="grid-sizer col-xs-12 col-sm-4 col-md-3"></div>
+                        {predicts}
+                    </Masonry>
+                </InfiniteScroll>
             </div>
         );
     }
