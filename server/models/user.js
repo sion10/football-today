@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const 
+const Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
     fbId: {type: String, index: true},

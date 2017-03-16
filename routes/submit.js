@@ -10,9 +10,10 @@ router.post('/', function (req, res, next) {
   let newPredict = Prediction({
     date: Date.now(),
     tips: [],
+    user: req.body.user
   })
 
-  let proms = req.body.map((item) => {
+  let proms = req.body.tips.map((item) => {
     return new Promise((resolve) => {
       let newTip = Tip({
         eventId: item.eventId,

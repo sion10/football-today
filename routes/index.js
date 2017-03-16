@@ -28,7 +28,6 @@ router.get('/user', function (req, res, next) {
 })
 
 router.post('/predictions', (req, res, next) => {
-  console.log(req.body)
   let page = req.body.page
   Prediction.find()
     .limit(10)
@@ -41,7 +40,7 @@ router.post('/predictions', (req, res, next) => {
         let results = []
         let proms = predictions.map((item) => {
           return new Promise((resolve) => {
-            item.populate('tips', (err, populated) => {
+            item.populate('tips user', (err, populated) => {
               results.push(populated)
               resolve()
             })
@@ -59,4 +58,3 @@ router.post('/predictions', (req, res, next) => {
 })
 
 module.exports = router;
-

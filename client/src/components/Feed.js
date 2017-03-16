@@ -58,7 +58,7 @@ class Feed extends Component {
     }
     render() {
 
-        const predicts = this.state.predictions.map((item) => {
+        const predicts = this.state.predictions.map((item, num) => {
             const tips = item.tips.map((tip) => {
                 return (
                     <ListItem key={tip._id}
@@ -69,13 +69,14 @@ class Feed extends Component {
                 )
             })
             return (
-                <div className="grid-item">
-                    <Card key={item._id} style={{ marginBottom: 10 }}>
+                <div className="grid-item" key={'div' + item._id + num}>
+                    <Card style={{ marginBottom: 10 }}>
                         <CardHeader
                             title={`Status:  ${item.status}`}
-                            subtitle={moment(item.date).format('DD/MM/YY [at] HH:mm:ss')}
-                            avatar={this.props.user.picture}
+                            subtitle={'shared: ' + moment(item.date).fromNow()}
+                            avatar={item.user.picture}
                             children={<List> {tips}</List>}
+                            subtitleStyle={{fontSize:'0.76em'}}
                         />
                     </Card>
                 </div>

@@ -29,14 +29,17 @@ class App extends Component {
   handleSubmit() {
     fetch('/submit', {
       method: 'POST',
-      body: JSON.stringify(this.state.tips),
+      body: JSON.stringify({
+        tips: this.state.tips,
+        user: this.state.user
+      }),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': `bearer ${Auth.getToken()}`
       }
     }).then((response) => {
-      if(response.status == 200){
+      if(response.status === 200){
         this.handleClear()
       }
     });
