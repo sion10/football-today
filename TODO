@@ -5,3 +5,4 @@ ON GAMES PAGE
 From DB
 ## IMPLEMENT BLOCK OF CONFLICTING BETS COMBINATIONS
 ## CHECK EACH BET OPTION EXISTS ELSE SET TO 1 to avoid can't property x of undefined errors
+## Choose and ad server side rendering partial/full

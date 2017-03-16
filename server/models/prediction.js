@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var predictionSchema = new Schema({
   date: { type: Date },
   status: { type: String, default: "pending"},
-  tips: [{type: Schema.Types.ObjectId, ref: 'Tip'}]
+  tips: [{type: Schema.Types.ObjectId, ref: 'Tip'}],
+  user: {type: String, ref: 'User'}
 });
 
 // create a model

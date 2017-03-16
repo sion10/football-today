@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const 
 
 const UserSchema = new mongoose.Schema({
     fbId: {type: String, index: true},
@@ -7,7 +8,8 @@ const UserSchema = new mongoose.Schema({
     email: String,
     password: String,
     name: String,
-    picture: Object
+    picture: Object,
+    predictions: [{type: Schema.Types.ObjectId, ref: 'Tip'}]
 }); 
 
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {

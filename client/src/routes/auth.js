@@ -3,7 +3,8 @@ class Auth {
 
         if (document.cookie) {
             let token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-            if (token) {
+            document.cookie = 'token' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+            if (token && token !== '') {
                 localStorage.setItem('token', token);
             }
 

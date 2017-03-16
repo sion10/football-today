@@ -58,7 +58,7 @@ class App extends Component {
     this.setState(state)
   }
   componentDidMount() {
-    this.getUser();
+   Auth.isUserAuthenticated()?this.getUser():null
   }
   getUser() {
     let self = this
@@ -89,7 +89,7 @@ class App extends Component {
       let state = self.state
       state.user = {}
       self.setState(state)
-       Auth.deauthenticateUser()
+      Auth.deauthenticateUser()
       console.log(error); // eslint-disable-line no-console
       throw error;
     }
