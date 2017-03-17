@@ -6,6 +6,8 @@ import { Card, CardHeader } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
 import moment from 'moment'
 import Masonry from 'react-masonry-component'
+import Divider from 'material-ui/Divider';
+import ActionDone from 'material-ui/svg-icons/action/done';
 import './Feed.css'
 
 
@@ -61,11 +63,16 @@ class Feed extends Component {
         const predicts = this.state.predictions.map((item, num) => {
             const tips = item.tips.map((tip) => {
                 return (
-                    <ListItem key={tip._id}
-                        primaryText={tip.eventName}
-                        secondaryText={<p>{tip.betName}</p>}
-                        style={{ color: '#686868', fontSize: 12, overflow: 'hidden' }}
-                    />
+                    <div key={tip._id}>
+                        <ListItem
+                            leftIcon={<ActionDone style={{ margin: 0, marginTop: 12 }} viewBox={'0 0 50 25'} />}
+                            primaryText={tip.eventName}
+                            secondaryText={<p>{tip.betName}</p>}
+                            style={{ color: '#686868', fontSize: 12, overflow: 'hidden', paddingLeft: 30 }}
+                            disabled={true}
+                        />
+                        <Divider inset={true} style={{ marginLeft: 30 }} />
+                    </div>
                 )
             })
             return (
@@ -76,7 +83,7 @@ class Feed extends Component {
                             subtitle={'shared: ' + moment(item.date).fromNow()}
                             avatar={item.user.picture}
                             children={<List> {tips}</List>}
-                            subtitleStyle={{fontSize:'0.76em'}}
+                            subtitleStyle={{ fontSize: '0.76em' }}
                         />
                     </Card>
                 </div>

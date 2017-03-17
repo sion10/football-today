@@ -50,7 +50,7 @@ router.post('/predictions', (req, res, next) => {
           res.json({
             predictions: results,
             hasMore: hasMore,
-            page: (req.body.page + 1)
+            page: (page + 1)
           })
         })
       })
