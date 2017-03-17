@@ -3,6 +3,7 @@ let request = require('request')
 let moment = require('moment')
 let Prediction = require('../models/prediction');
 let betType = require('../scripts/betTypes')
+let Tip = require('../models/tip')
 
 function checkResults() {
     console.log('started checking results')
@@ -18,15 +19,16 @@ function checkResults() {
                 console.log(err)
             }
             else {
-                let tipResults = body[0].c.forEach((item) => {
-                    if (item.id === 331) {
-                        item.l.forEach((league) => {
-                            if (league.id === 2615) {
-                                return league.m
+                let tipResults
+                for (let i = 0; i < body[0].c.length; i++) {
+                    if (body[0].c[i].id === 304) {
+                        for (let x = 0; x < body[0].c[i].l.length; x++) {
+                            if (body[0].c[i].l[x].id === 2560) {
+                                tipResults = body[0].c[i].l[x].m
                             }
-                        })
+                        }
                     }
-                })
+                }
                 resolve(tipResults)
             }
         })
@@ -37,18 +39,18 @@ function checkResults() {
         predicts.map((predict) => {
             predict.populate('tips', (err, item) => {
                 let status
-                item.tips.forEach((tip) => {
-                    if (tip.status === 'lost') {
+                for (let i = 0; i < item.tips.length; i++) {
+                    if (item.tips[i].status === 'lost') {
                         status = 'lost'
                         return
                     }
-                    else if (tip.status === 'open') {
+                    else if (item.tips[i].status === 'open') {
                         return
                     }
                     else {
                         status = 'won'
                     }
-                }) // end tips forEach
+                } // end tips loop
                 predict.status = status
                 predict.save()
             })  // end populate callBack
@@ -61,22 +63,22 @@ function checkResults() {
             tips.map((tip) => {
                 if (moment() > (moment(tip.eventStart).add(3, 'h'))) {
                     // check outcome of the event
-                    results.forEach((result) => {
-                        if (result.id === tip.eventId) {
-                            result.t[betType[tip.betType]].forEach((option)=> {
-                                if (option.n === tip.betName){
-                                    if(option.w === true){
+                    for (let n = 0; n < results.length; n++) {
+                        if (results[n].id === tip.eventId) {
+                            for (let x = 0; x < results[n].t[betType[tip.betType]].length; x++) {
+                                if (option.n === tip.betName) {
+                                    if (results[n].t[betType[tip.betType]][x].w === true) {
                                         tip.status = 'won'
                                         tip.save()
                                     }
-                                    else{
+                                    else {
                                         tip.status = 'lost'
                                         tip.save()
                                     }
                                 }
-                            })
+                            }//bet types loop ends here
                         }
-                    })
+                    }//results loop ends here
                 }
             })
         })
