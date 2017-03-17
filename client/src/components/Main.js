@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TipButton from './TipButton.js'
 import Auth from '../routes/auth'
 import moment from 'moment'
+import './Main.css'
 
 class Main extends Component {
   constructor(props) {
@@ -110,7 +111,7 @@ class Main extends Component {
     })
     return (
       <div className="col-sm-9">
-        <table className="table table-sm table-condensed table-striped table-responsive" style={{ fontSize: 12 }}>
+        <table className="table table-sm table-condensed table-striped table-responsive table-bordered" style={{ fontSize: 12 }}>
           <thead>
             <tr>
               <th>Date</th>

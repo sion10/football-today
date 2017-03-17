@@ -7,7 +7,6 @@ import { List, ListItem } from 'material-ui/List';
 import moment from 'moment'
 import Masonry from 'react-masonry-component'
 import Divider from 'material-ui/Divider';
-import ActionDone from 'material-ui/svg-icons/action/done';
 import './Feed.css'
 
 
@@ -23,55 +22,64 @@ class Feed extends Component {
         this.width = document.querySelector('.grid-sizer')
         this.predictionsList = this.predictionsList.bind(this)
     }
-    predictionsList() {
-        let self = this;
-        return fetch('/api/predictions', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `bearer ${Auth.getToken()}`
-            },
-            body: JSON.stringify({ page: self.state.page })
-        }).then(checkStatus)
-            .then(parseJSON)
-            .then(function (data) {
-                let prds = self.state.predictions.concat(data.predictions)
-                self.setState({
-                    predictions: prds,
-                    hasMore: data.hasMore,
-                    page: data.page
-                });
-            });
-
-
-        function checkStatus(response) {
-            if (response.status >= 200 && response.status < 300) {
-                return response;
-            }
-            const error = new Error(`HTTP Error ${response.statusText}`);
-            error.status = response.statusText;
-            error.response = response;
-            throw error;
-        }
-        function parseJSON(response) {
-            return response.json();
-        }
+    componentDidMount() {
+        this.predictionsList()
     }
+    predictionsList(page) {
+        let self = this;
+        if (!self.state.hasMore) {
+            return false
+        }
+        else {
+            return fetch('/api/predictions', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `bearer ${Auth.getToken()}`
+                },
+                body: JSON.stringify({ page: this.state.page })
+            }).then(checkStatus)
+                .then(parseJSON)
+                .then(function (data) {
+                    let prds = self.state.predictions.concat(data.predictions)
+                    self.setState({
+                        predictions: prds,
+                        hasMore: data.hasMore,
+                        page: data.page
+                    });
+                });
+
+            function checkStatus(response) {
+                if (response.status >= 200 && response.status < 300) {
+                    return response;
+                }
+                const error = new Error(`HTTP Error ${response.statusText}`);
+                error.status = response.statusText;
+                error.response = response;
+                throw error;
+            }
+            function parseJSON(response) {
+                return response.json();
+            }
+        }
+
+    }
+
     render() {
 
         const predicts = this.state.predictions.map((item, num) => {
             const tips = item.tips.map((tip) => {
+                console.log(tip)
                 return (
                     <div key={tip._id}>
                         <ListItem
-                            leftIcon={<ActionDone style={{ margin: 0, marginTop: 12 }} viewBox={'0 0 50 25'} />}
                             primaryText={tip.eventName}
-                            secondaryText={<p>{tip.betName}</p>}
-                            style={{ color: '#686868', fontSize: 12, overflow: 'hidden', paddingLeft: 30 }}
+                            secondaryText={<p style={{ fontSize: '1em', fontStyle:'italic' }}>{tip.betType.toLowerCase()}:<span style={{float:'right'}}>{tip.betName}</span></p>}
+                            style={{ color: '#686868', paddingLeft:0, fontSize: 12, overflow: 'hidden'}}
                             disabled={true}
                         />
-                        <Divider inset={true} style={{ marginLeft: 30 }} />
+                        <Divider inset={false} />
                     </div>
                 )
             })
@@ -92,6 +100,7 @@ class Feed extends Component {
         return (
             <div className="col-sm-9">
                 <InfiniteScroll
+                    initialLoad={false}
                     pageStart={0}
                     loadMore={this.predictionsList}
                     hasMore={this.state.hasMore}
