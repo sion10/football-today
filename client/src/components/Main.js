@@ -53,7 +53,7 @@ class Main extends Component {
       if (item.markets['0'].options['0']) {
         threeWay = item.markets['0'].options.map((option, x) => {
           return (
-            <td key={'b' + (i + x)}> <TipButton item={item} tip={item.markets['0'].options[x]} addTip={this.props.addTip} tipType={item.markets['0'].type} /></td>
+            <td key={'b' + (i + x)}> <TipButton item={item} tip={item.markets['0'].options[x]} addTip={this.props.addTip} tipMarket={item.markets['0']} /></td>
           )
         })
       }
@@ -63,7 +63,7 @@ class Main extends Component {
       if (item.markets['1'].options['0']) {
         BTS = item.markets['1'].options.map((option, x) => {
           return (
-            <td key={'a' + i + x}><TipButton item={item} tip={item.markets['1'].options[x]} addTip={this.props.addTip} tipType={item.markets['1'].type} /></td>
+            <td key={'a' + i + x}><TipButton item={item} tip={item.markets['1'].options[x]} addTip={this.props.addTip} tipMarket={item.markets['1']} /></td>
           )
         })
       }
@@ -77,7 +77,7 @@ class Main extends Component {
       if (item.markets['2'].options['0']) {
         total = item.markets['2'].options.map((option, x) => {
           return (
-            <td key={'c' + i + x}><TipButton item={item} tip={item.markets['2'].options[x]} addTip={this.props.addTip} tipType={item.markets['2'].type} /></td>
+            <td key={'c' + i + x}><TipButton item={item} tip={item.markets['2'].options[x]} addTip={this.props.addTip} tipMarket={item.markets['2']} /></td>
           )
         })
       }
@@ -91,7 +91,7 @@ class Main extends Component {
       if (item.markets['3'].options['0']) {
         double = item.markets['3'].options.map((option, x) => {
           return (
-            <td key={'d' + i + x}><TipButton item={item} tip={item.markets['3'].options[x]} addTip={this.props.addTip} tipType={item.markets['3'].type} /></td>
+            <td key={'d' + i + x}><TipButton item={item} tip={item.markets['3'].options[x]} addTip={this.props.addTip} tipMarket={item.markets['3']} /></td>
           )
         })
       }

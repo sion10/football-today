@@ -4,6 +4,8 @@ import Side from './components/Side.js'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Auth from './routes/auth'
 import { browserHistory } from 'react-router';
+import Snackbar from 'material-ui/Snackbar';
+import moment from 'moment'
 import './App.css';
 
 
@@ -13,19 +15,35 @@ class App extends Component {
 
     this.state = {
       tips: [],
-      user: {}
+      user: {},
+      submitFeedback: {
+        open: false,
+        mssg: 'Your Tip Submitted Successfully'
+      }
     }
     this.addTip = this.addTip.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClear = this.handleClear.bind(this)
     this.getUser = this.getUser.bind(this)
     this.handleLogOut = this.handleLogOut.bind(this)
+    this.handleSubmitFeedbackClose = this.handleSubmitFeedbackClose.bind(this)
+    this.isValid = this.isValid.bind(this)
   }
   handleClear() {
     let state = this.state
     state.tips = []
     this.setState(state)
   }
+  isValid(match) {
+    for (let i = 0; i < this.state.tips.length; i++) {
+      if (this.state.tips[i].eventId === match.game.gameId && this.state.tips[i].betConflict === match.market.conflict) {
+        return `Tip can not be combined with other games`
+      }
+    }
+    return moment(match.game.eventStart).isAfter(moment())?true:'The game has already started'
+  }
+
+
   handleSubmit() {
     fetch('/submit', {
       method: 'POST',
@@ -39,12 +57,22 @@ class App extends Component {
         'Authorization': `bearer ${Auth.getToken()}`
       }
     }).then((response) => {
-      if(response.status === 200){
+      if (response.status === 200) {
         this.handleClear()
+        let state = this.state
+        state.submitFeedback.open = true
+        this.setState(state)
       }
     });
   }
   addTip(item) {
+    let state = this.state
+    if (typeof this.isValid(item) === 'string' ) {
+      state.submitFeedback.open = true
+      state.submitFeedback.mssg = this.isValid(item)
+      this.setState(state)
+      return
+    }
     let arr = this.state.tips.slice()
     let obj = {
       eventId: item.game.gameId,
@@ -53,15 +81,15 @@ class App extends Component {
       eventStart: item.game.eventStart,
       betName: item.tip.n,
       betValue: item.tip.v,
-      betType: item.tipType
+      betType: item.market.type,
+      betConflict: item.market.conflict
     }
     arr.push(obj)
-    let state = this.state
     state.tips = arr
     this.setState(state)
   }
   componentDidMount() {
-   Auth.isUserAuthenticated()?this.getUser():null
+    Auth.isUserAuthenticated() ? this.getUser() : null
   }
   getUser() {
     let self = this
@@ -100,11 +128,16 @@ class App extends Component {
       return response.json();
     }
   }
-  handleLogOut(){
+  handleLogOut() {
     Auth.deauthenticateUser()
     browserHistory.push('/');
     let state = this.state
     state.user = {}
+    this.setState(state)
+  }
+  handleSubmitFeedbackClose() {
+    let state = this.state
+    state.submitFeedback.open = false
     this.setState(state)
   }
 
@@ -125,6 +158,12 @@ class App extends Component {
             <div className="row">
               {children}
               <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} />
+              <Snackbar
+                open={this.state.submitFeedback.open}
+                message={this.state.submitFeedback.mssg}
+                autoHideDuration={4000}
+                onRequestClose={this.handleSubmitFeedbackClose}
+              />
             </div>
           </div>
         </div>

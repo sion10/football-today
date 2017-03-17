@@ -7,7 +7,7 @@ class TipButton extends Component {
         let obj = {}
         obj.game = this.props.item
         obj.tip = this.props.tip
-        obj.tipType = this.props.tipType
+        obj.market = this.props.tipMarket
         this.props.addTip(obj);
     }
     

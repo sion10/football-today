@@ -70,7 +70,6 @@ class Feed extends Component {
 
         const predicts = this.state.predictions.map((item, num) => {
             const tips = item.tips.map((tip) => {
-                console.log(tip)
                 return (
                     <div key={tip._id}>
                         <ListItem
