@@ -4,22 +4,25 @@ var Game = require('../server/models/game');
 var User = require('../server/models/user');
 var Prediction = require('../server/models/prediction');
 var ObjectId = require('mongoose').Types.ObjectId;
+var moment = require('moment')
 
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
-  Game.find(function (err, games) {
+  Game.find({ eventStart: { $gte: moment() } })
+    .sort({
+      eventStart: 1
+    }).exec((err, games) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else {
+        // send the list of all games
+        res.send(games);
+      }
+    })
+});
 
-    if (err) {
-      res.status(500).send(err);
-    }
-    else {
-
-      // send the list of all games
-      res.send(games);
-    }
-  });
-})
 
 router.get('/user', function (req, res, next) {
   User.findOne({ fbId: req.userId }, (err, user) => {

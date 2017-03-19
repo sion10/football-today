@@ -40,7 +40,7 @@ class App extends Component {
         return `Tip can not be combined with other games`
       }
     }
-    return moment(match.game.eventStart).isAfter(moment()) ? true : 'The game has already started'
+    return true //moment(match.game.eventStart).isAfter(moment()) ? true : 'The game has already started'
   }
 
 

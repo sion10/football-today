@@ -13,6 +13,3 @@ var predictionSchema = new Schema({
 var Prediction = mongoose.model('Prediction', predictionSchema);
 
 module.exports = Prediction;
-
-
-{}

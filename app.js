@@ -39,7 +39,7 @@ passport.use('facebook', facebookStrategy);
 var authCheck = require('./server/scripts/check');
 
 setInterval(updateGames, 600000);
-setInterval(checkResults,(60000*60*2));
+setInterval(checkResults, (60000*60*2));
 
 app.use('/api', authCheck);
 app.use('/submit', authCheck);
