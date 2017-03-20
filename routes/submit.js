@@ -6,7 +6,7 @@ var moment = require('moment');
 
 /* Submit  tip */
 router.post('/', function (req, res, next) {
-
+  let coef = 1
   let newPredict = Prediction({
     date: Date.now(),
     tips: [],
@@ -15,6 +15,7 @@ router.post('/', function (req, res, next) {
 
   let proms = req.body.tips.map((item) => {
     return new Promise((resolve) => {
+      coef *= item.betValue
       let newTip = Tip({
         eventId: item.eventId,
         eventName: item.eventName,
@@ -26,6 +27,7 @@ router.post('/', function (req, res, next) {
       })
       newTip.save((err) => {
         if (!err) {
+          newPredict.coef = coef
           newPredict.tips.push(newTip)
           resolve()
         }
@@ -34,6 +36,7 @@ router.post('/', function (req, res, next) {
   })
 
   Promise.all(proms).then(() => {
+
     newPredict.save((err) => {
       if (!err) res.status(200).send('success')
     })

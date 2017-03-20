@@ -6,7 +6,8 @@ var predictionSchema = new Schema({
   date: { type: Date },
   status: { type: String, default: "pending"},
   tips: [{type: Schema.Types.ObjectId, ref: 'Tip'}],
-  user: {type: String, ref: 'User'}
+  user: {type: String, ref: 'User'},
+  coef: {type: Number, default: 1}
 });
 
 // create a model

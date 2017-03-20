@@ -72,13 +72,13 @@ class Feed extends Component {
             const tips = item.tips.map((tip) => {
                 return (
                     <div key={tip._id}>
+                        <Divider inset={false} />
                         <ListItem
                             primaryText={tip.eventName}
-                            secondaryText={<p style={{ fontSize: '1em', fontStyle:'italic' }}>{tip.betType.toLowerCase()}:<span style={{float:'right'}}>{tip.betName}</span></p>}
-                            style={{ color: '#686868', paddingLeft:0, fontSize: 12, overflow: 'hidden'}}
+                            secondaryText={<p style={{ fontSize: '1em', fontStyle: 'italic' }}>{tip.betType.toLowerCase()}:<span style={{ float: 'right' }}>{tip.betName}</span></p>}
+                            style={{ color: '#686868', paddingLeft: 0, fontSize: 12, overflow: 'hidden' }}
                             disabled={true}
                         />
-                        <Divider inset={false} />
                     </div>
                 )
             })

@@ -28,10 +28,16 @@ class App extends Component {
     this.handleLogOut = this.handleLogOut.bind(this)
     this.handleSubmitFeedbackClose = this.handleSubmitFeedbackClose.bind(this)
     this.isValid = this.isValid.bind(this)
+    this.removeTip = this.removeTip.bind(this)
   }
   handleClear() {
     let state = this.state
     state.tips = []
+    this.setState(state)
+  }
+  removeTip(index){
+    let state = this.state
+    state.tips.splice(index, 1)
     this.setState(state)
   }
   isValid(match) {
@@ -40,7 +46,7 @@ class App extends Component {
         return `Tip can not be combined with other games`
       }
     }
-    return true //moment(match.game.eventStart).isAfter(moment()) ? true : 'The game has already started'
+    return moment(match.game.eventStart).isAfter(moment()) ? true : 'The game has already started'
   }
 
 
@@ -158,7 +164,7 @@ class App extends Component {
           <div className="container" style={{ paddingTop: "70px" }}>
             <div className="row">
               {children}
-              <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} />
+              <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} removeTip={this.removeTip} />
               <Snackbar className="snackbar"
                 open={this.state.submitFeedback.open}
                 message={this.state.submitFeedback.mssg}

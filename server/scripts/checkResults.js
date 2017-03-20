@@ -88,12 +88,10 @@ function checkResults() {
                 let status = item.status
                 let counter = 0
                 for (let i = 0; i < item.tips.length; i++) {
-                    console.log(item.tips[i].status)
                     if (item.tips[i].status === 'lost') {
                         status = 'lost'
                         predict.status = status
                         predict.save((err, product) => {
-                            console.log(product)
                         })
                         return
                     }
