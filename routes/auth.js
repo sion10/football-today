@@ -7,7 +7,6 @@ router.get('/', passport.authenticate('facebook', {scope: ['email']}));
 router.get('/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/', session: false }), 
     (req, res) => {
-        console.log(req.user)
         res.status(200)
         res.cookie('token', req.user, {maxAge: 10000 });
         res.redirect('/');

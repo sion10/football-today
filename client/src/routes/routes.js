@@ -26,6 +26,10 @@ const routes = {
         {
             path: '/dashboard',
             component: Dashboard
+        },
+         {
+            path: '*',
+            component: Feed
         }
     ]
 };

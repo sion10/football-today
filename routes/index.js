@@ -9,7 +9,22 @@ var moment = require('moment')
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
-  Game.find({ eventStart: { $gte: moment() } })
+  Game.find({ eventStart: { $gte: moment() }, categoryName: '2615' })
+    .sort({
+      eventStart: 1
+    }).exec((err, games) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else {
+        // send the list of all games
+        res.send(games);
+      }
+    })
+});
+
+router.post('/getleague', (req, res, next) => {
+  Game.find({ eventStart: { $gte: moment() }, categoryName: req.body.id })
     .sort({
       eventStart: 1
     }).exec((err, games) => {
