@@ -10,6 +10,16 @@ const Table = (props) => {
     <table className="table table-sm table-condensed table-striped table-responsive table-bordered" style={{ fontSize: 12 }}>
       <thead>
         <tr>
+          <th colSpan="12">
+            <div style={{ display: 'flex', alignItems: 'center'}}>
+              <img src={props.game.svg} alt={props.game.country}/>
+              <div style={{ verticalAlign: 'middle' }}>{props.game.country} - {props.game.league} </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <thead>
+        <tr>
           <th>Date</th>
           <th>Sides</th>
           <th>1</th>
@@ -39,17 +49,26 @@ class Main extends Component {
 
     this.state = {
       games: {
-        '2615': {
-          matches: [],
-          selected: true
-        },
         '2609': {
           matches: [],
-          selected: false
+          selected: false,
+          country: 'Germany',
+          league: 'Bundesliga',
+          svg: '/flagsvg/de.svg'
         },
         '2553': {
           matches: [],
-          selected: false
+          selected: false,
+          country: 'Spain',
+          league: 'Primera Division',
+          svg: '/flagsvg/esp.svg'
+        },
+        '2615': {
+          matches: [],
+          selected: true,
+          country: 'England',
+          league: 'Premier League',
+          svg: '/flagsvg/eng.svg'
         }
       }
     }
@@ -191,7 +210,7 @@ class Main extends Component {
             })
           }
           else {
-            double = ['1X', '12', 'X2'].map(() => <td></td>)
+            double = ['1X', '12', 'X2'].map((a, x) => <td key={'da' + i + x}></td>)
           }
           return (
             <tr key={item._id}>
@@ -205,7 +224,7 @@ class Main extends Component {
           )
         })
         return (
-          <Table key={key} matches={obj[key]} />
+          <Table key={key} matches={obj[key]} game={this.state.games[key]} />
         )
       }
     })
@@ -214,7 +233,7 @@ class Main extends Component {
     return (
       <div className="col-sm-9">
         <div className="jumbotron" style={{ display: 'flex', margin: 0, padding: 0, marginBottom: 10, paddingTop: 10 }}>
-          <p className="h5" style={{paddingLeft:15, paddingRight:15}}> Filter: </p>
+          <p className="h5" style={{ paddingLeft: 15, paddingRight: 15 }}> Filter: </p>
           <Checkbox style={{ display: 'block' }}
             label="Premier League"
             defaultChecked={true}

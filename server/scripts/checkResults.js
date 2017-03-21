@@ -20,12 +20,12 @@ function checkResults() {
                 console.log(err)
             }
             else {
-                let tipResults
+                let tipResults = []
                 for (let i = 0; i < body[0].c.length; i++) {
-                    if (body[0].c[i].id === 331) {
+                    if (body[0].c[i].id === 331 || body[0].c[i].id === 303 || body[0].c[i].id === 324) {
                         for (let x = 0; x < body[0].c[i].l.length; x++) {
-                            if (body[0].c[i].l[x].id === 2615) {
-                                tipResults = body[0].c[i].l[x].m
+                            if (body[0].c[i].l[x].id === 2615 || body[0].c[i].l[x].id === 2553 || body[0].c[i].l[x].id === 2609) {
+                                tipResults.concat(body[0].c[i].l[x].m)
                             }
                         }
                     }
