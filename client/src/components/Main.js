@@ -11,8 +11,8 @@ const Table = (props) => {
       <thead>
         <tr>
           <th colSpan="12">
-            <div style={{ display: 'flex', alignItems: 'center'}}>
-              <img src={props.game.svg} alt={props.game.country}/>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img src={props.game.svg} alt={props.game.country} />
               <div style={{ verticalAlign: 'middle' }}>{props.game.country} - {props.game.league} </div>
             </div>
           </th>
@@ -69,13 +69,30 @@ class Main extends Component {
           country: 'England',
           league: 'Premier League',
           svg: '/flagsvg/eng.svg'
+        },
+        '96892': {
+          matches: [],
+          selected: false,
+          country: 'International',
+          league: 'World Cup',
+          svg: '/flagsvg/fifa.svg'
+        },
+        '2673': {
+          matches: [],
+          selected: false,
+          country: 'International',
+          league: 'Friendly Matches',
+          svg: '/flagsvg/fifa.svg'
         }
       }
     }
     this.handleCheckPrem = this.handleCheckPrem.bind(this)
     this.handleCheckPrim = this.handleCheckPrim.bind(this)
     this.handleCheckBund = this.handleCheckBund.bind(this)
+    this.handleCheckFriendly = this.handleCheckFriendly.bind(this)
+    this.handleCheckWorld = this.handleCheckWorld.bind(this)
     this.getGamesByLeague = this.getGamesByLeague.bind(this)
+    this.getWorldCupGames = this.getWorldCupGames.bind(this)
   }
 
   componentDidMount() {
@@ -106,7 +123,44 @@ class Main extends Component {
       this.setState(state)
     }
   }
+  handleCheckWorld() {
+    if (!this.state.games['96892'].selected && !this.state.games['96892'].matches[0]) {
+      this.getWorldCupGames()
+    }
+    else {
+      let state = this.state
+      state.games['96892'].selected = !this.state.games['96892'].selected
+      this.setState(state)
+    }
+  }
+  handleCheckFriendly() {
+    if (!this.state.games['2673'].selected && !this.state.games['2673'].matches[0]) {
+      this.getGamesByLeague('2673')
+    }
+    else {
+      let state = this.state
+      state.games['2673'].selected = !this.state.games['2673'].selected
+      this.setState(state)
+    }
+  }
 
+  getWorldCupGames() {
+    fetch('/api/getworld', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    }).then(this.checkStatus)
+      .then(this.parseJSON)
+      .then((data) => {
+        let state = this.state
+        state.games['96892'].selected = !this.state.games['96892'].selected
+        state.games['96892'].matches = data
+        this.setState(state)
+      })
+  }
   getGamesByLeague(league) {
     fetch('/api/getleague', {
       method: 'POST',
@@ -248,6 +302,16 @@ class Main extends Component {
             label="Bundesliga"
             defaultChecked={false}
             onCheck={this.handleCheckBund}
+          />
+          <Checkbox style={{ display: 'block' }}
+            label="International"
+            defaultChecked={false}
+            onCheck={this.handleCheckWorld}
+          />
+          <Checkbox style={{ display: 'block' }}
+            label="Int. Friendly"
+            defaultChecked={false}
+            onCheck={this.handleCheckFriendly}
           />
         </div>
         {matches}
