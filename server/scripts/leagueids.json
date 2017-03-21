@@ -1,0 +1,278 @@
+[
+  {
+    "id": 373,
+    "n": "International",
+    "c": "Inter",
+    "nb": 50,
+    "p": 10,
+    "l": [
+      {
+        "id": 96892,
+        "n": "World Cup Qual. UEFA Group A",
+        "nb": 3
+      },
+      {
+        "id": 96891,
+        "n": "World Cup Qual. UEFA Group B",
+        "nb": 3
+      },
+      {
+        "id": 99334,
+        "n": "World Cup Qual. UEFA Group C",
+        "nb": 3
+      },
+      {
+        "id": 99551,
+        "n": "World Cup Qual. UEFA Group D",
+        "nb": 3
+      },
+      {
+        "id": 99311,
+        "n": "World Cup Qual. UEFA Group E",
+        "nb": 3
+      },
+      {
+        "id": 99312,
+        "n": "World Cup Qual. UEFA Group F",
+        "nb": 3
+      },
+      {
+        "id": 99580,
+        "n": "World Cup Qual. UEFA Group G",
+        "nb": 3
+      },
+      {
+        "id": 99763,
+        "n": "World Cup Qual. UEFA Group H",
+        "nb": 3
+      },
+      {
+        "id": 99553,
+        "n": "World Cup Qual. UEFA Group I",
+        "nb": 3
+      },
+      {
+        "id": 62207,
+        "n": "World Cup Qualification, CONMEBOL",
+        "nb": 5
+      },
+      {
+        "id": 2673,
+        "n": "Int. Friendly Games",
+        "nb": 8
+      },
+      {
+        "id": 98976,
+        "n": "World Cup Qualification, AFC, Round 3, Gr. A",
+        "nb": 3
+      },
+      {
+        "id": 98977,
+        "n": "World Cup Qualification, AFC, Round 3, Gr. B",
+        "nb": 3
+      },
+      {
+        "id": 108607,
+        "n": "World Cup Qualification, OFC 3rd round, Gr.B",
+        "nb": 1
+      },
+      {
+        "id": 106530,
+        "n": "World Cup Qualification, CONCACAF 4th round",
+        "nb": 3
+      }
+    ]
+  },
+  {
+    "id": 304,
+    "n": "International Clubs",
+    "c": "Inter",
+    "nb": 14,
+    "p": 9,
+    "l": [
+      {
+        "id": 3148,
+        "n": "UEFA Champions League",
+        "nb": 5
+      },
+      {
+        "id": 2560,
+        "n": "UEFA Europa League",
+        "nb": 5
+      },
+      {
+        "id": 3408,
+        "n": "UEFA Champions League, Women",
+        "nb": 4
+      }
+    ]
+  },
+  {
+    "id": 331,
+    "n": "England",
+    "c": "ENG",
+    "nb": 93,
+    "p": 8,
+    "l": [
+      {
+        "id": 2615,
+        "n": "Premier League",
+        "nb": 30
+      },
+      {
+        "id": 2605,
+        "n": "Championship",
+        "nb": 12
+      },
+      {
+        "id": 2883,
+        "n": "League One",
+        "nb": 13
+      },
+      {
+        "id": 2935,
+        "n": "League Two",
+        "nb": 14
+      },
+      {
+        "id": 7490,
+        "n": "National League",
+        "nb": 23
+      },
+      {
+        "id": 9010,
+        "n": "Football League Trophy",
+        "nb": 1
+      }
+    ]
+  },
+  {
+    "id": 303,
+    "n": "Spain",
+    "c": "ESP",
+    "nb": 31,
+    "p": 7,
+    "l": [
+      {
+        "id": 2553,
+        "n": "Primera Division",
+        "nb": 20
+      },
+      {
+        "id": 3127,
+        "n": "Segunda Division",
+        "nb": 11
+      }
+    ]
+  },
+  {
+    "id": 324,
+    "n": "Germany",
+    "c": "DEU",
+    "nb": 37,
+    "p": 6,
+    "l": [
+      {
+        "id": 2609,
+        "n": "Bundesliga",
+        "nb": 18
+      },
+      {
+        "id": 2590,
+        "n": "2. Bundesliga",
+        "nb": 9
+      },
+      {
+        "id": 3016,
+        "n": "3.Liga",
+        "nb": 10
+      }
+    ]
+  },
+  {
+    "id": 344,
+    "n": "Italy",
+    "c": "ITA",
+    "nb": 53,
+    "p": 5,
+    "l": [
+      {
+        "id": 2620,
+        "n": "Serie A",
+        "nb": 30
+      },
+      {
+        "id": 3197,
+        "n": "Coppa Italia",
+        "nb": 2
+      },
+      {
+        "id": 3137,
+        "n": "Serie B",
+        "nb": 11
+      },
+      {
+        "id": 8970,
+        "n": "Lega Pro, Girone A",
+        "nb": 9
+      },
+      {
+        "id": 8971,
+        "n": "Lega Pro, Girone B",
+        "nb": 1
+      }
+    ]
+  },
+  {
+    "id": 403,
+    "n": "France",
+    "c": "FRA",
+    "nb": 13,
+    "p": 4,
+    "l": [
+      {
+        "id": 3008,
+        "n": "Ligue 1",
+        "nb": 8
+      },
+      {
+        "id": 3665,
+        "n": "Coupe de France",
+        "nb": 4
+      },
+      {
+        "id": 7595,
+        "n": "Coupe de la Ligue",
+        "nb": 1
+      }
+    ]
+  },
+  {
+    "id": 446,
+    "n": "Netherlands",
+    "c": "NLD",
+    "nb": 9,
+    "p": 3,
+    "l": [
+      {
+        "id": 3210,
+        "n": "Eredivisie",
+        "nb": 9
+      }
+    ]
+  },
+  {
+    "id": 487,
+    "n": "Portugal",
+    "c": "PRT",
+    "nb": 9,
+    "p": 2,
+    "l": [
+      {
+        "id": 2987,
+        "n": "Primeira Liga",
+        "nb": 9
+      }
+    ]
+  }
+]

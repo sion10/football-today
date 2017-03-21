@@ -38,6 +38,21 @@ router.post('/getleague', (req, res, next) => {
     })
 });
 
+router.get('/getworld', (req, res, next) => {
+  Game.find({ eventStart: { $gte: moment() }, categoryName: {$in: ['96892', '96891', '99334', '99551', '99311', '99312', '99580', '99763', '99553', '62207', '98976', '98977', '108607', '106530']} })
+    .sort({
+      eventStart: 1
+    }).exec((err, games) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else {
+        // send the list of all games
+        res.send(games);
+      }
+    })
+});
+
 
 router.get('/user', function (req, res, next) {
   User.findOne({ fbId: req.userId }, (err, user) => {
