@@ -286,29 +286,29 @@ class Main extends Component {
 
     return (
       <div className="col-sm-9">
-        <div className="jumbotron" style={{ display: 'flex', margin: 0, padding: 0, marginBottom: 10, paddingTop: 10 }}>
-          <p className="h5" style={{ paddingLeft: 15, paddingRight: 15 }}> Filter: </p>
-          <Checkbox style={{ display: 'block' }}
+        <div className="jumbotron row" style={{ display: 'flex', margin: 0, padding: 0, marginBottom: 10, paddingTop: 10 }}>
+          <p className="h5 col" style={{ paddingLeft: 15, paddingRight: 15 }}> Filter: </p>
+          <Checkbox className="col" style={{ display: 'block' }}
             label="Premier League"
             defaultChecked={true}
             onCheck={this.handleCheckPrem}
           />
-          <Checkbox style={{ display: 'block' }}
+          <Checkbox className="col" style={{ display: 'block' }}
             label="Primera Division"
             defaultChecked={false}
             onCheck={this.handleCheckPrim}
           />
-          <Checkbox style={{ display: 'block' }}
+          <Checkbox className="col" style={{ display: 'block' }}
             label="Bundesliga"
             defaultChecked={false}
             onCheck={this.handleCheckBund}
           />
-          <Checkbox style={{ display: 'block' }}
+          <Checkbox className="col" style={{ display: 'block' }}
             label="International"
             defaultChecked={false}
             onCheck={this.handleCheckWorld}
           />
-          <Checkbox style={{ display: 'block' }}
+          <Checkbox className="col" style={{ display: 'block' }}
             label="Int. Friendly"
             defaultChecked={false}
             onCheck={this.handleCheckFriendly}
