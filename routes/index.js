@@ -23,6 +23,22 @@ router.get('/', function (req, res, next) {
     })
 });
 
+router.get('/gettopusers', (req, res, next) => {
+  User.find()
+    .limit(10)
+    .sort({
+      points: 'desc'
+    }).exec((err, users) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else {
+        // send the list of top Users
+        res.send(users);
+      }
+    })
+});
+
 router.post('/getleague', (req, res, next) => {
   Game.find({ eventStart: { $gte: moment() }, categoryName: req.body.id })
     .sort({

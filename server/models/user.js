@@ -9,7 +9,8 @@ const UserSchema = new mongoose.Schema({
     password: String,
     name: String,
     picture: Object,
-    predictions: [{type: Schema.Types.ObjectId, ref: 'Tip'}]
+    predictions: [{type: Schema.Types.ObjectId, ref: 'Tip'}],
+    points: {type: Number, default: 1}
 }); 
 
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {

@@ -1,0 +1,19 @@
+
+.tabsNamed{
+    padding-left: 40px
+}   
+.tabsContainer{
+    width: 400px
+}
+
+@media(max-width: 750px){
+  .logoNamed {
+    display: none
+  }
+  .tabsNamed{
+    padding: 0px
+  }
+  .tabsContainer{
+      width: 200px
+  }
+}

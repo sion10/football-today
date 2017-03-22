@@ -4,6 +4,7 @@ import Main from '../components/Main'
 import Auth from './auth'
 import Login from '../components/Login'
 import Dashboard from '../components/Dashboard'
+import Leaderboard from '../components/Leaderboard'
 
 const routes = {
     component: App,
@@ -21,13 +22,38 @@ const routes = {
         },
         {
             path: '/games',
-            component: Main
+            getComponent: (location, callback) => {
+                if (Auth.isUserAuthenticated()) {
+                    callback(null, Main)
+                }
+                else {
+                    callback(null, Login)
+                }
+            }
         },
         {
             path: '/dashboard',
-            component: Dashboard
+            getComponent: (location, callback) => {
+                if (Auth.isUserAuthenticated()) {
+                    callback(null, Dashboard)
+                }
+                else {
+                    callback(null, Login)
+                }
+            }
         },
-         {
+        {
+            path: '/leaderboard',
+            getComponent: (location, callback) => {
+                if (Auth.isUserAuthenticated()) {
+                    callback(null, Leaderboard)
+                }
+                else {
+                    callback(null, Login)
+                }
+            }
+        },
+        {
             path: '*',
             component: Feed
         }

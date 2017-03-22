@@ -5,6 +5,7 @@ let moment = require('moment')
 let Prediction = require('../models/prediction');
 let betType = require('../scripts/betTypes')
 let Tip = require('../models/tip')
+let toCheck = require('../scripts/listToCheck')
 
 function checkResults() {
     console.log('started checking the results')
@@ -22,9 +23,9 @@ function checkResults() {
             else {
                 let tipResults = []
                 for (let i = 0; i < body[0].c.length; i++) {
-                    if (body[0].c[i].id === 331 || body[0].c[i].id === 303 || body[0].c[i].id === 324) {
+                    if (toCheck.countries.indexOf(body[0].c[i].id) > -1) {
                         for (let x = 0; x < body[0].c[i].l.length; x++) {
-                            if (body[0].c[i].l[x].id === 2615 || body[0].c[i].l[x].id === 2553 || body[0].c[i].l[x].id === 2609) {
+                            if (toCheck.leagues.indexOf(body[0].c[i].l[x].id) > -1) {
                                 tipResults.concat(body[0].c[i].l[x].m)
                             }
                         }
@@ -82,7 +83,7 @@ function checkResults() {
     })//Check individual tips Statuses ends here
 
     //Checking Predicts for update of status
-    Prediction.find({status: 'pending'}, (err, predicts) => {
+    Prediction.find({ status: 'pending' }, (err, predicts) => {
         predicts.map((predict) => {
             predict.populate('tips', (err, item) => {
                 let status = item.status
@@ -91,16 +92,29 @@ function checkResults() {
                     if (item.tips[i].status === 'lost') {
                         status = 'lost'
                         predict.status = status
-                        predict.save((err, product) => {
+                        predict.populate('user', (err, predWithUser) => {
+                            predWithUser.user.points -= predict.coef
+                            predWithUser.user.save((err, x) => {
+                                predict.save()
+                                return
+                            })
                         })
-                        return
                     }
                     else if (item.tips[i].status === 'open') {
                         return
                     }
                     else {
                         counter++
-                        counter === item.tips.length ? status = 'won' : null
+                        if (counter === item.tips.length) {
+                            predict.status = 'won'
+                            predict.populate('user', (err, predWithUser) => {
+                                predWithUser.user.points += predict.coef
+                                predWithUser.user.save((err, x) => {
+                                    predict.save()
+                                    return
+                                })
+                            })
+                        }
                     }
                 } // end tips loop
             })  // end populate callBack
