@@ -49,7 +49,7 @@ class LeaderBoard extends Component {
                 <tr key={i}>
                     <th scope="row">{i+1}</th>
                     <td><div style={{display: 'flex', justifyContent: 'flexStart', alignItems: 'center'}}><Avatar src={user.picture} /><p style={{margin:0, paddingLeft:5}} className="h4">{user.name}</p></div></td>
-                    <td>{user.points}</td>
+                    <td>{parseFloat(user.points).toFixed(0)}</td>
                 </tr>
             )
         })

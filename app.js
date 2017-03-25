@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 var passport = require('passport');
 
 var updateGames = require('./server/scripts/updateGames');
@@ -39,7 +40,7 @@ passport.use('facebook', facebookStrategy);
 var authCheck = require('./server/scripts/check');
 
 setInterval(updateGames, 600000);
-setInterval(checkResults, (60000*60*2));
+setInterval(checkResults, 20000)//(600000*1.5));
 
 app.use('/api', authCheck);
 app.use('/submit', authCheck);
