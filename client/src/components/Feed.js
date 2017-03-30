@@ -7,6 +7,7 @@ import { List, ListItem } from 'material-ui/List';
 import moment from 'moment'
 import Masonry from 'react-masonry-component'
 import Divider from 'material-ui/Divider';
+import Side from './Side.js'
 import './Feed.css'
 
 
@@ -75,7 +76,7 @@ class Feed extends Component {
                         <Divider inset={false} />
                         <ListItem
                             primaryText={tip.eventName}
-                            secondaryText={<p style={{ fontSize: '1em', fontStyle: 'italic' }}>{tip.betType.toLowerCase()}:<span style={{ float: 'right', paddingRight:1 }}>{tip.betName}</span></p>}
+                            secondaryText={<p style={{ fontSize: '1em', fontStyle: 'italic' }}>{tip.betType.toLowerCase()}:<span style={{ float: 'right', paddingRight: 1 }}>{tip.betName}</span></p>}
                             style={{ color: '#686868', paddingLeft: 0, fontSize: 12, overflow: 'hidden' }}
                             disabled={true}
                         />
@@ -91,7 +92,7 @@ class Feed extends Component {
                             avatar={item.user.picture}
                             children={<div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <List> {tips}</List>
-                                <div style={{display:'flex', justifyContent:'space-between'}}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <div>
                                         <p style={{ marginBottom: 0, paddingRight: 5, fontWeight: 'bold', fontSize: 12, color: '#686868' }}>shared: {moment(item.date).fromNow()}</p>
                                     </div>
@@ -107,25 +108,33 @@ class Feed extends Component {
             )
         })
         return (
-            <div className="col-sm-9">
-                <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={this.predictionsList}
-                    hasMore={this.state.hasMore}
-                    loader={<div className="loader"> <CircularProgress /></div>}
-                    useWindow={true}
-                >
-                    <Masonry className={'grid'}
-                        options={{
-                            itemSelector: '.grid-item',
-                            columnWidth: this.width,
-                            gutter: 5
-                        }}>
-                        <div className="grid-sizer col-xs-12 col-sm-4 col-md-3"></div>
-                        {predicts}
-                    </Masonry>
-                </InfiniteScroll>
+            <div className="row">
+                <div className="col-md-9">
+                    <div style={{display:'flex', justifyContent:'space-between', flexDirection:'column'}}>
+                        <InfiniteScroll
+                            initialLoad={false}
+                            pageStart={0}
+                            loadMore={this.predictionsList}
+                            hasMore={this.state.hasMore}
+                            loader={<div className="loader"> <CircularProgress /></div>}
+                            useWindow={true}
+                        >
+                            <Masonry
+                                className={'grid'}
+                                options={{
+                                    itemSelector: '.grid-item',
+                                    columnWidth: this.width,
+                                    gutter: 5
+                                }}>
+                                <div className="grid-sizer col-xs-12 col-sm-3"></div>
+                                {predicts}
+                            </Masonry>
+                        </InfiniteScroll>
+                    </div>
+                </div>
+                <div className="sideBar col-md-3">
+                    <Side tips={this.props.tips} handleSubmit={this.props.handleSubmit} handleClear={this.props.handleClear} removeTip={this.props.removeTip} />
+                </div>
             </div>
         );
     }

@@ -6,14 +6,18 @@
     width: 400px
 }
 
-@media(max-width: 750px){
+@media(max-width: 840px){
   .logoNamed {
     display: none
   }
   .tabsNamed{
-    padding: 0px
+    display: none
   }
   .tabsContainer{
-      width: 200px
+      display:  none
+  }
+  .log{
+    display: none
   }
 }
+

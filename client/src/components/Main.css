@@ -1,3 +1,12 @@
 .table td, .table th{
     text-align: center;
 }
+
+@media(max-width: 840px){
+  .sideBar {
+    display: none
+  }
+  .jum{
+    display: none
+  }
+}

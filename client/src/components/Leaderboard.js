@@ -55,7 +55,7 @@ class LeaderBoard extends Component {
         })
         return (
             <div className="col-sm-9">
-                <h1 className="display-3">LeaderBoard<h3><small class="text-muted">Top Tipsters</small></h3></h1>
+                <h1 className="display-3">LeaderBoard<p className="h3"><small className="text-muted">Top Tipsters</small></p></h1>
                 <table className="table table-striped table-responsive table-bordered">
                     <thead className="thead-inverse">
                         <tr>

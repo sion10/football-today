@@ -1,1 +1,7 @@
 .grid-item { width: 250px }
+
+@media(max-width: 840px){
+  .sideBar {
+    display: none
+  }
+}

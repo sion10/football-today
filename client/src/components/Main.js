@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import TipButton from './TipButton.js'
 import Auth from '../routes/auth'
 import moment from 'moment'
-import Checkbox from 'material-ui/Checkbox';
+import Checkbox from 'material-ui/Checkbox'
+import Side from './Side.js'
 import './Main.css'
 
 const Table = (props) => {
@@ -283,39 +284,45 @@ class Main extends Component {
       }
     })
 
-
     return (
-      <div className="col-sm-9">
-        <div className="jumbotron row" style={{ display: 'flex', margin: 0, padding: 0, marginBottom: 10, paddingTop: 10 }}>
-          <p className="h5 col" style={{ paddingLeft: 15, paddingRight: 15 }}> Filter: </p>
-          <Checkbox className="col" style={{ display: 'block' }}
-            label="Premier League"
-            defaultChecked={true}
-            onCheck={this.handleCheckPrem}
-          />
-          <Checkbox className="col" style={{ display: 'block' }}
-            label="Primera Division"
-            defaultChecked={false}
-            onCheck={this.handleCheckPrim}
-          />
-          <Checkbox className="col" style={{ display: 'block' }}
-            label="Bundesliga"
-            defaultChecked={false}
-            onCheck={this.handleCheckBund}
-          />
-          <Checkbox className="col" style={{ display: 'block' }}
-            label="International"
-            defaultChecked={false}
-            onCheck={this.handleCheckWorld}
-          />
-          <Checkbox className="col" style={{ display: 'block' }}
-            label="Int. Friendly"
-            defaultChecked={false}
-            onCheck={this.handleCheckFriendly}
-          />
+      <div className="row">
+        <div className="col-md-9">
+          <div className="jum">
+            <div className="jumbotron row" style={{ display: 'flex', margin: 0, padding: 0, marginBottom: 10, paddingTop: 10 }}>
+              <p className="h5 col" style={{ paddingLeft: 15, paddingRight: 15 }}> Filter: </p>
+              <Checkbox className="col" style={{ display: 'block' }}
+                label="Premier League"
+                defaultChecked={true}
+                onCheck={this.handleCheckPrem}
+              />
+              <Checkbox className="col" style={{ display: 'block' }}
+                label="Primera Division"
+                defaultChecked={false}
+                onCheck={this.handleCheckPrim}
+              />
+              <Checkbox className="col" style={{ display: 'block' }}
+                label="Bundesliga"
+                defaultChecked={false}
+                onCheck={this.handleCheckBund}
+              />
+              <Checkbox className="col" style={{ display: 'block' }}
+                label="International"
+                defaultChecked={false}
+                onCheck={this.handleCheckWorld}
+              />
+              <Checkbox className="col" style={{ display: 'block' }}
+                label="Int. Friendly"
+                defaultChecked={false}
+                onCheck={this.handleCheckFriendly}
+              />
+            </div>
+          </div>
+          {matches}
+        </div >
+        <div className="sideBar col-md-3">
+          <Side tips={this.props.tips} handleSubmit={this.props.handleSubmit} handleClear={this.props.handleClear} removeTip={this.props.removeTip} />
         </div>
-        {matches}
-      </div >
+      </div>
     );
   }
 }

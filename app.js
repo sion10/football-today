@@ -39,8 +39,8 @@ passport.use('facebook', facebookStrategy);
 // pass the authenticaion checker middleware
 var authCheck = require('./server/scripts/check');
 
-setInterval(updateGames, 600000);
-setInterval(checkResults, 20000)//(600000*1.5));
+setInterval(updateGames, 60000 * 35);
+setInterval(checkResults, 60000 * 15);
 
 app.use('/api', authCheck);
 app.use('/submit', authCheck);

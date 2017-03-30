@@ -6,6 +6,13 @@ import Auth from './routes/auth'
 import { browserHistory } from 'react-router';
 import Snackbar from 'material-ui/Snackbar';
 import moment from 'moment'
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import MediaQuery from 'react-responsive'
+import RaisedButton from 'material-ui/RaisedButton';
+import { BottomSheet } from 'material-ui-bottom-sheet'
+import IconButton from 'material-ui/IconButton';
+import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
+import ArrowDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import './App.css';
 
 
@@ -14,6 +21,7 @@ class App extends Component {
     super();
 
     this.state = {
+      open: false,
       tips: [],
       user: {},
       submitFeedback: {
@@ -29,13 +37,25 @@ class App extends Component {
     this.handleSubmitFeedbackClose = this.handleSubmitFeedbackClose.bind(this)
     this.isValid = this.isValid.bind(this)
     this.removeTip = this.removeTip.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+  }
+  handleOpen() {
+    let state = this.state
+    state.open = true
+    this.setState(state)
+  }
+  handleClose() {
+    let state = this.state
+    state.open = false
+    this.setState(state)
   }
   handleClear() {
     let state = this.state
     state.tips = []
     this.setState(state)
   }
-  removeTip(index){
+  removeTip(index) {
     let state = this.state
     state.tips.splice(index, 1)
     this.setState(state)
@@ -153,7 +173,11 @@ class App extends Component {
       return (
         React.cloneElement(child, {
           addTip: this.addTip,
-          user: this.state.user
+          user: this.state.user,
+          tips: this.state.tips,
+          handleSubmit: this.handleSubmit,
+          handleClear: this.handleClear,
+          removeTip: this.removeTip
         })
       )
     })
@@ -162,23 +186,59 @@ class App extends Component {
         <div>
           <Nav path={this.props.location.pathname} user={this.state.user} logOut={this.handleLogOut} />
           <div className="container" style={{ paddingTop: "70px" }}>
-            <div className="row">
-              {children}
-              <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} removeTip={this.removeTip} />
-              <Snackbar className="snackbar"
-                open={this.state.submitFeedback.open}
-                message={this.state.submitFeedback.mssg}
-                autoHideDuration={4000}
-                onRequestClose={this.handleSubmitFeedbackClose}
-              />
-            </div>
+            {children}
+            <Snackbar className="snackbar"
+              open={this.state.submitFeedback.open}
+              message={this.state.submitFeedback.mssg}
+              autoHideDuration={4000}
+              onRequestClose={this.handleSubmitFeedbackClose}
+            />
           </div>
+          <MediaQuery query='(max-width: 840px)'>
+            {this.state.tips[0] ?
+              <Toolbar
+                style={{
+                  zIndex: 1200,
+                  position: 'fixed',
+                  bottom: 0,
+                  width: '100%',
+                  justifyContent: 'space-between'
+                }}>
+                <ToolbarGroup firstChild={true}>
+                  <div style={{ marginLeft: 24 }}>{this.state.tips.length} {this.state.tips.length === 1 ? 'tip' : 'tips'}</div>
+                </ToolbarGroup>
+                <ToolbarGroup>
+                  Show TipSlip
+                   <IconButton onTouchTap={this.handleOpen} tooltip="Expand">
+                    <ArrowUp />
+                  </IconButton>
+                </ToolbarGroup>
+              </Toolbar> : null}
+          </MediaQuery>
+          <BottomSheet
+            bodyStyle={{ background: 'e8e8e8', display: 'flex', maxHeight: '100%', overflowY: 'auto' }}
+            contentStyle={{ flex: 1 }}
+            onRequestClose={this.handleClose}
+            open={this.state.open}
+          >
+            <Toolbar
+              style={{
+                width: '100%',
+                justifyContent: 'flex-end'
+              }}>
+              <ToolbarGroup firstChild={true}>
+                Collapse TipSlip
+                <IconButton onTouchTap={this.handleClose} tooltip="Collapse">
+                  <ArrowDown />
+                </IconButton>
+              </ToolbarGroup>
+            </Toolbar>
+            <Side tips={this.state.tips} handleSubmit={this.handleSubmit} handleClear={this.handleClear} removeTip={this.removeTip} />
+          </BottomSheet>
         </div>
       </MuiThemeProvider>
     );
   }
-
 }
-
 
 export default App;
