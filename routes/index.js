@@ -28,7 +28,7 @@ router.get('/gettopusers', (req, res, next) => {
     .sort({
       points: 'desc'
     })
-    .limit(10)
+    .limit(100)
     .exec((err, users) => {
       if (err) {
         res.status(500).send(err);

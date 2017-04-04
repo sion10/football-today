@@ -8,13 +8,12 @@ let getResults = require('./resultsHelpers/getResults')
 let checkTips = require('./resultsHelpers/checkTips')
 let checkPredicts = require('./resultsHelpers/checkPredicts')
 
-function checkResults() {
+function checkResults(d) {
     console.log('started checking the results')
-    let date = moment().subtract(1, 'd').format('YYYY-MM-DD')
+    let date = moment(d).format('YYYY-MM-DD')
     getResults(uri, date)
     .then(checkTips)
     .then(checkPredicts)
-
 }
 
 module.exports = checkResults

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import FlatButton from 'material-ui/FlatButton';
@@ -32,8 +32,9 @@ class Nav extends Component {
     render() {
         return (
             <Toolbar style={{ backgroundColor: "#333333" }}>
-                <ToolbarGroup firstChild={true}>
-                    <ToolbarTitle className='logoNamed' text="PredictX" style={{ color: "#ffffff" }} onTouchTap={this.handleOnTouch} />
+                <ToolbarGroup firstChild={true} style={{display:'flex', justifyContet: 'center'}}>
+                    <Link to="/"><img alt="football today logo" src='/logo.png' height='53px' width='40px' /></Link>
+                    <ToolbarTitle className='logoNamed' text="football today" style={{ color: "#24c2e1", fontFamily:'roboto', fontStyle:'italic', paddingLeft: 10, paddingTop: 10 }} onTouchTap={this.handleOnTouch} />
                     <div className='tabsContainer'>
                         <Tabs className='tabsNamed' value={this.state.active}>
                             <Tab value="/" label="home" style={{ width: '100%', paddingTop: 12, paddingBottom: 12 }} onActive={this.handleOnTouch} />

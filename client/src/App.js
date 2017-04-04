@@ -8,7 +8,6 @@ import Snackbar from 'material-ui/Snackbar';
 import moment from 'moment'
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import MediaQuery from 'react-responsive'
-import RaisedButton from 'material-ui/RaisedButton';
 import { BottomSheet } from 'material-ui-bottom-sheet'
 import IconButton from 'material-ui/IconButton';
 import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
@@ -21,6 +20,43 @@ class App extends Component {
     super();
 
     this.state = {
+      games: {
+        '2609': {
+          matches: [],
+          selected: false,
+          country: 'Germany',
+          league: 'Bundesliga',
+          svg: '/flagsvg/de.svg'
+        },
+        '2553': {
+          matches: [],
+          selected: false,
+          country: 'Spain',
+          league: 'Primera Division',
+          svg: '/flagsvg/esp.svg'
+        },
+        '2615': {
+          matches: [],
+          selected: true,
+          country: 'England',
+          league: 'Premier League',
+          svg: '/flagsvg/eng.svg'
+        },
+        '96892': {
+          matches: [],
+          selected: false,
+          country: 'International',
+          league: 'World Cup',
+          svg: '/flagsvg/fifa.svg'
+        },
+        '2673': {
+          matches: [],
+          selected: false,
+          country: 'International',
+          league: 'Friendly Matches',
+          svg: '/flagsvg/fifa.svg'
+        }
+      },
       open: false,
       tips: [],
       user: {},
@@ -29,6 +65,14 @@ class App extends Component {
         mssg: 'Your Tip Submitted Successfully'
       }
     }
+    this.handleCheckPrem = this.handleCheckPrem.bind(this)
+    this.handleCheckPrim = this.handleCheckPrim.bind(this)
+    this.handleCheckBund = this.handleCheckBund.bind(this)
+    this.handleCheckFriendly = this.handleCheckFriendly.bind(this)
+    this.handleCheckWorld = this.handleCheckWorld.bind(this)
+    this.getGamesByLeague = this.getGamesByLeague.bind(this)
+    this.getWorldCupGames = this.getWorldCupGames.bind(this)
+
     this.addTip = this.addTip.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClear = this.handleClear.bind(this)
@@ -40,6 +84,93 @@ class App extends Component {
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
   }
+  handleCheckPrem() {
+    let state = this.state
+    state.games['2615'].selected = !this.state.games['2615'].selected
+    this.setState(state)
+  }
+  handleCheckPrim() {
+    if (!this.state.games['2553'].selected && !this.state.games['2553'].matches[0]) {
+      this.getGamesByLeague('2553')
+    }
+    else {
+      let state = this.state
+      state.games['2553'].selected = !this.state.games['2553'].selected
+      this.setState(state)
+    }
+  }
+  handleCheckBund() {
+    if (!this.state.games['2609'].selected && !this.state.games['2609'].matches[0]) {
+      this.getGamesByLeague('2609')
+    }
+    else {
+      let state = this.state
+      state.games['2609'].selected = !this.state.games['2609'].selected
+      this.setState(state)
+    }
+  }
+  handleCheckWorld() {
+    if (!this.state.games['96892'].selected && !this.state.games['96892'].matches[0]) {
+      this.getWorldCupGames()
+    }
+    else {
+      let state = this.state
+      state.games['96892'].selected = !this.state.games['96892'].selected
+      this.setState(state)
+    }
+  }
+  handleCheckFriendly() {
+    if (!this.state.games['2673'].selected && !this.state.games['2673'].matches[0]) {
+      this.getGamesByLeague('2673')
+    }
+    else {
+      let state = this.state
+      state.games['2673'].selected = !this.state.games['2673'].selected
+      this.setState(state)
+    }
+  }
+
+  getWorldCupGames() {
+    fetch('/api/getworld', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    }).then(this.checkStatus)
+      .then(this.parseJSON)
+      .then((data) => {
+        let state = this.state
+        state.games['96892'].selected = !this.state.games['96892'].selected
+        state.games['96892'].matches = data
+        this.setState(state)
+      })
+  }
+  getGamesByLeague(league) {
+    fetch('/api/getleague', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: league
+      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${Auth.getToken()}`
+      }
+    }).then(this.checkStatus)
+      .then(this.parseJSON)
+      .then((data) => {
+        let state = this.state
+        state.games[league].selected = !this.state.games[league].selected
+        state.games[league].matches = data
+
+        this.setState(state)
+      })
+  }
+
+
+
   handleOpen() {
     let state = this.state
     state.open = true
@@ -68,8 +199,6 @@ class App extends Component {
     }
     return moment(match.game.eventStart).isAfter(moment()) ? true : 'The game has already started'
   }
-
-
   handleSubmit() {
     fetch('/submit', {
       method: 'POST',
@@ -127,33 +256,31 @@ class App extends Component {
         'Content-Type': 'application/json',
         'Authorization': `bearer ${Auth.getToken()}`
       }
-    }).then(checkStatus.bind(self))
-      .then(parseJSON)
+    }).then(this.checkStatus.bind(self))
+      .then(this.parseJSON)
       .then(function (data) {
         let state = self.state
         state.user = data
         self.setState(state);
       });
-
-
-    function checkStatus(response) {
-      if (response.status >= 200 && response.status < 300) {
-        return response;
-      }
-      const error = new Error(`HTTP Error ${response.statusText}`);
-      error.status = response.statusText;
-      error.response = response;
-      let self = this
-      let state = self.state
-      state.user = {}
-      self.setState(state)
-      Auth.deauthenticateUser()
-      console.log(error); // eslint-disable-line no-console
-      throw error;
+  }
+  checkStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return response;
     }
-    function parseJSON(response) {
-      return response.json();
-    }
+    const error = new Error(`HTTP Error ${response.statusText}`);
+    error.status = response.statusText;
+    error.response = response;
+    let self = this
+    let state = self.state
+    state.user = {}
+    self.setState(state)
+    Auth.deauthenticateUser()
+    console.log(error); // eslint-disable-line no-console
+    throw error;
+  }
+  parseJSON(response) {
+    return response.json();
   }
   handleLogOut() {
     Auth.deauthenticateUser()
@@ -172,6 +299,16 @@ class App extends Component {
     let children = React.Children.map(this.props.children, (child) => {
       return (
         React.cloneElement(child, {
+          games: this.state.games,
+          gamesFuncs: {
+            handleCheckPrem: this.handleCheckPrem,
+            handleCheckPrim: this.handleCheckPrim,
+            handleCheckBund: this.handleCheckBund,
+            handleCheckFriendly: this.handleCheckFriendly,
+            handleCheckWorld: this.handleCheckWorld,
+            getGamesByLeague: this.getGamesByLeague,
+            getWorldCupGames: this.getWorldCupGames
+          },
           addTip: this.addTip,
           user: this.state.user,
           tips: this.state.tips,
@@ -184,7 +321,16 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Nav path={this.props.location.pathname} user={this.state.user} logOut={this.handleLogOut} />
+          <Nav gamesFuncs={{
+            handleCheckPrem: this.handleCheckPrem,
+            handleCheckPrim: this.handleCheckPrim,
+            handleCheckBund: this.handleCheckBund,
+            handleCheckFriendly: this.handleCheckFriendly,
+            handleCheckWorld: this.handleCheckWorld,
+            getGamesByLeague: this.getGamesByLeague,
+            getWorldCupGames: this.getWorldCupGames
+          }}
+            path={this.props.location.pathname} user={this.state.user} logOut={this.handleLogOut} />
           <div className="container" style={{ paddingTop: "70px" }}>
             {children}
             <Snackbar className="snackbar"

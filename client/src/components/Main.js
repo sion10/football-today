@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TipButton from './TipButton.js'
 import Auth from '../routes/auth'
 import moment from 'moment'
+import Drawer from 'material-ui/Drawer'
 import Checkbox from 'material-ui/Checkbox'
 import Side from './Side.js'
 import './Main.css'
@@ -49,140 +50,20 @@ class Main extends Component {
     super(props);
 
     this.state = {
-      games: {
-        '2609': {
-          matches: [],
-          selected: false,
-          country: 'Germany',
-          league: 'Bundesliga',
-          svg: '/flagsvg/de.svg'
-        },
-        '2553': {
-          matches: [],
-          selected: false,
-          country: 'Spain',
-          league: 'Primera Division',
-          svg: '/flagsvg/esp.svg'
-        },
-        '2615': {
-          matches: [],
-          selected: true,
-          country: 'England',
-          league: 'Premier League',
-          svg: '/flagsvg/eng.svg'
-        },
-        '96892': {
-          matches: [],
-          selected: false,
-          country: 'International',
-          league: 'World Cup',
-          svg: '/flagsvg/fifa.svg'
-        },
-        '2673': {
-          matches: [],
-          selected: false,
-          country: 'International',
-          league: 'Friendly Matches',
-          svg: '/flagsvg/fifa.svg'
-        }
-      }
+      games: this.props.games
     }
-    this.handleCheckPrem = this.handleCheckPrem.bind(this)
-    this.handleCheckPrim = this.handleCheckPrim.bind(this)
-    this.handleCheckBund = this.handleCheckBund.bind(this)
-    this.handleCheckFriendly = this.handleCheckFriendly.bind(this)
-    this.handleCheckWorld = this.handleCheckWorld.bind(this)
-    this.getGamesByLeague = this.getGamesByLeague.bind(this)
-    this.getWorldCupGames = this.getWorldCupGames.bind(this)
+    this.handleCheckPrem = this.props.gamesFuncs.handleCheckPrem
+    this.handleCheckPrim = this.props.gamesFuncs.handleCheckPrim
+    this.handleCheckBund = this.props.gamesFuncs.handleCheckBund
+    this.handleCheckFriendly = this.props.gamesFuncs.handleCheckFriendly
+    this.handleCheckWorld = this.props.gamesFuncs.handleCheckWorld
+    this.getGamesByLeague = this.props.gamesFuncs.getGamesByLeague
+    this.getWorldCupGames = this.props.gamesFuncs.getWorldCupGames
   }
 
   componentDidMount() {
     this.gamesList();
   }
-  handleCheckPrem() {
-    let state = this.state
-    state.games['2615'].selected = !this.state.games['2615'].selected
-    this.setState(state)
-  }
-  handleCheckPrim() {
-    if (!this.state.games['2553'].selected && !this.state.games['2553'].matches[0]) {
-      this.getGamesByLeague('2553')
-    }
-    else {
-      let state = this.state
-      state.games['2553'].selected = !this.state.games['2553'].selected
-      this.setState(state)
-    }
-  }
-  handleCheckBund() {
-    if (!this.state.games['2609'].selected && !this.state.games['2609'].matches[0]) {
-      this.getGamesByLeague('2609')
-    }
-    else {
-      let state = this.state
-      state.games['2609'].selected = !this.state.games['2609'].selected
-      this.setState(state)
-    }
-  }
-  handleCheckWorld() {
-    if (!this.state.games['96892'].selected && !this.state.games['96892'].matches[0]) {
-      this.getWorldCupGames()
-    }
-    else {
-      let state = this.state
-      state.games['96892'].selected = !this.state.games['96892'].selected
-      this.setState(state)
-    }
-  }
-  handleCheckFriendly() {
-    if (!this.state.games['2673'].selected && !this.state.games['2673'].matches[0]) {
-      this.getGamesByLeague('2673')
-    }
-    else {
-      let state = this.state
-      state.games['2673'].selected = !this.state.games['2673'].selected
-      this.setState(state)
-    }
-  }
-
-  getWorldCupGames() {
-    fetch('/api/getworld', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `bearer ${Auth.getToken()}`
-      }
-    }).then(this.checkStatus)
-      .then(this.parseJSON)
-      .then((data) => {
-        let state = this.state
-        state.games['96892'].selected = !this.state.games['96892'].selected
-        state.games['96892'].matches = data
-        this.setState(state)
-      })
-  }
-  getGamesByLeague(league) {
-    fetch('/api/getleague', {
-      method: 'POST',
-      body: JSON.stringify({
-        id: league
-      }),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `bearer ${Auth.getToken()}`
-      }
-    }).then(this.checkStatus)
-      .then(this.parseJSON)
-      .then((data) => {
-        let state = this.state
-        state.games[league].selected = !this.state.games[league].selected
-        state.games[league].matches = data
-        this.setState(state)
-      })
-  }
-
   checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
       return response;
@@ -239,7 +120,7 @@ class Main extends Component {
           else {
             BTS = ['Yes', 'No'].map((a, x) => {
               return (
-                <td> </td>
+                <td key={'aa' + i + x }> </td>
               )
             })
           }
@@ -285,43 +166,43 @@ class Main extends Component {
     })
 
     return (
-      <div className="row">
-        <div className="col-md-9">
-          <div className="jum">
-            <div className="jumbotron row" style={{ display: 'flex', margin: 0, padding: 0, marginBottom: 10, paddingTop: 10 }}>
-              <p className="h5 col" style={{ paddingLeft: 15, paddingRight: 15 }}> Filter: </p>
-              <Checkbox className="col" style={{ display: 'block' }}
-                label="Premier League"
-                defaultChecked={true}
-                onCheck={this.handleCheckPrem}
-              />
-              <Checkbox className="col" style={{ display: 'block' }}
-                label="Primera Division"
-                defaultChecked={false}
-                onCheck={this.handleCheckPrim}
-              />
-              <Checkbox className="col" style={{ display: 'block' }}
-                label="Bundesliga"
-                defaultChecked={false}
-                onCheck={this.handleCheckBund}
-              />
-              <Checkbox className="col" style={{ display: 'block' }}
-                label="International"
-                defaultChecked={false}
-                onCheck={this.handleCheckWorld}
-              />
-              <Checkbox className="col" style={{ display: 'block' }}
-                label="Int. Friendly"
-                defaultChecked={false}
-                onCheck={this.handleCheckFriendly}
-              />
-            </div>
+      <div>
+        <Drawer className="jum" open={true} width={200} containerStyle={{zIndex:'1000'}}>
+          <p className="h6 col" style={{ paddingLeft: 15, paddingRight: 15, marginTop: 80}}> LEAGUES FILTER: </p>
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label="Premier League"
+            defaultChecked={true}
+            onCheck={this.handleCheckPrem}
+          />
+          <Checkbox className="col" style={{ display: 'block',fontSize: 15 }}
+            label="Primera Division"
+            defaultChecked={false}
+            onCheck={this.handleCheckPrim}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label="Bundesliga"
+            defaultChecked={false}
+            onCheck={this.handleCheckBund}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label="International"
+            defaultChecked={false}
+            onCheck={this.handleCheckWorld}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label="Int. Friendly"
+            defaultChecked={false}
+            onCheck={this.handleCheckFriendly}
+          />
+        </Drawer>
+        <div className="row">
+          <div className="col-md-9">
+            {matches}
           </div>
-          {matches}
+          <div className="sideBar col-md-3">
+            <Side tips={this.props.tips} handleSubmit={this.props.handleSubmit} handleClear={this.props.handleClear} removeTip={this.props.removeTip} />
+          </div>
         </div >
-        <div className="sideBar col-md-3">
-          <Side tips={this.props.tips} handleSubmit={this.props.handleSubmit} handleClear={this.props.handleClear} removeTip={this.props.removeTip} />
-        </div>
       </div>
     );
   }
