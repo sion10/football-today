@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import Auth from '../routes/auth'
 import InfiniteScroll from 'react-infinite-scroller';
 import CircularProgress from 'material-ui/CircularProgress';
-import { Card, CardHeader } from 'material-ui/Card';
-import { List, ListItem } from 'material-ui/List';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import moment from 'moment'
 import Masonry from 'react-masonry-component'
 import Divider from 'material-ui/Divider';
 import Side from './Side.js'
+import Won from 'material-ui/svg-icons/action/done'
+import Lost from 'material-ui/svg-icons/navigation/close'
+import Open from 'material-ui/svg-icons/content/remove'
+
 import './Feed.css'
 
 
@@ -43,11 +46,12 @@ class Feed extends Component {
             }).then(checkStatus)
                 .then(parseJSON)
                 .then(function (data) {
+                    if (self.state.predictions.length > 0 && data.page === 1) return
                     let prds = self.state.predictions.concat(data.predictions)
                     self.setState({
                         predictions: prds,
                         hasMore: data.hasMore,
-                        page: data.page
+                        page: self.state.page + 1
                     });
                 });
 
@@ -72,14 +76,19 @@ class Feed extends Component {
         const predicts = this.state.predictions.map((item, num) => {
             const tips = item.tips.map((tip) => {
                 return (
-                    <div key={tip._id}>
-                        <Divider inset={false} />
-                        <ListItem
-                            primaryText={tip.eventName}
-                            secondaryText={<p style={{ fontSize: '1em', fontStyle: 'italic' }}>{tip.betType.toLowerCase()}:<span style={{ float: 'right', paddingRight: 1 }}>{tip.betName}</span></p>}
-                            style={{ color: '#686868', paddingLeft: 0, fontSize: 12, overflow: 'hidden' }}
-                            disabled={true}
-                        />
+                    <div style={{ display: 'flex', flexDirection: 'column' }} key={tip._id}>
+                        <div style={{ display: 'flex' }} >
+                            {tip.status === 'open'?
+                            <Open viewBox='-12 -12 48 48' style={{ color: '#30b8d5' }} />:
+                            tip.status === 'lost'?
+                            <Lost viewBox='-12 -12 48 48' style={{ color: '#ff0000' }} />:
+                            <Won viewBox='-12 -12 48 48' style={{ color: '#2cb373' }} />}
+                            <h6 style={{ whiteSpace: ' nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '1.5em', fontSize: '1em', margin: 0 }}>{tip.eventName.toLowerCase()}</h6>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 25px 0px 25px' }} >
+                            <span style={{ fontSize: '0.76em', color: 'rgba(0, 0, 0, 0.54)' }}>{tip.betType.toLowerCase()}:</span>
+                            <span style={{ fontSize: '0.76em', color: 'rgba(0, 0, 0, 0.54)' }}>{tip.betName}</span>
+                        </div>
                     </div>
                 )
             })
@@ -87,22 +96,24 @@ class Feed extends Component {
                 <div className="grid-item" key={'div' + item._id + num}>
                     <Card style={{ marginBottom: 10 }}>
                         <CardHeader
-                            title={`Status:  ${item.status}`}
-                            subtitle={item.user.name}
+                            title={item.user.name}
+                            subtitle={`Status:  ${item.status}`}
                             avatar={item.user.picture}
-                            children={<div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <List> {tips}</List>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <div>
-                                        <p style={{ marginBottom: 0, paddingRight: 5, fontWeight: 'bold', fontSize: 12, color: '#686868' }}>shared: {moment(item.date).fromNow()}</p>
-                                    </div>
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                        <p style={{ marginBottom: 0, paddingRight: 5, fontWeight: 'bold', fontSize: 12, color: '#686868' }}>Total: {parseFloat(item.coef).toFixed(2)}</p>
-                                    </div>
-                                </div>
-                            </div>}
                             subtitleStyle={{ fontSize: '0.76em' }}
                         />
+                        {item.status === 'pending' ?
+                            <Divider style={{ borderTop: '2px solid #30b8d5' }} /> :
+                            item.status === 'won' ?
+                                <Divider style={{ borderTop: '2px solid #2cb373' }}
+                                /> :
+                                <Divider style={{ borderTop: '2px solid #ff0000' }} />}
+                        <CardText style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
+                            {tips}
+                            <div style={{display: 'flex', justifyContent: 'space-between', paddingTop: 10}}>
+                                <p style={{ marginBottom: 0, paddingLeft: 10, fontWeight:500, fontSize: '0.8em', color: '#686868' }}>Shared: {moment(item.date).fromNow()}</p>
+                                <p style={{ marginBottom: 0, paddingRight: 10, fontWeight:500, fontSize: '0.8em', color: '#686868' }}>Total: {parseFloat(item.coef).toFixed(2)}</p>
+                            </div>
+                        </CardText>
                     </Card>
                 </div>
             )
@@ -110,7 +121,7 @@ class Feed extends Component {
         return (
             <div className="row">
                 <div className="col-md-9">
-                    <div style={{display:'flex', justifyContent:'space-between', flexDirection:'column'}}>
+                    <div>
                         <InfiniteScroll
                             initialLoad={false}
                             pageStart={0}

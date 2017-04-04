@@ -18,8 +18,9 @@ let checkPredicts = () => {
                                         predWithUser.user.points < 2 ? predWithUser.user.points = 1 : predWithUser.user.points -= 1
                                         predWithUser.user.save()
                                             .then(() => {
-                                                predict.save()
-                                                return
+                                                predict.save().then(() => { 
+                                                    return 
+                                                }) 
                                             })
                                     })
                             }

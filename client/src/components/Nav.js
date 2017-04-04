@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import MenuItem from 'material-ui/MenuItem'
 import Menu from 'material-ui/Menu'
 import Divider from 'material-ui/Divider'
-import { Link, browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 import Checkbox from 'material-ui/Checkbox'
 
 class Nav extends Component {

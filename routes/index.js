@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
 router.get('/gettopusers', (req, res, next) => {
   User.find()
     .sort({
-      points: 'desc'
+      points: -1
     })
     .limit(100)
     .exec((err, users) => {
@@ -81,7 +81,7 @@ router.post('/predictions', (req, res, next) => {
   let page = req.body.page
   Prediction.find()
     .sort({
-      date: 'desc'
+      date: -1
     })
     .limit(10)
     .skip(10 * page)
@@ -89,10 +89,10 @@ router.post('/predictions', (req, res, next) => {
       Prediction.count((err, count) => {
         let hasMore = (count - (page + 1) * 10) > 0
         let results = []
-        let proms = predictions.map((item) => {
+        let proms = predictions.map((item, i) => {
           return new Promise((resolve) => {
             item.populate('tips user', (err, populated) => {
-              results.push(populated)
+              results[i] = populated
               resolve()
             })
           })

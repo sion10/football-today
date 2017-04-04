@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import './Login.css'
 
 class Login extends Component {
     constructor() {
@@ -13,9 +14,10 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="col-sm-9 container">
-                <div className="jumbotron" >
-                    <h1 className="display-4" >TWITTER FOR <br/>FOOTBALL  BETTING <br/>PREDICTIONS</h1>
+
+            <div className="bg" style={{height: '90vh', display:'flex', alignItems: 'center'}}>
+                <div>
+                    <h1 className="display-4" >TWITTER FOR <br />FOOTBALL  BETTING <br />PREDICTIONS</h1>
                     <RaisedButton href={'/login'} label="SignUp With Facebook" primary={true} />
                 </div>
             </div>
