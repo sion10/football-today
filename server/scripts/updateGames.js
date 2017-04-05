@@ -94,7 +94,7 @@ function updateGames() {
             }
             // More 2.5 Market Options
             if (item.t['0-60']!== undefined && item.t['0-60'][1]) {
-              item.t['0-60'][0].n === 'Over' ? game.markets[2].options = item.t['0-60'] : game.markets[2].options = [item.t['0-60'][1], item.t['0-60'][0]]
+              item.t['0-60'][0].n === 'Under' ? game.markets[2].options = item.t['0-60'] : game.markets[2].options = [item.t['0-60'][1], item.t['0-60'][0]]
             }
             //doubleChance Market Options
             if (item.t['0-46']!== undefined && item.t['0-46'][2]) {

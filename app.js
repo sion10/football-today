@@ -19,6 +19,17 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+function wwwRedirect(req, res, next) {
+    if (req.headers.host.slice(0, 4) === 'www.') {
+        var newHost = req.headers.host.slice(4);
+        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+    }
+    next();
+};
+
+app.set('trust proxy', true);
+app.use(wwwRedirect);
+
 app.use(favicon(path.join(__dirname, 'client/build', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -39,8 +50,13 @@ passport.use('facebook', facebookStrategy);
 // pass the authenticaion checker middleware
 var authCheck = require('./server/scripts/check');
 
-setInterval(updateGames, 60000 * 35);
-setInterval(checkResults, 60000 * 15);
+setInterval(updateGames, 60000*40);
+setInterval(function(){checkResults(Date.now(), 'en')}, 60000*10);
+setInterval(function(){
+var d = new Date();
+d.setDate(d.getDate() - 1);
+checkResults(d, 'ka');
+}, 60000*60);
 
 app.use('/api', authCheck);
 app.use('/submit', authCheck);

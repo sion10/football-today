@@ -83,11 +83,27 @@ class Feed extends Component {
                             tip.status === 'lost'?
                             <Lost viewBox='-12 -12 48 48' style={{ color: '#ff0000' }} />:
                             <Won viewBox='-12 -12 48 48' style={{ color: '#2cb373' }} />}
-                            <h6 style={{ whiteSpace: ' nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '1.5em', fontSize: '1em', margin: 0 }}>{tip.eventName.toLowerCase()}</h6>
+                            <h6 style={{ whiteSpace: ' nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '2em', fontSize: '0.8em', margin: 0 }}>{tip.eventName.toUpperCase()}</h6>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 25px 0px 25px' }} >
-                            <span style={{ fontSize: '0.76em', color: 'rgba(0, 0, 0, 0.54)' }}>{tip.betType.toLowerCase()}:</span>
-                            <span style={{ fontSize: '0.76em', color: 'rgba(0, 0, 0, 0.54)' }}>{tip.betName}</span>
+                            <span style={{ fontSize: '0.75em', color: 'rgba(0, 0, 0, 0.54)' }}>
+                                {tip.betType === '3way'? 'fulltime' : tip.betType.toLowerCase()}:
+                            </span>
+                            <span style={{ fontSize: '0.75em', color: 'rgba(0, 0, 0, 0.54)' }}>{moment(tip.eventStart).format('DD MMM [:] hh:mm')}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 25px 0px 25px' }} >
+                            <span style={{ fontSize: '0.65em', fontWeight: 500 }}>
+                               { 
+                               tip.betType === '3way' && tip.betName === '1'?
+                               '1(' + tip.eventName.split('vs')[0].trim().toUpperCase() + ')':
+                               tip.betType === '3way' && tip.betName === '2'?
+                               '1(' + tip.eventName.split('vs')[1].trim().toUpperCase() + ')':
+                               tip.betType === '3way' && tip.betName === 'X'?
+                               'X (Draw)':
+                               tip.betName
+                               }
+                                </span>
+                            <span style={{ fontSize: '0.76em'}}>@{parseFloat(tip.betValue).toFixed(2)}</span>
                         </div>
                     </div>
                 )
