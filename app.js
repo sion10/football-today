@@ -66,11 +66,12 @@ app.use('/api', index);
 app.use('/submit', submit);
 app.use('/login', login);
 
+app.use('/sitemap.xml', function (req, res, next){
+  res.sendFile(__dirname + 'client/build/sitemap.xml')
+})
 
 // catch 404 and forward to error handler
 app.use('*', function (req, res, next) {
-  console.log(req.cookies)
-  console.log(req)
   res.sendFile(__dirname + '/client/build/index.html')
 });
 

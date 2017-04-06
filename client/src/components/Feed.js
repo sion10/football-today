@@ -10,9 +10,26 @@ import Side from './Side.js'
 import Won from 'material-ui/svg-icons/action/done'
 import Lost from 'material-ui/svg-icons/navigation/close'
 import Open from 'material-ui/svg-icons/content/remove'
-
 import './Feed.css'
 
+class GoogleAd extends Component {
+    componentDidMount() {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+    render() {
+        return (
+            <Card style={{ marginBottom: 10 }}>
+                <CardText style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
+                    <ins className="adsbygoogle"
+                        style={{display:'block'}}
+                        data-ad-client="ca-pub-7948871671167561"
+                        data-ad-slot="7770703735"
+                        data-ad-format="auto"></ins>
+                </CardText>
+            </Card>
+        );
+    }
+}
 
 class Feed extends Component {
     constructor(props) {
@@ -27,7 +44,7 @@ class Feed extends Component {
         this.predictionsList = this.predictionsList.bind(this)
     }
     componentDidMount() {
-        this.predictionsList()
+        this.predictionsList();
     }
     predictionsList(page) {
         let self = this;
@@ -73,37 +90,37 @@ class Feed extends Component {
 
     render() {
 
-        const predicts = this.state.predictions.map((item, num) => {
+        let predicts = this.state.predictions.map((item, num) => {
             const tips = item.tips.map((tip) => {
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column' }} key={tip._id}>
                         <div style={{ display: 'flex' }} >
-                            {tip.status === 'open'?
-                            <Open viewBox='-12 -12 48 48' style={{ color: '#30b8d5' }} />:
-                            tip.status === 'lost'?
-                            <Lost viewBox='-12 -12 48 48' style={{ color: '#ff0000' }} />:
-                            <Won viewBox='-12 -12 48 48' style={{ color: '#2cb373' }} />}
+                            {tip.status === 'open' ?
+                                <Open viewBox='-12 -12 48 48' style={{ color: '#30b8d5' }} /> :
+                                tip.status === 'lost' ?
+                                    <Lost viewBox='-12 -12 48 48' style={{ color: '#ff0000' }} /> :
+                                    <Won viewBox='-12 -12 48 48' style={{ color: '#2cb373' }} />}
                             <h6 style={{ whiteSpace: ' nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '2em', fontSize: '0.8em', margin: 0 }}>{tip.eventName.toUpperCase()}</h6>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 25px 0px 25px' }} >
                             <span style={{ fontSize: '0.75em', color: 'rgba(0, 0, 0, 0.54)' }}>
-                                {tip.betType === '3way'? 'fulltime' : tip.betType.toLowerCase()}:
+                                {tip.betType === '3way' ? 'fulltime' : tip.betType.toLowerCase()}:
                             </span>
                             <span style={{ fontSize: '0.75em', color: 'rgba(0, 0, 0, 0.54)' }}>{moment(tip.eventStart).format('DD MMM [:] hh:mm')}</span>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0px 25px 0px 25px' }} >
-                            <span style={{ fontSize: '0.65em', fontWeight: 500 }}>
-                               { 
-                               tip.betType === '3way' && tip.betName === '1'?
-                               '1(' + tip.eventName.split('vs')[0].trim().toUpperCase() + ')':
-                               tip.betType === '3way' && tip.betName === '2'?
-                               '1(' + tip.eventName.split('vs')[1].trim().toUpperCase() + ')':
-                               tip.betType === '3way' && tip.betName === 'X'?
-                               'X (Draw)':
-                               tip.betName
-                               }
-                                </span>
-                            <span style={{ fontSize: '0.76em'}}>@{parseFloat(tip.betValue).toFixed(2)}</span>
+                            <p style={{ fontSize: '0.65em', fontWeight: 600 }}>
+                                {
+                                    tip.betType === '3way' && tip.betName === '1' ?
+                                        '1(' + tip.eventName.split('vs')[0].trim().toUpperCase() + ')' :
+                                        tip.betType === '3way' && tip.betName === '2' ?
+                                            '2(' + tip.eventName.split('vs')[1].trim().toUpperCase() + ')' :
+                                            tip.betType === '3way' && tip.betName === 'X' ?
+                                                'X (Draw)' :
+                                                tip.betName
+                                }
+                            </p>
+                            <p style={{ fontSize: '0.65em', fontWeight: 600 }}>@{parseFloat(tip.betValue).toFixed(2)}</p>
                         </div>
                     </div>
                 )
@@ -125,15 +142,20 @@ class Feed extends Component {
                                 <Divider style={{ borderTop: '2px solid #ff0000' }} />}
                         <CardText style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
                             {tips}
-                            <div style={{display: 'flex', justifyContent: 'space-between', paddingTop: 10}}>
-                                <p style={{ marginBottom: 0, paddingLeft: 10, fontWeight:500, fontSize: '0.8em', color: '#686868' }}>Shared: {moment(item.date).fromNow()}</p>
-                                <p style={{ marginBottom: 0, paddingRight: 10, fontWeight:500, fontSize: '0.8em', color: '#686868' }}>Total: {parseFloat(item.coef).toFixed(2)}</p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10 }}>
+                                <p style={{ marginBottom: 0, paddingLeft: 10, fontWeight: 500, fontSize: '0.8em', color: '#686868' }}>Shared: {moment(item.date).fromNow()}</p>
+                                <p style={{ marginBottom: 0, paddingRight: 10, fontWeight: 500, fontSize: '0.8em', color: '#686868' }}>Total: {parseFloat(item.coef).toFixed(2)}</p>
                             </div>
                         </CardText>
                     </Card>
                 </div>
             )
         })
+            predicts.splice(3, 0,
+                <div className="grid-item" key={'adbyG' + 3}>
+                    <GoogleAd />
+                </div>
+            )
         return (
             <div className="row">
                 <div className="col-md-9">
