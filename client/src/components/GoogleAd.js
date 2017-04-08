@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { Card, CardText } from 'material-ui/Card'
 
 class GoogleAd extends Component {
-    constructor(props){
-        super(props)
-    }
     componentDidMount() {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
     }

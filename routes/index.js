@@ -108,4 +108,36 @@ router.post('/predictions', (req, res, next) => {
     })
 })
 
+router.post('/userpredictions', (req, res, next) => {
+  let page = req.body.page
+  let userId = req.body.user
+  Prediction.find({user: new ObjectId(userId)})
+    .sort({
+      date: -1
+    })
+    .limit(10)
+    .skip(10 * page)
+    .exec((err, predictions) => {
+      Prediction.count((err, count) => {
+        let hasMore = (count - (page + 1) * 10) > 0
+        let results = []
+        let proms = predictions.map((item, i) => {
+          return new Promise((resolve) => {
+            item.populate('tips user', (err, populated) => {
+              results[i] = populated
+              resolve()
+            })
+          })
+        })//map ends here
+        Promise.all(proms).then(() => {
+          res.json({
+            predictions: results,
+            hasMore: hasMore,
+            page: (page + 1)
+          })
+        })
+      })
+    })
+})
+
 module.exports = router;

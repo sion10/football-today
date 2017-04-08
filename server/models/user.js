@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema({
     name: String,
     picture: Object,
     predictions: [{type: Schema.Types.ObjectId, ref: 'Tip'}],
-    points: {type: Number, default: 1}
+    points: {type: Number, default: 1},
+    rank: {type: Number, default: 1 }
 }); 
 
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {
