@@ -5,6 +5,7 @@ import Auth from './auth'
 import Login from '../components/Login'
 import Dashboard from '../components/Dashboard'
 import Leaderboard from '../components/Leaderboard'
+import { browserHistory } from 'react-router'
 
 const routes = {
     component: App,
@@ -16,6 +17,7 @@ const routes = {
                     callback(null, Feed)
                 }
                 else {
+                    browserHistory.push('/login')
                     callback(null, Login)
                 }
             }
@@ -27,6 +29,7 @@ const routes = {
                     callback(null, Main)
                 }
                 else {
+                    browserHistory.push('/login')
                     callback(null, Login)
                 }
             }
@@ -38,6 +41,7 @@ const routes = {
                     callback(null, Dashboard)
                 }
                 else {
+                    browserHistory.push('/login')
                     callback(null, Login)
                 }
             }
@@ -49,6 +53,7 @@ const routes = {
                     callback(null, Leaderboard)
                 }
                 else {
+                    browserHistory.push('/login')
                     callback(null, Login)
                 }
             }

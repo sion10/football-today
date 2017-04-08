@@ -10,26 +10,8 @@ import Side from './Side.js'
 import Won from 'material-ui/svg-icons/action/done'
 import Lost from 'material-ui/svg-icons/navigation/close'
 import Open from 'material-ui/svg-icons/content/remove'
+import GoogleAd from  './GoogleAd'
 import './Feed.css'
-
-class GoogleAd extends Component {
-    componentDidMount() {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-    }
-    render() {
-        return (
-            <Card style={{ marginBottom: 10 }}>
-                <CardText style={{ display: 'flex', flexDirection: 'column', padding: 5 }}>
-                    <ins className="adsbygoogle"
-                        style={{display:'block'}}
-                        data-ad-client="ca-pub-7948871671167561"
-                        data-ad-slot="7770703735"
-                        data-ad-format="auto"></ins>
-                </CardText>
-            </Card>
-        );
-    }
-}
 
 class Feed extends Component {
     constructor(props) {
@@ -153,7 +135,7 @@ class Feed extends Component {
         })
             predicts.splice(3, 0,
                 <div className="grid-item" key={'adbyG' + 3}>
-                    <GoogleAd />
+                    <GoogleAd slot={'7770703735'} />
                 </div>
             )
         return (
