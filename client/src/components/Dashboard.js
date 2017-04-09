@@ -29,7 +29,7 @@ class Dashboard extends Component {
         this.getUser = this.getUser.bind(this)
     }
     componentDidMount() {
-        !this.props.user._id ? this.getUser() : this.predictionsList()
+        !this.props.user._id ? this.getUser() : this.state.hasMore ? this.predictionsList(this.state.page) : null
     }
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
@@ -58,7 +58,7 @@ class Dashboard extends Component {
                 let state = self.state
                 state.user = data
                 self.setState(state)
-                self.predictionsList()
+                self.predictionsList(self.state.page)
             });
     }
     predictionsList(page) {

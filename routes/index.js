@@ -77,6 +77,14 @@ router.get('/user', function (req, res, next) {
   })
 })
 
+router.post('/userbyid', function (req, res, next) {
+  User.findOne({ fbId: req.body.id }, (err, user) => {
+    if (err) res.status(500).send('error finding user')
+    res.json(user)
+  })
+})
+
+
 router.post('/predictions', (req, res, next) => {
   let page = req.body.page
   Prediction.find()

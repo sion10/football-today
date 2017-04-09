@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Auth from '../routes/auth'
-import InfiniteScroll from 'react-infinite-scroller';
-import CircularProgress from 'material-ui/CircularProgress';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import InfiniteScroll from 'react-infinite-scroller'
+import CircularProgress from 'material-ui/CircularProgress'
+import { Card, CardHeader, CardText } from 'material-ui/Card'
+import { Link} from 'react-router'
 import moment from 'moment'
 import Masonry from 'react-masonry-component'
-import Divider from 'material-ui/Divider';
+import Divider from 'material-ui/Divider'
 import Side from './Side.js'
 import Won from 'material-ui/svg-icons/action/done'
 import Lost from 'material-ui/svg-icons/navigation/close'
@@ -110,12 +111,12 @@ class Feed extends Component {
             return (
                 <div className="grid-item" key={'div' + item._id + num}>
                     <Card style={{ marginBottom: 10 }}>
-                        <CardHeader
+                       <Link to={"/profile/" + item.user.fbId}> <CardHeader
                             title={item.user.name}
                             subtitle={`Status:  ${item.status}`}
                             avatar={item.user.picture}
                             subtitleStyle={{ fontSize: '0.76em' }}
-                        />
+                        /> </Link>
                         {item.status === 'pending' ?
                             <Divider style={{ borderTop: '2px solid #30b8d5' }} /> :
                             item.status === 'won' ?

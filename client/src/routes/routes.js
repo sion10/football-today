@@ -4,6 +4,7 @@ import Main from '../components/Main'
 import Auth from './auth'
 import Login from '../components/Login'
 import Dashboard from '../components/Dashboard'
+import Profile from '../components/Profile'
 import Leaderboard from '../components/Leaderboard'
 import { browserHistory } from 'react-router'
 
@@ -39,6 +40,18 @@ const routes = {
             getComponent: (location, callback) => {
                 if (Auth.isUserAuthenticated()) {
                     callback(null, Dashboard)
+                }
+                else {
+                    browserHistory.push('/login')
+                    callback(null, Login)
+                }
+            }
+        },
+        {
+            path: '/profile/:id',
+            getComponent: (location, callback) => {
+                if (Auth.isUserAuthenticated()) {
+                    callback(null, Profile)
                 }
                 else {
                     browserHistory.push('/login')
