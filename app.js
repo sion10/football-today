@@ -7,6 +7,12 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var passport = require('passport');
+var React = require('react');
+require('ignore-styles');
+import { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
+import routes from './client/src/routes/routes';
+import NotFoundPage from './client/src/components/NotFoundPage';
 
 var updateGames = require('./server/scripts/updateGames');
 var checkResults = require('./server/scripts/checkResults');
@@ -49,6 +55,7 @@ passport.use('facebook', facebookStrategy);
 
 // pass the authenticaion checker middleware
 var authCheck = require('./server/scripts/check');
+var addUser = require('./server/scripts/addUser')
 
 setInterval(updateGames, 60000 * 10);
 setInterval(function(){checkResults(Date.now(), 'en')}, 60000*10);
@@ -58,9 +65,9 @@ d.setDate(d.getDate() - 1);
 checkResults(d, 'ka');
 }, 60000*60);
 
-app.use('/api', authCheck);
+//app.use('/api', authCheck);
+app.use('*', addUser)
 app.use('/submit', authCheck);
-
 
 app.use('/api', index);
 app.use('/submit', submit);
@@ -70,13 +77,49 @@ app.use('/sitemap.xml', function (req, res, next){
   res.sendFile(__dirname + 'client/build/sitemap.xml')
 })
 
-// catch 404 and forward to error handler
-app.use('*', function (req, res, next) {
-  res.sendFile(__dirname + '/client/build/index.html')
+app.use('*', (req, res) => {
+  console.log('route handler entered')
+  match(
+    { routes, location: req.url },
+    (err, redirectLocation, renderProps) => {
+      console.log('hi')
+      // in case of error display the error message
+      if (err) {
+        console.log('err')
+        return res.status(500).send(err.message);
+      }
+
+      // in case of redirect propagate the redirect to the browser
+      if (redirectLocation) {
+        return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      }
+
+      // generate the React markup for the current route
+      let markup;
+      if (renderProps) {
+        console.log('one')
+        // if the current route matched we have renderProps
+        markup = renderToString(<RouterContext {...renderProps}/>);
+      } else {
+        // otherwise we can render a 404 page
+        markup = renderToString(<NotFoundPage />);
+        res.status(404);
+      }
+
+      // render the index template with the embedded React markup
+      return res.render('index', { markup });
+    }
+  );
 });
 
+
+// catch 404 and forward to error handler
+//app.use('*', function (req, res, next) {
+  //res.sendFile(__dirname + '/client/build/index.html')
+//});
+
 // error handler
-app.use(function (err, req, res, next) {
+/* app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -84,6 +127,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
+});  */
 
 module.exports = app;

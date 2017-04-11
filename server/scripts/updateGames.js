@@ -21,7 +21,7 @@ function updateGames() {
     }
     else {
       obj = JSON.parse(body)
-      for (key in obj) {
+      for (var key in obj) {
         obj[key].forEach((item) => {
           if (item.h && item.a) {
             game = {
