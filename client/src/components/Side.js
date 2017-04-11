@@ -8,6 +8,7 @@ import { browserHistory } from 'react-router';
 import Subheader from 'material-ui/Subheader';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import IconButton from 'material-ui/IconButton';
+import SSR from '../helper'
 
 let handleRemoveTip = (i, func) => {
     func(i)
@@ -65,7 +66,8 @@ const Side = (props) => {
                 {tips[0] ? <Paper style={styleDef} zDepth={2}> {tips} </Paper> : <Paper style={style} zDepth={2}> <div style={inner}><Subheader style={{ fontSize: 18, padding: 0 }}>Your Tip Slip Is Empty</Subheader><p style={{ fontStyle: 'italic', fontSize: 12, lineHeight: 0.2, color: '#b4b6ba' }}><br />make predictions to submit a tip</p></div> </Paper>}
             </List>
             <div>
-                {location.pathname !== '/games' ?
+                {console.log(SSR)}
+                {SSR ? null : location.pathname !== '/games' ?
                     <RaisedButton backgroundColor='#1aad67' onTouchTap={handleMakePred} label="Make Predictions" labelColor='#ffffff' /> :
                     <RaisedButton backgroundColor='#1aad67' onTouchTap={props.handleSubmit} label="Submit Tip" labelColor='#ffffff' disabled={tips[0] ? false : true} />}
                 <span style={{ float: 'right', paddingRight: 7, paddingTop: 5 }}>{tips[0] ? <p>Total: {parseFloat(coef).toFixed(2)}</p> : null}</span>

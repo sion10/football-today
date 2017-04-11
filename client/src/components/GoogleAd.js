@@ -12,7 +12,6 @@ class GoogleAd extends Component {
                     <ins className="adsbygoogle"
                         style={{display:'block'}}
                         data-ad-client="ca-pub-7948871671167561"
-                        data-ad-slot={this.props}
                         data-ad-format="auto"></ins>
                 </CardText>
             </Card>
@@ -20,3 +19,4 @@ class GoogleAd extends Component {
     }
 }
 export default GoogleAd;
+

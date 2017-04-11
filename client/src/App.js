@@ -12,6 +12,7 @@ import { BottomSheet } from 'material-ui-bottom-sheet'
 import IconButton from 'material-ui/IconButton';
 import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import ArrowDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import G from './components/G'
 import './App.css';
 
 
@@ -20,43 +21,50 @@ class App extends Component {
     super();
 
     this.state = {
-      games: {
-        '2609': {
+      games: [
+        {
           matches: [],
           selected: false,
-          country: 'Germany',
-          league: 'Bundesliga',
-          svg: '/flagsvg/de.svg'
+          country: 'International Clubs',
+          league: 'Champions League',
+          svg: '/flagsvg/fifa.svg'
         },
-        '2553': {
-          matches: [],
-          selected: false,
-          country: 'Spain',
-          league: 'Primera Division',
-          svg: '/flagsvg/esp.svg'
-        },
-        '2615': {
+        {
           matches: [],
           selected: true,
           country: 'England',
           league: 'Premier League',
           svg: '/flagsvg/eng.svg'
         },
-        '96892': {
+        {
+          matches: [],
+          selected: false,
+          country: 'Germany',
+          league: 'Bundesliga',
+          svg: '/flagsvg/de.svg'
+        },
+        {
+          matches: [],
+          selected: false,
+          country: 'Spain',
+          league: 'Primera Division',
+          svg: '/flagsvg/esp.svg'
+        },
+        {
           matches: [],
           selected: false,
           country: 'International',
           league: 'World Cup',
           svg: '/flagsvg/fifa.svg'
         },
-        '2673': {
+        {
           matches: [],
           selected: false,
           country: 'International',
           league: 'Friendly Matches',
           svg: '/flagsvg/fifa.svg'
         }
-      },
+      ],
       open: false,
       tips: [],
       user: {},
@@ -68,10 +76,12 @@ class App extends Component {
     this.handleCheckPrem = this.handleCheckPrem.bind(this)
     this.handleCheckPrim = this.handleCheckPrim.bind(this)
     this.handleCheckBund = this.handleCheckBund.bind(this)
+    this.handleCheckChamp = this.handleCheckChamp.bind(this)
     this.handleCheckFriendly = this.handleCheckFriendly.bind(this)
     this.handleCheckWorld = this.handleCheckWorld.bind(this)
     this.getGamesByLeague = this.getGamesByLeague.bind(this)
     this.getWorldCupGames = this.getWorldCupGames.bind(this)
+
 
     this.addTip = this.addTip.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -86,46 +96,56 @@ class App extends Component {
   }
   handleCheckPrem() {
     let state = this.state
-    state.games['2615'].selected = !this.state.games['2615'].selected
+    state.games[G['2615']].selected = !this.state.games[G['2615']].selected
     this.setState(state)
   }
   handleCheckPrim() {
-    if (!this.state.games['2553'].selected && !this.state.games['2553'].matches[0]) {
+    if (!this.state.games[G['2553']].selected && !this.state.games[G['2553']].matches[0]) {
       this.getGamesByLeague('2553')
     }
     else {
       let state = this.state
-      state.games['2553'].selected = !this.state.games['2553'].selected
+      state.games[G['2553']].selected = !this.state.games[G['2553']].selected
       this.setState(state)
     }
   }
   handleCheckBund() {
-    if (!this.state.games['2609'].selected && !this.state.games['2609'].matches[0]) {
+    if (!this.state.games[G['2609']].selected && !this.state.games[G['2609']].matches[0]) {
       this.getGamesByLeague('2609')
     }
     else {
       let state = this.state
-      state.games['2609'].selected = !this.state.games['2609'].selected
+      state.games[G['2609']].selected = !this.state.games[G['2609']].selected
+      this.setState(state)
+    }
+  }
+  handleCheckChamp() {
+    if (!this.state.games[G['3148']].selected && !this.state.games[G['3148']].matches[0]) {
+      this.getGamesByLeague('3148')
+    }
+    else {
+      let state = this.state
+      state.games[G['3148']].selected = !this.state.games[G['3148']].selected
       this.setState(state)
     }
   }
   handleCheckWorld() {
-    if (!this.state.games['96892'].selected && !this.state.games['96892'].matches[0]) {
+    if (!this.state.games[G['96892']].selected && !this.state.games[G['96892']].matches[0]) {
       this.getWorldCupGames()
     }
     else {
       let state = this.state
-      state.games['96892'].selected = !this.state.games['96892'].selected
+      state.games[G['96892']].selected = !this.state.games[G['96892']].selected
       this.setState(state)
     }
   }
   handleCheckFriendly() {
-    if (!this.state.games['2673'].selected && !this.state.games['2673'].matches[0]) {
+    if (!this.state.games[G['2673']].selected && !this.state.games[G['2673']].matches[0]) {
       this.getGamesByLeague('2673')
     }
     else {
       let state = this.state
-      state.games['2673'].selected = !this.state.games['2673'].selected
+      state.games[G['2673']].selected = !this.state.games[G['2673']].selected
       this.setState(state)
     }
   }
@@ -142,8 +162,8 @@ class App extends Component {
       .then(this.parseJSON)
       .then((data) => {
         let state = this.state
-        state.games['96892'].selected = !this.state.games['96892'].selected
-        state.games['96892'].matches = data
+        state.games[G['96892']].selected = !this.state.games[G['96892']].selected
+        state.games[G['96892']].matches = data
         this.setState(state)
       })
   }
@@ -162,8 +182,8 @@ class App extends Component {
       .then(this.parseJSON)
       .then((data) => {
         let state = this.state
-        state.games[league].selected = !this.state.games[league].selected
-        state.games[league].matches = data
+        state.games[G[league]].selected = !this.state.games[G[league]].selected
+        state.games[G[league]].matches = data
 
         this.setState(state)
       })
@@ -304,6 +324,7 @@ class App extends Component {
             handleCheckPrem: this.handleCheckPrem,
             handleCheckPrim: this.handleCheckPrim,
             handleCheckBund: this.handleCheckBund,
+            handleCheckChamp: this.handleCheckChamp,
             handleCheckFriendly: this.handleCheckFriendly,
             handleCheckWorld: this.handleCheckWorld,
             getGamesByLeague: this.getGamesByLeague,
@@ -325,6 +346,7 @@ class App extends Component {
             handleCheckPrem: this.handleCheckPrem,
             handleCheckPrim: this.handleCheckPrim,
             handleCheckBund: this.handleCheckBund,
+            handleCheckChamp: this.handleCheckChamp,
             handleCheckFriendly: this.handleCheckFriendly,
             handleCheckWorld: this.handleCheckWorld,
             getGamesByLeague: this.getGamesByLeague,

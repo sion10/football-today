@@ -1,6 +1,8 @@
+import SSR from '../helper'
+
 class Auth {
     static isUserAuthenticated() {
-
+        if (SSR) return true
         if (document.cookie) {
             // eslint-disable-next-line
             let token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");

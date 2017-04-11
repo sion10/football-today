@@ -18,6 +18,7 @@ class Nav extends Component {
     this.handleCheckPrem = this.props.gamesFuncs.handleCheckPrem
     this.handleCheckPrim = this.props.gamesFuncs.handleCheckPrim
     this.handleCheckBund = this.props.gamesFuncs.handleCheckBund
+    this.handleCheckChamp = this.props.gamesFuncs.handleCheckChamp
     this.handleCheckFriendly = this.props.gamesFuncs.handleCheckFriendly
     this.handleCheckWorld = this.props.gamesFuncs.handleCheckWorld
     this.getGamesByLeague = this.props.gamesFuncs.getGamesByLeague
@@ -92,6 +93,14 @@ class Nav extends Component {
                   this.handleClose()
                   }}
               />
+               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+                label="Champions League"
+                defaultChecked={true}
+                onCheck={()=>{
+                  this.handleCheckChamp()
+                  this.handleClose()
+                  }}
+              />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label="International"
                 defaultChecked={false}
@@ -109,7 +118,7 @@ class Nav extends Component {
                   }}
               />
               <Divider />
-              {this.props.user.name ?
+              {this.props.user && this.props.user.name ?
                 <MenuItem onTouchTap={this.props.logOut}>Log Out</MenuItem> :
                 <a href='/login'><MenuItem>Log In</MenuItem></a>
               }

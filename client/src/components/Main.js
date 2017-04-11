@@ -4,7 +4,8 @@ import Auth from '../routes/auth'
 import moment from 'moment'
 import Drawer from 'material-ui/Drawer'
 import Checkbox from 'material-ui/Checkbox'
-import Side from './Side.js'
+import Side from './Side'
+import G from './G'
 import './Main.css'
 
 const Table = (props) => {
@@ -55,6 +56,7 @@ class Main extends Component {
     this.handleCheckPrem = this.props.gamesFuncs.handleCheckPrem
     this.handleCheckPrim = this.props.gamesFuncs.handleCheckPrim
     this.handleCheckBund = this.props.gamesFuncs.handleCheckBund
+    this.handleCheckChamp = this.props.gamesFuncs.handleCheckChamp
     this.handleCheckFriendly = this.props.gamesFuncs.handleCheckFriendly
     this.handleCheckWorld = this.props.gamesFuncs.handleCheckWorld
     this.getGamesByLeague = this.props.gamesFuncs.getGamesByLeague
@@ -90,15 +92,15 @@ class Main extends Component {
       .then(this.parseJSON)
       .then((data) => {
         let state = self.state
-        state.games['2615'].matches = data
+        state.games[G['2615']].matches = data
         self.setState(state)
       });
   }
   render() {
-    let matches = Object.keys(this.state.games).map((key) => {
+    let matches = this.state.games.map((game, ii) => {
       let obj = {}
-      if (this.state.games[key].selected === true) {
-        obj[key] = this.state.games[key].matches.map((item, i) => {
+      if (game.selected === true) {
+        obj[G[ii]] = game.matches.map((item, i) => {
           let threeWay, BTS, total, double
           if (item.markets['0'].options['0']) {
             threeWay = item.markets['0'].options.map((option, x) => {
@@ -160,7 +162,7 @@ class Main extends Component {
           )
         })
         return (
-          <Table key={key} matches={obj[key]} game={this.state.games[key]} />
+          <Table key={ii} matches={obj[G[ii]]} game={game} />
         )
       }
     })
@@ -183,6 +185,11 @@ class Main extends Component {
             label="Bundesliga"
             defaultChecked={false}
             onCheck={this.handleCheckBund}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label="Champions League"
+            defaultChecked={false}
+            onCheck={this.handleCheckChamp}
           />
           <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
             label="International"

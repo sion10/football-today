@@ -3,7 +3,7 @@ import Auth from '../routes/auth'
 import InfiniteScroll from 'react-infinite-scroller'
 import CircularProgress from 'material-ui/CircularProgress'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
-import { Link} from 'react-router'
+import { Link } from 'react-router'
 import moment from 'moment'
 import Masonry from 'react-masonry-component'
 import Divider from 'material-ui/Divider'
@@ -11,19 +11,20 @@ import Side from './Side.js'
 import Won from 'material-ui/svg-icons/action/done'
 import Lost from 'material-ui/svg-icons/navigation/close'
 import Open from 'material-ui/svg-icons/content/remove'
-import GoogleAd from  './GoogleAd'
+import GoogleAd from './GoogleAd'
+import RSS from '../helper.js'
 import './Feed.css'
 
 class Feed extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
+        this.state = {  
             predictions: [],
             hasMore: true,
             page: 0
         }
-        this.width = document.querySelector('.grid-sizer')
+        RSS ? null : this.width = document.querySelector('.grid-sizer')
         this.predictionsList = this.predictionsList.bind(this)
     }
     componentDidMount() {
@@ -111,7 +112,7 @@ class Feed extends Component {
             return (
                 <div className="grid-item" key={'div' + item._id + num}>
                     <Card style={{ marginBottom: 10 }}>
-                       <Link to={"/profile/" + item.user.fbId}> <CardHeader
+                        <Link to={"/profile/" + item.user.fbId}> <CardHeader
                             title={item.user.name}
                             subtitle={`Status:  ${item.status}`}
                             avatar={item.user.picture}
@@ -134,11 +135,11 @@ class Feed extends Component {
                 </div>
             )
         })
-            predicts.splice(3, 0,
-                <div className="grid-item" key={'adbyG' + 3}>
-                    <GoogleAd slot={'7770703735'} />
-                </div>
-            )
+        predicts.splice(3, 0,
+            <div className="grid-item" key={'adbyG' + 3}>
+                <GoogleAd slot={'7770703735'} />
+            </div>
+        )
         return (
             <div className="row">
                 <div className="col-md-9">

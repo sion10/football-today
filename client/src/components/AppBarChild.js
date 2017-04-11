@@ -45,11 +45,11 @@ class Nav extends Component {
                 </ToolbarGroup>
                 <ToolbarGroup lastChild={true}>
                     
-                        {this.props.user.name ? <Chip onTouchTap={this.handleTouchTap}>
+                        {this.props.user && this.props.user.name ? <Chip onTouchTap={this.handleTouchTap}>
                             <Avatar className="log" src={this.props.user.picture} size={30} />
                             {this.props.user.name}
                         </Chip> : null}
-                        {this.props.user.name ? <div className="log"><FlatButton labelStyle={{ color: '#ffffff' }} label="Log Out" onTouchTap={this.props.logOut} /> </div> : <div className="log"><FlatButton labelStyle={{ color: '#ffffff' }} href={'/login'} label="Log In" /></div>}
+                        {this.props.user && this.props.user.name ? <div className="log"><FlatButton labelStyle={{ color: '#ffffff' }} label="Log Out" onTouchTap={this.props.logOut} /> </div> : <div className="log"><FlatButton labelStyle={{ color: '#ffffff' }} href={'/login'} label="Log In" /></div>}
                     
                 </ToolbarGroup>
             </Toolbar>

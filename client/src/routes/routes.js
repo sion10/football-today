@@ -7,6 +7,7 @@ import Dashboard from '../components/Dashboard'
 import Profile from '../components/Profile'
 import Leaderboard from '../components/Leaderboard'
 import { browserHistory } from 'react-router'
+import NotFoundPage from '../components/NotFoundPage'
 
 const routes = {
     component: App,
@@ -73,7 +74,7 @@ const routes = {
         },
         {
             path: '*',
-            component: Feed
+            component: NotFoundPage
         }
     ]
 };
