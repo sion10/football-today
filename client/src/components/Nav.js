@@ -95,7 +95,7 @@ class Nav extends Component {
               />
                <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label="Champions League"
-                defaultChecked={true}
+                defaultChecked={false}
                 onCheck={()=>{
                   this.handleCheckChamp()
                   this.handleClose()

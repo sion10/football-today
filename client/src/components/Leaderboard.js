@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import Auth from '../routes/auth'
+import Auth from '../routes/auth';
 import Avatar from 'material-ui/Avatar';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import FullStar from 'material-ui/svg-icons/toggle/star';
+import Star from 'material-ui/svg-icons/toggle/star-border';
+import { Link } from 'react-router';
+import './Leaderboard.css'
 
 class LeaderBoard extends Component {
     constructor(props) {
@@ -9,6 +14,8 @@ class LeaderBoard extends Component {
             users: []
         }
         this.getUsers = this.getUsers.bind(this)
+        this.avatarFormatter = this.avatarFormatter.bind(this)
+        this.statusFormatter = this.statusFormatter.bind(this)
     }
     componentDidMount() {
         this.getUsers()
@@ -42,33 +49,52 @@ class LeaderBoard extends Component {
                 })
             })
     }
-
-    render() {
-        let users = this.state.users.map((user, i) => {
-            return (
-                <tr key={i}>
-                    <th scope="row">{i+1}</th>
-                    <td><div style={{display: 'flex', justifyContent: 'flexStart', alignItems: 'center'}}><Avatar src={user.picture} /><p style={{margin:0, paddingLeft:5}} className="h4">{user.name}</p></div></td>
-                    <td>{parseFloat(user.points).toFixed(0)}</td>
-                </tr>
-            )
-        })
+    avatarFormatter(cell, row) {
         return (
-            <div className="col-sm-9">
-                <h1 className="display-3">LeaderBoard<p className="h3"><small className="text-muted">Top Tipsters</small></p></h1>
-                <table className="table table-striped table-responsive table-bordered">
-                    <thead className="thead-inverse">
-                        <tr>
-                            <th>#</th>
-                            <th>Tipster</th>
-                            <th>Points</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users}
-                    </tbody>
-                </table>
+            <Link style={{ textDecoration: 'none', color: 'inherit' }} to={"/profile/" + cell.fbId}>
+                <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+                    <Avatar src={cell.picture} /><p style={{ margin: 0, paddingLeft: 5 }} className="h4">{cell.name}</p>
+                </div>
+            </Link>
+        )
+    }
+    statusFormatter(cell, row) {
+        let rank = []
+        let colors = {
+            '1': '#d59267',
+            '2': '#a5c9e1',
+            '3': '#b4b4b4',
+            '4': '#dbb87e',
+            '5': '#cc3e32'
+        }
+        for (let i = 0; i < 5; i++) {
+            console.log(cell)
+            i < cell ?
+                rank.push(<FullStar style={{ width: '18px', height: '18px' }} viewBox='-1.5 -1.5 27 27' color={colors[`${cell}`]} key={i} />) :
+                rank.push(<Star style={{ width: '18px', height: '18px' }} viewBox='-1.5 -1.5 27 27' color='#f4dacb' key={i} />)
+        }
+        return (
+            <div>
+                {rank}
             </div>
+        )
+    }
+    render() {
+        let users = this.state.users.map((user, i) => (
+            {
+                id: i + 1,
+                name: { name: user.name, picture: user.picture, fbId: user.fbId },
+                points: parseFloat(user.points).toFixed(0),
+                rank: parseFloat(user.rank).toFixed(0)
+            }
+        ))
+        return (
+            <BootstrapTable data={users} bordered={false} striped hover>
+                <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='id' isKey={true}>#</TableHeaderColumn>
+                <TableHeaderColumn dataField='name' dataFormat={this.avatarFormatter}>Name</TableHeaderColumn>
+                <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='points'>Points</TableHeaderColumn>
+                <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='120' dataField='rank' dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
+            </BootstrapTable>
         );
     }
 }

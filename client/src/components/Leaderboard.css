@@ -1,0 +1,16 @@
+.table td{
+    vertical-align: middle;
+}
+@media(max-width: 1000px){
+  .tablRow {
+    font-size: 10px
+  };
+  .h4{
+      font-size: 10px;
+      font-weight: 400
+  };
+  #tablName{
+      display: none
+  }
+
+}

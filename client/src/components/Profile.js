@@ -173,7 +173,7 @@ class Profile extends Component {
                 <div className="col-sm-3 container">
                     <Card style={{marginBottom: 10}} >
                         <CardMedia >
-                            <img src={this.props.user.pictureBig || 'https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png'} alt='profile' />
+                            <img src={this.state.user.pictureBig || 'https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png'} alt='profile' />
                             <cardText>
                                 <hr style={{ margin: 0 }} />
                                 <div style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '10px 0px 10px 0px' }}>

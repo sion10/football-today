@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
     password: String,
     name: String,
     picture: Object,
+    pictureBig:  {type: Object, default: 'https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png' },
     predictions: [{type: Schema.Types.ObjectId, ref: 'Tip'}],
     points: {type: Number, default: 1},
     rank: {type: Number, default: 1 }
