@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var passport = require('passport');
 var React = require('react');
+var Helmet = require('react-helmet').Helmet;
 require('ignore-styles');
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
@@ -77,12 +78,11 @@ app.use('/sitemap.xml', function (req, res, next){
   res.sendFile(__dirname + 'client/build/sitemap.xml')
 })
 
-app.use('*', (req, res) => {
-  console.log('route handler entered')
+app.get('*', (req, res) => {
+  console.log('url', req.url)
   match(
     { routes, location: req.url },
     (err, redirectLocation, renderProps) => {
-      console.log('hi')
       // in case of error display the error message
       if (err) {
         console.log('err')
@@ -95,19 +95,20 @@ app.use('*', (req, res) => {
       }
 
       // generate the React markup for the current route
-      let markup;
+      let markup, helmet
       if (renderProps) {
-        console.log('one')
         // if the current route matched we have renderProps
         markup = renderToString(<RouterContext {...renderProps}/>);
+        helmet = Helmet.renderStatic();
       } else {
         // otherwise we can render a 404 page
         markup = renderToString(<NotFoundPage />);
+        helmet = Helmet.renderStatic();
         res.status(404);
       }
 
       // render the index template with the embedded React markup
-      return res.render('index', { markup });
+      return res.render('index', { markup, helmet });
     }
   );
 });

@@ -11,25 +11,27 @@ import Masonry from 'react-masonry-component'
 import Divider from 'material-ui/Divider'
 import InfiniteScroll from 'react-infinite-scroller'
 import CircularProgress from 'material-ui/CircularProgress'
+import { Helmet } from 'react-helmet'
+import SSR from '../helper'
 
 class Profile extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user:{},
+            user: {},
             predictions: [],
             hasMore: true,
             page: 0
         }
-        this.width = document.querySelector('.grid-sizer')
+        this.width = SSR ? null : document.querySelector('.grid-sizer')
         this.predictionsList = this.predictionsList.bind(this)
         this.checkStatus = this.checkStatus.bind(this)
         this.parseJSON = this.parseJSON.bind(this)
         this.getUser = this.getUser.bind(this)
     }
     componentDidMount() {
-        this.getUser(this.props.params.id) 
+        this.getUser(this.props.params.id)
     }
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
@@ -53,8 +55,8 @@ class Profile extends Component {
                 'Authorization': `bearer ${Auth.getToken()}`
             },
             body: JSON.stringify({
-                    id: id
-                })
+                id: id
+            })
         }).then(this.checkStatus.bind(self))
             .then(this.parseJSON)
             .then(function (data) {
@@ -170,8 +172,11 @@ class Profile extends Component {
         })
         return (
             <div className="row">
+                <Helmet>
+                    <title>{`Football Today - Profile Page of  ${this.state.user.name}`}</title>
+                </Helmet>
                 <div className="col-sm-3 container">
-                    <Card style={{marginBottom: 10}} >
+                    <Card style={{ marginBottom: 10 }} >
                         <CardMedia >
                             <img src={this.state.user.pictureBig || 'https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png'} alt='profile' />
                             <cardText>

@@ -13,6 +13,7 @@ import IconButton from 'material-ui/IconButton';
 import ArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import ArrowDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import G from './components/G'
+import SSR from './helper'
 import './App.css';
 
 
@@ -71,7 +72,8 @@ class App extends Component {
       submitFeedback: {
         open: false,
         mssg: 'Your Tip Submitted Successfully'
-      }
+      },
+      snackAction: ''
     }
     this.handleCheckPrem = this.handleCheckPrem.bind(this)
     this.handleCheckPrim = this.handleCheckPrim.bind(this)
@@ -93,6 +95,7 @@ class App extends Component {
     this.removeTip = this.removeTip.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.onActionTouchTap = this.onActionTouchTap.bind(this)
   }
   handleCheckPrem() {
     let state = this.state
@@ -211,6 +214,12 @@ class App extends Component {
     state.tips.splice(index, 1)
     this.setState(state)
   }
+  onActionTouchTap(){
+    let state = this.state
+    state.open =  false
+    this.setState(state)
+    SSR ? null : document.location.href='/login'
+  }
   isValid(match) {
     for (let i = 0; i < this.state.tips.length; i++) {
       if (this.state.tips[i].eventId === match.game.gameId && this.state.tips[i].betConflict === match.market.conflict) {
@@ -236,6 +245,13 @@ class App extends Component {
         this.handleClear()
         let state = this.state
         state.submitFeedback.mssg = 'Your tip submitted Successfully'
+        state.submitFeedback.open = true
+        this.setState(state)
+      }
+      else if (response.status === 401) {
+        let state = this.state
+        state.submitFeedback.mssg = 'Please Log in to make prediction'
+        state.snackAction = 'FB Login'
         state.submitFeedback.open = true
         this.setState(state)
       }
@@ -356,6 +372,8 @@ class App extends Component {
           <div className="container" style={{ paddingTop: "70px" }}>
             {children}
             <Snackbar className="snackbar"
+              action={this.state.snackAction}
+              onActionTouchTap={this.onActionTouchTap}
               open={this.state.submitFeedback.open}
               message={this.state.submitFeedback.mssg}
               autoHideDuration={4000}

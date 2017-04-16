@@ -11,18 +11,20 @@ import Masonry from 'react-masonry-component'
 import Divider from 'material-ui/Divider'
 import InfiniteScroll from 'react-infinite-scroller'
 import CircularProgress from 'material-ui/CircularProgress'
+import {Helmet} from "react-helmet"
+import SSR from '../helper'
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user:{},
+            user: {},
             predictions: [],
             hasMore: true,
             page: 0
         }
-        this.width = document.querySelector('.grid-sizer')
+        this.width = SSR ? null : document.querySelector('.grid-sizer')
         this.predictionsList = this.predictionsList.bind(this)
         this.checkStatus = this.checkStatus.bind(this)
         this.parseJSON = this.parseJSON.bind(this)
@@ -76,7 +78,7 @@ class Dashboard extends Component {
                 },
                 body: JSON.stringify({
                     page: this.state.page,
-                    user: this.props.user._id? this.props.user._id : this.state.user._id
+                    user: this.props.user._id ? this.props.user._id : this.state.user._id
                 })
             }).then(this.checkStatus)
                 .then(this.parseJSON)
@@ -167,8 +169,11 @@ class Dashboard extends Component {
         })
         return (
             <div className="row">
+                <Helmet>
+                    <title>{`Football Today - Dashboard  of ${this.props.user.name}`}</title>
+                </Helmet>
                 <div className="col-sm-3 container">
-                    <Card style={{marginBottom: 10}} >
+                    <Card style={{ marginBottom: 10 }} >
                         <CardMedia >
                             <img src={this.props.user.pictureBig || 'https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png'} alt='profile' />
                             <cardText>

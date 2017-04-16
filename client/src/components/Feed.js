@@ -13,6 +13,7 @@ import Lost from 'material-ui/svg-icons/navigation/close'
 import Open from 'material-ui/svg-icons/content/remove'
 import GoogleAd from './GoogleAd'
 import RSS from '../helper.js'
+import {Helmet} from "react-helmet"
 import './Feed.css'
 
 class Feed extends Component {
@@ -142,6 +143,9 @@ class Feed extends Component {
         )
         return (
             <div className="row">
+                <Helmet>
+                    <title>{`Football Today - Feed of recent football predictions`}</title>
+                </Helmet>
                 <div className="col-md-9">
                     <div>
                         <InfiniteScroll

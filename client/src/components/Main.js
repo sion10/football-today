@@ -6,6 +6,7 @@ import Drawer from 'material-ui/Drawer'
 import Checkbox from 'material-ui/Checkbox'
 import Side from './Side'
 import G from './G'
+import { Helmet } from "react-helmet"
 import './Main.css'
 
 const Table = (props) => {
@@ -122,7 +123,7 @@ class Main extends Component {
           else {
             BTS = ['Yes', 'No'].map((a, x) => {
               return (
-                <td key={'aa' + i + x }> </td>
+                <td key={'aa' + i + x}> </td>
               )
             })
           }
@@ -169,14 +170,17 @@ class Main extends Component {
 
     return (
       <div>
-        <Drawer className="jum" open={true} width={200} containerStyle={{zIndex:'1000'}}>
-          <p className="h6 col" style={{ paddingLeft: 15, paddingRight: 15, marginTop: 80}}> LEAGUES FILTER: </p>
+        <Helmet>
+          <title>{`Football Today - Make prediction for today's games`}</title>
+        </Helmet>
+        <Drawer className="jum" open={true} width={200} containerStyle={{ zIndex: '1000' }}>
+          <p className="h6 col" style={{ paddingLeft: 15, paddingRight: 15, marginTop: 80 }}> LEAGUES FILTER: </p>
           <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
             label="Premier League"
             defaultChecked={true}
             onCheck={this.handleCheckPrem}
           />
-          <Checkbox className="col" style={{ display: 'block',fontSize: 15 }}
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
             label="Primera Division"
             defaultChecked={false}
             onCheck={this.handleCheckPrim}

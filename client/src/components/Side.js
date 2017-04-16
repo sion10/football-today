@@ -66,7 +66,6 @@ const Side = (props) => {
                 {tips[0] ? <Paper style={styleDef} zDepth={2}> {tips} </Paper> : <Paper style={style} zDepth={2}> <div style={inner}><Subheader style={{ fontSize: 18, padding: 0 }}>Your Tip Slip Is Empty</Subheader><p style={{ fontStyle: 'italic', fontSize: 12, lineHeight: 0.2, color: '#b4b6ba' }}><br />make predictions to submit a tip</p></div> </Paper>}
             </List>
             <div>
-                {console.log(SSR)}
                 {SSR ? null : location.pathname !== '/games' ?
                     <RaisedButton backgroundColor='#1aad67' onTouchTap={handleMakePred} label="Make Predictions" labelColor='#ffffff' /> :
                     <RaisedButton backgroundColor='#1aad67' onTouchTap={props.handleSubmit} label="Submit Tip" labelColor='#ffffff' disabled={tips[0] ? false : true} />}

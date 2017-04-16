@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "SET BABEL_ENV=node&& SET NODE_ENV=production&&concurrently \"npm run server\" \"npm run client\"",
+    "startServ": "SET BABEL_ENV=node&& SET NODE_ENV=production&&npm run server",
     "server": "./node_modules/.bin/babel-node ./bin/www",
     "client": "./node_modules/.bin/babel-node start-client.js",
     "test": "mocha"
@@ -56,6 +57,7 @@
     "passport-local": "^1.0.0",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
+    "react-helmet": "^5.0.3",
     "react-router": "^3.0.2",
     "request": "^2.79.0",
     "request-promise": "^4.2.0",

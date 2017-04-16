@@ -5,6 +5,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import FullStar from 'material-ui/svg-icons/toggle/star';
 import Star from 'material-ui/svg-icons/toggle/star-border';
 import { Link } from 'react-router';
+import { Helmet } from "react-helmet";
 import './Leaderboard.css'
 
 class LeaderBoard extends Component {
@@ -89,12 +90,17 @@ class LeaderBoard extends Component {
             }
         ))
         return (
-            <BootstrapTable data={users} bordered={false} striped hover>
-                <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='id' isKey={true}>#</TableHeaderColumn>
-                <TableHeaderColumn dataField='name' dataFormat={this.avatarFormatter}>Name</TableHeaderColumn>
-                <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='points'>Points</TableHeaderColumn>
-                <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='120' dataField='rank' dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
-            </BootstrapTable>
+            <div>
+                <Helmet>
+                    <title>{`Football Today - Leaderboard of top prediction makers`}</title>
+                </Helmet>
+                <BootstrapTable data={users} bordered={false} striped hover>
+                    <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='id' isKey={true}>#</TableHeaderColumn>
+                    <TableHeaderColumn dataField='name' dataFormat={this.avatarFormatter}>Name</TableHeaderColumn>
+                    <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='points'>Points</TableHeaderColumn>
+                    <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='120' dataField='rank' dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
+                </BootstrapTable>
+            </div>
         );
     }
 }

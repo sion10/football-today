@@ -14,30 +14,15 @@ const routes = {
     childRoutes: [
         {
             path: '/',
-            getComponent: (location, callback) => {
-                if (Auth.isUserAuthenticated()) {
-                    callback(null, Feed)
-                }
-                else {
-                    browserHistory.push('/login')
-                    callback(null, Login)
-                }
-            }
+            exact: true,
+            component: Feed
         },
         {
-            path: '/games',
-            getComponent: (location, callback) => {
-                if (Auth.isUserAuthenticated()) {
-                    callback(null, Main)
-                }
-                else {
-                    browserHistory.push('/login')
-                    callback(null, Login)
-                }
-            }
+            path: 'games',
+            component: Main
         },
         {
-            path: '/dashboard',
+            path: 'dashboard',
             getComponent: (location, callback) => {
                 if (Auth.isUserAuthenticated()) {
                     callback(null, Dashboard)
@@ -49,28 +34,12 @@ const routes = {
             }
         },
         {
-            path: '/profile/:id',
-            getComponent: (location, callback) => {
-                if (Auth.isUserAuthenticated()) {
-                    callback(null, Profile)
-                }
-                else {
-                    browserHistory.push('/login')
-                    callback(null, Login)
-                }
-            }
+            path: 'profile/:id',
+            component: Profile
         },
         {
-            path: '/leaderboard',
-            getComponent: (location, callback) => {
-                if (Auth.isUserAuthenticated()) {
-                    callback(null, Leaderboard)
-                }
-                else {
-                    browserHistory.push('/login')
-                    callback(null, Login)
-                }
-            }
+            path: 'leaderboard',
+            component: Leaderboard
         },
         {
             path: '*',
