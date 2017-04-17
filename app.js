@@ -9,6 +9,7 @@ mongoose.Promise = global.Promise;
 var passport = require('passport');
 var React = require('react');
 var Helmet = require('react-helmet').Helmet;
+var compression = require('compression');
 require('ignore-styles');
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
@@ -22,6 +23,7 @@ var submit = require('./routes/submit');
 var login = require('./routes/auth');
 
 var app = express();
+app.use(compression())
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

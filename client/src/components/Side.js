@@ -56,7 +56,7 @@ const Side = (props) => {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <AppBar
                 style={{ zIndex: '1' }}
-                title={<span>Tip Slip</span>}
+                title={<h2 style={{lineHeight: 3.6, fontSize: 18}}>Prediction</h2>}
                 iconElementLeft={<span></span>}
                 iconElementRight={<FlatButton label="Clear" />}
                 onRightIconButtonTouchTap={props.handleClear}

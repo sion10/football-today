@@ -8,6 +8,7 @@ import Menu from 'material-ui/Menu'
 import Divider from 'material-ui/Divider'
 import { browserHistory } from 'react-router'
 import Checkbox from 'material-ui/Checkbox'
+import SSR from '../helper'
 
 class Nav extends Component {
   constructor(props) {
@@ -37,6 +38,10 @@ class Nav extends Component {
   render() {
     return (
       <div>
+        {SSR ? <AppBar style={{ position: 'fixed' }}
+            title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
+            showMenuIconButton={false}
+          /> : null}
         <MediaQuery query='(min-device-width: 841px)'>
           <AppBar style={{ position: 'fixed' }}
             title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}

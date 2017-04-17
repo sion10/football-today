@@ -18,11 +18,11 @@ const routes = {
             component: Feed
         },
         {
-            path: 'games',
+            path: '/games',
             component: Main
         },
         {
-            path: 'dashboard',
+            path: '/dashboard',
             getComponent: (location, callback) => {
                 if (Auth.isUserAuthenticated()) {
                     callback(null, Dashboard)
@@ -34,11 +34,11 @@ const routes = {
             }
         },
         {
-            path: 'profile/:id',
+            path: '/profile/:id',
             component: Profile
         },
         {
-            path: 'leaderboard',
+            path: '/leaderboard',
             component: Leaderboard
         },
         {

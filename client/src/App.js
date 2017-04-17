@@ -357,7 +357,7 @@ class App extends Component {
     })
     return (
       <MuiThemeProvider>
-        <div>
+        <div className="navDiv">
           <Nav gamesFuncs={{
             handleCheckPrem: this.handleCheckPrem,
             handleCheckPrim: this.handleCheckPrim,
