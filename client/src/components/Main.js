@@ -55,6 +55,7 @@ class Main extends Component {
       games: this.props.games
     }
     this.handleCheckPrem = this.props.gamesFuncs.handleCheckPrem
+    this.handleCheckEuropa = this.props.gamesFuncs.handleCheckEuropa
     this.handleCheckPrim = this.props.gamesFuncs.handleCheckPrim
     this.handleCheckBund = this.props.gamesFuncs.handleCheckBund
     this.handleCheckChamp = this.props.gamesFuncs.handleCheckChamp
@@ -66,6 +67,8 @@ class Main extends Component {
 
   componentDidMount() {
     this.gamesList();
+    this.getGamesByLeague('3148');
+    this.getGamesByLeague('2560');
   }
   checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -100,7 +103,7 @@ class Main extends Component {
   render() {
     let matches = this.state.games.map((game, ii) => {
       let obj = {}
-      if (game.selected === true) {
+      if (game.selected === true && game.matches[0]) {
         obj[G[ii]] = game.matches.map((item, i) => {
           let threeWay, BTS, total, double
           if (item.markets['0'].options['0']) {
@@ -176,33 +179,38 @@ class Main extends Component {
         <Drawer className="jum" open={true} width={200} containerStyle={{ zIndex: '1000' }}>
           <p className="h6 col" style={{ paddingLeft: 15, paddingRight: 15, marginTop: 80 }}> LEAGUES FILTER: </p>
           <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
-            label="Premier League"
-            defaultChecked={true}
-            onCheck={this.handleCheckPrem}
-          />
-          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
-            label="Primera Division"
-            defaultChecked={false}
-            onCheck={this.handleCheckPrim}
-          />
-          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
-            label="Bundesliga"
-            defaultChecked={false}
-            onCheck={this.handleCheckBund}
-          />
-          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
-            label="Champions League"
-            defaultChecked={false}
+            label={this.state.games[0].league}
+            defaultChecked={this.state.games[0].selected}
             onCheck={this.handleCheckChamp}
           />
           <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
-            label="International"
-            defaultChecked={false}
+            label={this.state.games[1].league}
+            defaultChecked={this.state.games[1].selected}
+            onCheck={this.handleCheckEuropa}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label={this.state.games[2].league}
+            defaultChecked={this.state.games[2].selected}
+            onCheck={this.handleCheckPrem}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label={this.state.games[3].league}
+            defaultChecked={this.state.games[3].selected}
+            onCheck={this.handleCheckBund}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label={this.state.games[4].league}
+            defaultChecked={this.state.games[4].selected}
+            onCheck={this.handleCheckPrim}
+          />
+          <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+            label={this.state.games[5].league}
+            defaultChecked={this.state.games[5].selected}
             onCheck={this.handleCheckWorld}
           />
           <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
-            label="Int. Friendly"
-            defaultChecked={false}
+            label={this.state.games[6].league}
+            defaultChecked={this.state.games[6].selected}
             onCheck={this.handleCheckFriendly}
           />
         </Drawer>

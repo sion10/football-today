@@ -25,9 +25,16 @@ class App extends Component {
       games: [
         {
           matches: [],
-          selected: false,
+          selected: true,
           country: 'International Clubs',
           league: 'Champions League',
+          svg: '/flagsvg/fifa.svg'
+        },
+        {
+          matches: [],
+          selected: true,
+          country: 'International Clubs',
+          league: 'Europa League',
           svg: '/flagsvg/fifa.svg'
         },
         {
@@ -76,6 +83,7 @@ class App extends Component {
       snackAction: ''
     }
     this.handleCheckPrem = this.handleCheckPrem.bind(this)
+    this.handleCheckEuropa = this.handleCheckEuropa.bind(this)
     this.handleCheckPrim = this.handleCheckPrim.bind(this)
     this.handleCheckBund = this.handleCheckBund.bind(this)
     this.handleCheckChamp = this.handleCheckChamp.bind(this)
@@ -102,9 +110,25 @@ class App extends Component {
     state.games[G['2615']].selected = !this.state.games[G['2615']].selected
     this.setState(state)
   }
+  handleCheckEuropa() {
+    if (!this.state.games[G['2560']].selected && !this.state.games[G['2560']].matches[0]) {
+      this.getGamesByLeague('2560')
+      let games = this.state.games
+      games[G['2560']].selected = !games[G['2560']].slected
+      this.setState({games: games})
+    }
+    else {
+      let state = this.state
+      state.games[G['2560']].selected = !this.state.games[G['2560']].selected
+      this.setState(state)
+    }
+  }
   handleCheckPrim() {
     if (!this.state.games[G['2553']].selected && !this.state.games[G['2553']].matches[0]) {
       this.getGamesByLeague('2553')
+      let games = this.state.games
+      games[G['2553']].selected = !games[G['2553']].slected
+      this.setState({games: games})
     }
     else {
       let state = this.state
@@ -115,6 +139,9 @@ class App extends Component {
   handleCheckBund() {
     if (!this.state.games[G['2609']].selected && !this.state.games[G['2609']].matches[0]) {
       this.getGamesByLeague('2609')
+      let games = this.state.games
+      games[G['2609']].selected = !games[G['2609']].slected
+      this.setState({games: games})
     }
     else {
       let state = this.state
@@ -125,6 +152,9 @@ class App extends Component {
   handleCheckChamp() {
     if (!this.state.games[G['3148']].selected && !this.state.games[G['3148']].matches[0]) {
       this.getGamesByLeague('3148')
+      let games = this.state.games
+      games[G['3148']].selected = !games[G['3148']].slected
+      this.setState({games: games})
     }
     else {
       let state = this.state
@@ -145,6 +175,9 @@ class App extends Component {
   handleCheckFriendly() {
     if (!this.state.games[G['2673']].selected && !this.state.games[G['2673']].matches[0]) {
       this.getGamesByLeague('2673')
+      let games = this.state.games
+      games[G['2673']].selected = !games[G['2673']].slected
+      this.setState({games: games})
     }
     else {
       let state = this.state
@@ -185,14 +218,10 @@ class App extends Component {
       .then(this.parseJSON)
       .then((data) => {
         let state = this.state
-        state.games[G[league]].selected = !this.state.games[G[league]].selected
         state.games[G[league]].matches = data
-
         this.setState(state)
       })
   }
-
-
 
   handleOpen() {
     let state = this.state
@@ -214,11 +243,11 @@ class App extends Component {
     state.tips.splice(index, 1)
     this.setState(state)
   }
-  onActionTouchTap(){
+  onActionTouchTap() {
     let state = this.state
-    state.open =  false
+    state.open = false
     this.setState(state)
-    SSR ? null : document.location.href='/login'
+    SSR ? null : document.location.href = '/login'
   }
   isValid(match) {
     for (let i = 0; i < this.state.tips.length; i++) {
@@ -338,6 +367,7 @@ class App extends Component {
           games: this.state.games,
           gamesFuncs: {
             handleCheckPrem: this.handleCheckPrem,
+            handleCheckEuropa: this.handleCheckEuropa,
             handleCheckPrim: this.handleCheckPrim,
             handleCheckBund: this.handleCheckBund,
             handleCheckChamp: this.handleCheckChamp,
@@ -358,8 +388,11 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="navDiv">
-          <Nav gamesFuncs={{
+          <Nav 
+          games={this.state.games}
+          gamesFuncs={{
             handleCheckPrem: this.handleCheckPrem,
+            handleCheckEuropa: this.handleCheckEuropa,
             handleCheckPrim: this.handleCheckPrim,
             handleCheckBund: this.handleCheckBund,
             handleCheckChamp: this.handleCheckChamp,
