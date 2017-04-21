@@ -1,0 +1,15 @@
+{
+    "short_name": "football-today",
+    "name": "Football Today Predictions",
+    "icons": [
+        {
+            "src": "logo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#f8f8f6",
+    "theme_color": "#333333"
+}

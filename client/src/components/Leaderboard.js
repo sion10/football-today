@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import FullStar from 'material-ui/svg-icons/toggle/star';
 import Star from 'material-ui/svg-icons/toggle/star-border';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { Helmet } from "react-helmet";
 import './Leaderboard.css'
 
@@ -54,7 +54,7 @@ class LeaderBoard extends Component {
         return (
             <Link style={{ textDecoration: 'none', color: 'inherit' }} to={"/profile/" + cell.fbId}>
                 <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-                    <Avatar src={cell.picture} /><p style={{ margin: 0, paddingLeft: 5 }} className="h4">{cell.name}</p>
+                    <Avatar src={cell.picture} />
                 </div>
             </Link>
         )
@@ -69,7 +69,6 @@ class LeaderBoard extends Component {
             '5': '#cc3e32'
         }
         for (let i = 0; i < 5; i++) {
-            console.log(cell)
             i < cell ?
                 rank.push(<FullStar style={{ width: '18px', height: '18px' }} viewBox='-1.5 -1.5 27 27' color={colors[`${cell}`]} key={i} />) :
                 rank.push(<Star style={{ width: '18px', height: '18px' }} viewBox='-1.5 -1.5 27 27' color='#f4dacb' key={i} />)
@@ -84,7 +83,8 @@ class LeaderBoard extends Component {
         let users = this.state.users.map((user, i) => (
             {
                 id: i + 1,
-                name: { name: user.name, picture: user.picture, fbId: user.fbId },
+                name: user.name,
+                avatar: { picture: user.picture, fbId: user.fbId },
                 points: parseFloat(user.points).toFixed(0),
                 rank: parseFloat(user.rank).toFixed(0)
             }
@@ -94,9 +94,10 @@ class LeaderBoard extends Component {
                 <Helmet>
                     <title>{`Football Today - Leaderboard of top prediction makers`}</title>
                 </Helmet>
-                <BootstrapTable data={users} bordered={false} striped hover>
+                <BootstrapTable search={true} trClassName='bootTr' data={users} bordered={false} options={{ onRowClick: (row) => browserHistory.push('/profile/' + row.avatar.fbId) }} striped hover>
                     <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='id' isKey={true}>#</TableHeaderColumn>
-                    <TableHeaderColumn dataField='name' dataFormat={this.avatarFormatter}>Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='avatar' dataFormat={this.avatarFormatter} width='30'></TableHeaderColumn>
+                    <TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
                     <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='80' dataField='points'>Points</TableHeaderColumn>
                     <TableHeaderColumn headerAlign='center' columnClassName="clmn" dataAlign='center' width='120' dataField='rank' dataFormat={this.statusFormatter}>Status</TableHeaderColumn>
                 </BootstrapTable>
