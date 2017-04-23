@@ -25,7 +25,6 @@ class Feed extends Component {
             hasMore: true,
             page: 0
         }
-        RSS ? null : this.width = document.querySelector('.grid-sizer')
         this.predictionsList = this.predictionsList.bind(this)
     }
     componentDidMount() {
@@ -136,7 +135,7 @@ class Feed extends Component {
                 </div>
             )
         })
-        predicts.splice(3, 0,
+        predicts.splice(4, 0,
             <div className="grid-item" key={'adbyG' + 3}>
                 <GoogleAd slot={'7770703735'} />
             </div>
@@ -146,7 +145,7 @@ class Feed extends Component {
                 <Helmet>
                     <title>{`Football Today - Feed of recent football predictions`}</title>
                 </Helmet>
-                <div className="col-md-9">
+                <div className="col-md-12 col-lg-9">
                     <div>
                         <InfiniteScroll
                             initialLoad={false}
@@ -160,16 +159,14 @@ class Feed extends Component {
                                 className={'grid'}
                                 options={{
                                     itemSelector: '.grid-item',
-                                    columnWidth: this.width,
                                     gutter: 5
                                 }}>
-                                <div className="grid-sizer col-xs-12 col-sm-3"></div>
                                 {predicts}
                             </Masonry>
                         </InfiniteScroll>
                     </div>
                 </div>
-                <div className="sideBar col-md-3">
+                <div className="sideBar col-lg-3">
                     <Side tips={this.props.tips} handleSubmit={this.props.handleSubmit} handleClear={this.props.handleClear} removeTip={this.props.removeTip} />
                 </div>
             </div>

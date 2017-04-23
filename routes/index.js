@@ -126,7 +126,7 @@ router.post('/userpredictions', (req, res, next) => {
     .limit(10)
     .skip(10 * page)
     .exec((err, predictions) => {
-      Prediction.count((err, count) => {
+        let count = predictions.length
         let hasMore = (count - (page + 1) * 10) > 0
         let results = []
         let proms = predictions.map((item, i) => {
@@ -144,7 +144,6 @@ router.post('/userpredictions', (req, res, next) => {
             page: (page + 1)
           })
         })
-      })
     })
 })
 

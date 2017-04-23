@@ -14,7 +14,6 @@ const routes = {
     childRoutes: [
         {
             path: '/',
-            exact: true,
             component: Feed
         },
         {

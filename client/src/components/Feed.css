@@ -1,7 +1,17 @@
 .grid-item { width: 250px }
 
-@media(max-width: 840px){
+@media(max-width: 992px){
   .sideBar {
     display: none
+  }
+}
+@media(min-width: 769px) and (max-width: 1198px){
+  .grid-item {
+    width: 325px;
+  }
+}
+@media(max-width: 768px){
+  .grid-item {
+    width: 100%;
   }
 }
