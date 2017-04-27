@@ -33,16 +33,16 @@ class Nav extends Component {
   handleMenu() {
     this.setState({ open: !this.state.open })
   }
-  handleClose(){
-    this.setState({ open:  false})
+  handleClose() {
+    this.setState({ open: false })
   }
   render() {
     return (
       <div>
         {SSR ? <AppBar style={{ position: 'fixed' }}
-            title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
-            showMenuIconButton={false}
-          /> : null}
+          title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
+          showMenuIconButton={false}
+        /> : null}
         <MediaQuery query='(min-device-width: 841px)'>
           <AppBar style={{ position: 'fixed' }}
             title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
@@ -64,72 +64,73 @@ class Nav extends Component {
               <MenuItem onTouchTap={() => {
                 browserHistory.push('/')
                 this.handleClose()
-                }}>Home</MenuItem>
+              }}>Home</MenuItem>
               <MenuItem onTouchTap={() => {
                 browserHistory.push('/games')
                 this.handleClose()
-                }}>Games</MenuItem>
+              }}>Games</MenuItem>
               <MenuItem onTouchTap={() => {
-                browserHistory.push('/Leaderboard')
+                browserHistory.push('/leaderboard')
                 this.handleClose()
-                }}>Leaderboard</MenuItem>
+              }}>Leaderboard</MenuItem>
+              <a href='https://blog.football-today.com'><MenuItem>Blog</MenuItem></a>
               <Divider />
               <p className="h6 col" style={{ paddingLeft: 15, paddingRight: 15 }}> LEAGUES FILTER: </p>
-               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+              <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[0].league}
                 defaultChecked={this.props.games[0].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckChamp()
                   this.handleClose()
-                  }}
+                }}
               />
-               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
+              <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[1].league}
                 defaultChecked={this.props.games[1].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckEuropa()
                   this.handleClose()
-                  }}
+                }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[2].league}
                 defaultChecked={this.props.games[2].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckPrem()
                   this.handleClose()
-                  }}
+                }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[3].league}
                 defaultChecked={this.props.games[3].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckBund()
                   this.handleClose()
-                  }}
+                }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[4].league}
                 defaultChecked={this.props.games[4].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckPrim()
                   this.handleClose()
-                  }}
+                }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[5].league}
                 defaultChecked={this.props.games[5].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckWorld()
                   this.handleClose()
-                  }}
+                }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[6].league}
                 defaultChecked={this.props.games[6].selected}
-                onCheck={()=>{
+                onCheck={() => {
                   this.handleCheckFriendly()
                   this.handleClose()
-                  }}
+                }}
               />
               <Divider />
               {this.props.user && this.props.user.name ?

@@ -90,25 +90,23 @@ app.get('*', (req, res) => {
         console.log('err')
         return res.status(500).send(err.message);
       }
-
       // in case of redirect propagate the redirect to the browser
       if (redirectLocation) {
         return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       }
-
       // generate the React markup for the current route
       let markup, helmet
       if (renderProps) {
         // if the current route matched we have renderProps
         markup = renderToString(<RouterContext {...renderProps}/>);
         helmet = Helmet.renderStatic();
+        console.log('helmet ', helmet)
       } else {
         // otherwise we can render a 404 page
         markup = renderToString(<NotFoundPage />);
         helmet = Helmet.renderStatic();
         res.status(404);
       }
-
       // render the index template with the embedded React markup
       return res.render('index', { markup, helmet });
     }

@@ -115,7 +115,7 @@ class App extends Component {
       this.getGamesByLeague('2560')
       let games = this.state.games
       games[G['2560']].selected = !games[G['2560']].slected
-      this.setState({games: games})
+      this.setState({ games: games })
     }
     else {
       let state = this.state
@@ -128,7 +128,7 @@ class App extends Component {
       this.getGamesByLeague('2553')
       let games = this.state.games
       games[G['2553']].selected = !games[G['2553']].slected
-      this.setState({games: games})
+      this.setState({ games: games })
     }
     else {
       let state = this.state
@@ -141,7 +141,7 @@ class App extends Component {
       this.getGamesByLeague('2609')
       let games = this.state.games
       games[G['2609']].selected = !games[G['2609']].slected
-      this.setState({games: games})
+      this.setState({ games: games })
     }
     else {
       let state = this.state
@@ -154,7 +154,7 @@ class App extends Component {
       this.getGamesByLeague('3148')
       let games = this.state.games
       games[G['3148']].selected = !games[G['3148']].slected
-      this.setState({games: games})
+      this.setState({ games: games })
     }
     else {
       let state = this.state
@@ -177,7 +177,7 @@ class App extends Component {
       this.getGamesByLeague('2673')
       let games = this.state.games
       games[G['2673']].selected = !games[G['2673']].slected
-      this.setState({games: games})
+      this.setState({ games: games })
     }
     else {
       let state = this.state
@@ -387,20 +387,20 @@ class App extends Component {
     })
     return (
       <MuiThemeProvider>
-        <div className="navDiv">
-          <Nav 
-          games={this.state.games}
-          gamesFuncs={{
-            handleCheckPrem: this.handleCheckPrem,
-            handleCheckEuropa: this.handleCheckEuropa,
-            handleCheckPrim: this.handleCheckPrim,
-            handleCheckBund: this.handleCheckBund,
-            handleCheckChamp: this.handleCheckChamp,
-            handleCheckFriendly: this.handleCheckFriendly,
-            handleCheckWorld: this.handleCheckWorld,
-            getGamesByLeague: this.getGamesByLeague,
-            getWorldCupGames: this.getWorldCupGames
-          }}
+        <div>
+          <Nav
+            games={this.state.games}
+            gamesFuncs={{
+              handleCheckPrem: this.handleCheckPrem,
+              handleCheckEuropa: this.handleCheckEuropa,
+              handleCheckPrim: this.handleCheckPrim,
+              handleCheckBund: this.handleCheckBund,
+              handleCheckChamp: this.handleCheckChamp,
+              handleCheckFriendly: this.handleCheckFriendly,
+              handleCheckWorld: this.handleCheckWorld,
+              getGamesByLeague: this.getGamesByLeague,
+              getWorldCupGames: this.getWorldCupGames
+            }}
             path={this.props.location.pathname} user={this.state.user} logOut={this.handleLogOut} />
           <div className="container" style={{ paddingTop: "70px" }}>
             {children}
@@ -413,6 +413,9 @@ class App extends Component {
               onRequestClose={this.handleSubmitFeedbackClose}
             />
           </div>
+          <a href="https://top.mail.ru/jump?from=2812079" rel="nofollow">
+            <img src="https://top-fwz1.mail.ru/counter?id=2812079;t=479;l=1"
+              style={{border:0, height:25, width:50, alt:"Рейтинг@Mail.ru", position:'fixed', left:'92%', top: '95%'}} /></a>
           <MediaQuery query='(max-width: 840px)'>
             {this.state.tips[0] ?
               <Toolbar
@@ -428,7 +431,7 @@ class App extends Component {
                 </ToolbarGroup>
                 <ToolbarGroup>
                   Show TipSlip
-                   <IconButton onTouchTap={this.handleOpen} tooltip="Expand">
+                    <IconButton onTouchTap={this.handleOpen} tooltip="Expand">
                     <ArrowUp />
                   </IconButton>
                 </ToolbarGroup>

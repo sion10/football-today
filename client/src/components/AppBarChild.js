@@ -40,6 +40,7 @@ class Nav extends Component {
                             <Tab value="/" label="home" style={{ width: '100%', paddingTop: 12, paddingBottom: 12 }} onActive={this.handleOnTouch} />
                             <Tab value="/games" label="games" style={{ width: '100%', paddingTop: 12, paddingBottom: 12 }} onActive={this.handleOnClick} />
                             <Tab value="/leaderboard" label="leaderboard" style={{ width: '100%', paddingTop: 12, paddingBottom: 12 }} onActive={this.handleOnClick} />
+                            <Tab href='https://blog.football-today.com' value="/blog" label="blog" style={{ width: '100%', paddingTop: 12, paddingBottom: 12 }}/>
                         </Tabs>
                     </div>
                 </ToolbarGroup>
