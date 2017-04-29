@@ -2,7 +2,7 @@
     text-align: center;
 }
 
-@media(max-width: 840px){
+@media(max-width: 1520px){
   .sideBar {
     display: none
   }

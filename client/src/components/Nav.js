@@ -43,13 +43,13 @@ class Nav extends Component {
           title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
           showMenuIconButton={false}
         /> : null}
-        <MediaQuery query='(min-device-width: 841px)'>
+        <MediaQuery query='(min-device-width: 1521px)'>
           <AppBar style={{ position: 'fixed' }}
             title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
             showMenuIconButton={false}
           />
         </MediaQuery>
-        <MediaQuery query='(max-width: 840px)'>
+        <MediaQuery query='(max-width: 1520px)'>
           <AppBar style={{ position: 'fixed' }}
             title={<div className={"container"}><AppBarChild path={this.props.path} user={this.props.user} logOut={this.props.logOut} /></div>}
             showMenuIconButton={true}

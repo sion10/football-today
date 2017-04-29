@@ -1,0 +1,13 @@
+<svg width="36" height="24" viewBox="0 0 370 240" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect fill="#193762" id="canvas_background" height="242" width="362" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <text font-weight="bold" stroke="#9d9dea" transform="matrix(5.6723895010497705,0,0,8.709676852790267,-165.54306628096975,-495.53221591826457) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_1" y="78.77037" x="28.66277" stroke-width="0" fill="#fcfcff">UEFA</text>
+ </g>
+</svg>

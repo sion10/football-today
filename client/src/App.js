@@ -28,14 +28,14 @@ class App extends Component {
           selected: true,
           country: 'International Clubs',
           league: 'Champions League',
-          svg: '/flagsvg/fifa.svg'
+          svg: '/flagsvg/uefa.svg'
         },
         {
           matches: [],
           selected: true,
           country: 'International Clubs',
           league: 'Europa League',
-          svg: '/flagsvg/fifa.svg'
+          svg: '/flagsvg/uefa.svg'
         },
         {
           matches: [],
@@ -416,7 +416,7 @@ class App extends Component {
           <a href="https://top.mail.ru/jump?from=2812079" rel="nofollow">
             <img src="https://top-fwz1.mail.ru/counter?id=2812079;t=479;l=1"
               style={{border:0, height:25, width:50, alt:"Рейтинг@Mail.ru", position:'fixed', left:'92%', top: '95%'}} /></a>
-          <MediaQuery query='(max-width: 840px)'>
+          <MediaQuery query='(max-width: 1520px)'>
             {this.state.tips[0] ?
               <Toolbar
                 style={{

@@ -8,5 +8,16 @@ module.exports = {
     ],
     dontCacheBustUrlsMatching: /\.\w{8}\./,
     swFilePath: 'build/service-worker.js',
-    directoryIndex: 'index.html'
+    directoryIndex: 'index.html',
+    dynamicUrlToDependencies: {
+        '/': [
+            './build/index.ejs',
+            './build/index.html'
+        ]
+    },
+    navigateFallback: '/',
+    runtimeCaching: [{
+        urlPattern: /this\\.is\\.a\\.regex/,
+        handler: 'networkFirst'
+    }]
 };  

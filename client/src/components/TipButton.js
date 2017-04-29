@@ -13,7 +13,9 @@ class TipButton extends Component {
     
     render() {
         return (
-            <FlatButton labelStyle={{paddingRight:3, paddingLeft:3}} style={{padding:0, minWidth:10}} label={parseFloat(this.props.tip.v).toFixed(2)} onTouchTap={this.handleOnClick.bind(this)}></FlatButton>
+            <FlatButton labelStyle={{paddingRight:3, paddingLeft:3, fontSize:12, textAlign:'center'}} 
+            style={{padding:0, minWidth:37, height:'100%', width:'100%'}} label={parseFloat(this.props.tip.v).toFixed(2)} 
+            onTouchTap={this.handleOnClick.bind(this)}></FlatButton>
         )
     }
 
