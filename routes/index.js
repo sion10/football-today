@@ -120,18 +120,18 @@ router.post('/userpredictions', (req, res, next) => {
   let page = req.body.page
   let userId = req.body.user
   let count = new Promise((resolve, reject) => {
-      Prediction.count((err, c) => {
-        resolve(c)
-      })
-  })
-count.then((c) => {
-Prediction.find({user: new ObjectId(userId)})
-    .sort({
-      date: -1
+    Prediction.count({ user: new ObjectId(userId) }, (err, c) => {
+      resolve(c)
     })
-    .limit(10)
-    .skip(10 * page)
-    .exec((err, predictions) => {
+  })
+  count.then((c) => {
+    Prediction.find({ user: new ObjectId(userId) })
+      .sort({
+        date: -1
+      })
+      .limit(10)
+      .skip(10 * page)
+      .exec((err, predictions) => {
         let hasMore = (c - (page + 1) * 10) > 0
         let results = []
         let proms = predictions.map((item, i) => {
@@ -149,9 +149,9 @@ Prediction.find({user: new ObjectId(userId)})
             page: (page + 1)
           })
         })
-    })
+      })
   })
-}) 
+})
 
 
 module.exports = router;

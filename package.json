@@ -5,11 +5,13 @@
   "babel": {
     "presets": [
       "es2015",
-      "react"
+      "react",
+      "stage-3"
     ],
     "env": {
       "node": {
         "plugins": [
+          "transform-object-rest-spread",
           [
             "babel-plugin-transform-require-ignore",
             {
@@ -65,6 +67,8 @@
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-stage-3": "^6.24.1",
     "concurrently": "^3.3.0",
     "mocha": "^3.2.0"
   }
