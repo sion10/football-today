@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import TipButton from './TipButton.js'
-import Auth from '../routes/auth'
 import moment from 'moment'
 import Drawer from 'material-ui/Drawer'
 import Checkbox from 'material-ui/Checkbox'
 import Side from './Side'
-import G from './G'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import { Helmet } from "react-helmet"
 import MediaQuery from 'react-responsive'
+import columns from '../data/columns'
+import colBig from '../data/colBig'
 import './Main.css'
 
 class Main extends Component {
@@ -18,171 +18,18 @@ class Main extends Component {
     this.state = {
       leagues: this.props.games
     }
-    this.gamesList = this.gamesList.bind(this)
+    this.gamesList = this.props.gamesFuncs.gamesList.bind(this)
     this.getGamesByLeague = this.props.gamesFuncs.getGamesByLeague.bind(this)
-    this.columns = [{
-      header: 'Date',
-      accessor: 'date',
-      style: { display: 'inline-flex', justifyContent: 'left', alignItems: 'center', textAlign: 'center', fontSize: 8 },
-      maxWidth: 68,
-      minWidth: 68
-    }, {
-      header: 'Sides',
-      accessor: 'sides',
-      minWidth: 100,
-      style: { display: 'inline-flex', justifyContent: 'left', alignItems: 'center', textAlign: 'center', fontSize: 8 }
-    }, {
-      header: '1',
-      accessor: 'one',
-      maxWidth: 40,
-      minWidth: 40,
-      style: { textAlign: 'center', padding: 0 },
-      render: row =>
-        <TipButton item={row.value} tip={row.value.markets[0].options[0]} addTip={this.props.addTip} tipMarket={row.value.markets[0]} />
-    }, {
-      header: 'X',
-      accessor: 'x',
-      maxWidth: 40,
-      minWidth: 40,
-      style: { textAlign: 'center', padding: 0 },
-      render: row =>
-        <TipButton item={row.value} tip={row.value.markets[0].options[1]} addTip={this.props.addTip} tipMarket={row.value.markets[0]} />
-    },
-    {
-      header: '2',
-      accessor: 'two',
-      maxWidth: 40,
-      minWidth: 40,
-      style: { textAlign: 'center', padding: 0 },
-      render: row =>
-        <TipButton item={row.value} tip={row.value.markets[0].options[2]} addTip={this.props.addTip} tipMarket={row.value.markets[0]} />
-    },
-    {
-      header: '+',
-      expander: true,
-      maxWidth: 20,
-      minWidth: 20,
-      style: { display: 'inline-flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' },
-      render: ({ isExpanded }) => (
-        <div style={{ textAlign: 'center' }}>
-          {isExpanded ? '-' : '+'}
-        </div>
-      )
-    }]
+    this.columns = columns(this.props)
   }
   componentDidMount() {
     this.gamesList();
     this.getGamesByLeague('3148');
     this.getGamesByLeague('2560');
   }
-  gamesList() {
-    return fetch('/api', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `bearer ${Auth.getToken()}`
-      }
-    }).then(this.checkStatus)
-      .then(this.parseJSON)
-      .then((data) => {
-        const leagues = this.state.leagues.map(league => league.league === 'Premier League' ? { ...league, matches: data } : league)
-        let state = { ...this.state, leagues: leagues }
-        this.setState(state)
-      });
-  }
-  checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-      return response;
-    }
-    const error = new Error(`HTTP Error ${response.statusText}`);
-    error.status = response.statusText;
-    error.response = response;
-    console.log(error); // eslint-disable-line no-console
-    throw error;
-  }
-  parseJSON(response) {
-    return response.json();
-  }
   generateColumn() {
     let arr = this.columns.filter(obj => !obj.expander)
-    arr.push({
-      header: '1X',
-      accessor: 'onedraw',
-      maxWidth: 40,
-      minWidth: 40,
-      style: { textAlign: 'center', padding: 0 },
-      render: row =>
-        row.value.markets[3].options[0] ? 
-        <TipButton item={row.value} tip={row.value.markets[3].options[0]} addTip={this.props.addTip} tipMarket={row.value.markets[3]} /> :
-        ''
-    },
-      {
-        header: '12',
-        accessor: 'onetwo',
-        maxWidth: 40,
-        minWidth: 40,
-        style: { textAlign: 'center', padding: 0 },
-        render: row =>
-          row.value.markets[3].options[1] ? 
-          <TipButton item={row.value} tip={row.value.markets[3].options[1]} addTip={this.props.addTip} tipMarket={row.value.markets[3]} /> :
-          ''
-      },
-      {
-        header: 'X2',
-        accessor: 'twodraw',
-        maxWidth: 40,
-        minWidth: 40,
-        style: { textAlign: 'center', padding: 0 },
-        render: row =>
-          row.value.markets[3].options[2] ? 
-          <TipButton item={row.value} tip={row.value.markets[3].options[2]} addTip={this.props.addTip} tipMarket={row.value.markets[3]} /> :
-          ''
-      },
-      {
-        header: 'Over',
-        accessor: 'over',
-        maxWidth: 40,
-        minWidth: 40,
-        style: { textAlign: 'center', padding: 0 },
-        render: row =>
-          row.value.markets[2].options[0] ? 
-          <TipButton item={row.value} tip={row.value.markets[2].options[0]} addTip={this.props.addTip} tipMarket={row.value.markets[2]} /> :
-          ''
-      },
-      {
-        header: 'Under',
-        accessor: 'under',
-        maxWidth: 40,
-        minWidth: 40,
-        style: { textAlign: 'center', padding: 0 },
-        render: row =>
-          row.value.markets[2].options[1] ? 
-          <TipButton item={row.value} tip={row.value.markets[2].options[1]} addTip={this.props.addTip} tipMarket={row.value.markets[2]} /> : 
-          ''
-      },
-      {
-        header: 'Yes',
-        accessor: 'yes',
-        maxWidth: 40,
-        minWidth: 40,
-        style: { textAlign: 'center', padding: 0 },
-        render: row =>
-          row.value.markets[1].options[0] ? 
-          <TipButton item={row.value} tip={row.value.markets[1].options[0]} addTip={this.props.addTip} tipMarket={row.value.markets[1]} /> :
-          ''
-      },
-      {
-        header: 'No',
-        accessor: 'no',
-        maxWidth: 40,
-        minWidth: 40,
-        style: { textAlign: 'center', padding: 0 },
-        render: row =>
-          row.value.markets[1].options[1] ? 
-          <TipButton item={row.value} tip={row.value.markets[1].options[1]} addTip={this.props.addTip} tipMarket={row.value.markets[1]} /> :
-          ''
-      })
+    arr = arr.concat(colBig(this.props))
     arr[0].style.fontSize = 10
     arr[1].style.fontSize = 10
     return arr
@@ -313,12 +160,12 @@ const NewDrawer = (props) => {
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[0].league}
       defaultChecked={props.games[0].selected}
-      onCheck={props.gamesFuncs.handleCheckChamp}
+      onCheck={() => props.gamesFuncs.handleCheckLeague('3148')}
     />
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[1].league}
       defaultChecked={props.games[1].selected}
-      onCheck={props.gamesFuncs.handleCheckEuropa}
+      onCheck={() => props.gamesFuncs.handleCheckLeague('2560')}
     />
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[2].league}
@@ -328,22 +175,22 @@ const NewDrawer = (props) => {
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[3].league}
       defaultChecked={props.games[3].selected}
-      onCheck={props.gamesFuncs.handleCheckBund}
+      onCheck={() => props.gamesFuncs.handleCheckLeague('2609')}
     />
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[4].league}
       defaultChecked={props.games[4].selected}
-      onCheck={props.gamesFuncs.handleCheckPrim}
+      onCheck={() => props.gamesFuncs.handleCheckLeague('2553')}
     />
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[5].league}
       defaultChecked={props.games[5].selected}
-      onCheck={props.gamesFuncs.handleCheckWorld}
+      onCheck={() => props.gamesFuncs.handleCheckLeague('96892')}
     />
     <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
       label={props.games[6].league}
       defaultChecked={props.games[6].selected}
-      onCheck={props.gamesFuncs.handleCheckFriendly}
+      onCheck={() => props.gamesFuncs.handleCheckLeague('2673')}
     />
   </Drawer>
 }

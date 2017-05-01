@@ -17,12 +17,7 @@ class Nav extends Component {
       open: false
     }
     this.handleCheckPrem = this.props.gamesFuncs.handleCheckPrem
-    this.handleCheckEuropa = this.props.gamesFuncs.handleCheckEuropa
-    this.handleCheckPrim = this.props.gamesFuncs.handleCheckPrim
-    this.handleCheckBund = this.props.gamesFuncs.handleCheckBund
-    this.handleCheckChamp = this.props.gamesFuncs.handleCheckChamp
-    this.handleCheckFriendly = this.props.gamesFuncs.handleCheckFriendly
-    this.handleCheckWorld = this.props.gamesFuncs.handleCheckWorld
+    this.handleCheckLeague = this.props.gamesFuncs.handleCheckLeague
     this.getGamesByLeague = this.props.gamesFuncs.getGamesByLeague
     this.getWorldCupGames = this.props.gamesFuncs.getWorldCupGames
 
@@ -80,16 +75,14 @@ class Nav extends Component {
                 label={this.props.games[0].league}
                 defaultChecked={this.props.games[0].selected}
                 onCheck={() => {
-                  this.handleCheckChamp()
-                  this.handleClose()
+                  this.handleCheckLeague('3148')
                 }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[1].league}
                 defaultChecked={this.props.games[1].selected}
                 onCheck={() => {
-                  this.handleCheckEuropa()
-                  this.handleClose()
+                  this.handleCheckLeague('2560')
                 }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
@@ -97,39 +90,34 @@ class Nav extends Component {
                 defaultChecked={this.props.games[2].selected}
                 onCheck={() => {
                   this.handleCheckPrem()
-                  this.handleClose()
                 }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[3].league}
                 defaultChecked={this.props.games[3].selected}
                 onCheck={() => {
-                  this.handleCheckBund()
-                  this.handleClose()
+                  this.handleCheckLeague('2609')
                 }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[4].league}
                 defaultChecked={this.props.games[4].selected}
                 onCheck={() => {
-                  this.handleCheckPrim()
-                  this.handleClose()
+                  this.handleCheckLeague('2553')
                 }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[5].league}
                 defaultChecked={this.props.games[5].selected}
                 onCheck={() => {
-                  this.handleCheckWorld()
-                  this.handleClose()
+                  this.handleCheckLeague('96892')
                 }}
               />
               <Checkbox className="col" style={{ display: 'block', fontSize: 15 }}
                 label={this.props.games[6].league}
                 defaultChecked={this.props.games[6].selected}
                 onCheck={() => {
-                  this.handleCheckFriendly()
-                  this.handleClose()
+                  this.handleCheckLeague('2673')
                 }}
               />
               <Divider />
